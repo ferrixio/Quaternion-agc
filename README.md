@@ -1,7 +1,7 @@
-### QUATERNIONS - A (small) Python 3.11 resource made by Ferrixio ###
->> Version 1.0
+# QUATERNIONS - A (small) Python 3.11 resource made by @ferrixio
+### > The main goal of this resource is to perform quaternionic arithmetic in Python.
+> Version 1.0
 
---> The main goal of this resource is to perform quaternionic arithmetic in Python.
 ===========================================================================
 
 §§ TABLE OF CONTENTS §§
@@ -19,7 +19,7 @@
 
 This class allows user to emulate quaternionic algebruh in Python. The class can do:
 
-	> internal sums
+	> internal and external sums
 	> scalar multiplications
 	> internal left-multiplications
 	> internal right-multiplications
@@ -48,13 +48,13 @@ The floating point is a #@!* and it breaks the accuracy of the computations when
 
 §§ 4. THINGS TO DO §§
 
-Create a library!!!
-Quaternionic functions
-Plotting quaternions (stereographic projection?)
-Find a solution for floating point accuracy errors
-Maybe use the @ operation?
-Floor division?
-Vector representation
++ Create a library!!!
++ Quaternionic functions
++ Plotting quaternions (stereographic projection?)
++ Find a solution for floating point accuracy errors
++ Maybe use the @ operation?
++ Floor division?
++ Vector representation
 
 ===========================================================================
 
