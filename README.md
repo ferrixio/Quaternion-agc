@@ -2,7 +2,7 @@
 >> Version 1.0
 
 -> The main goal of this resource is to use the quaternions in Python.
-==============================================================================
+===========================================================================
 §§ TABLE OF CONTENTS §§
 1. Features
 2. How to use
@@ -10,7 +10,7 @@
 4. Things to do
 5. Description
 6. Changelog
-==============================================================================
+===========================================================================
 
 §§ 1. FEATURES §§
 The class Quaternion allows user to emulate quaternionic arithmetic in Python, from sums to multiplication. Namely, the class can perform:
@@ -27,17 +27,17 @@ The class Quaternion allows user to emulate quaternionic arithmetic in Python, f
 
 Moreover, I used some magic methods to allow user to write x+y, x*y, y/x, ..., directly.
 
-==============================================================================
+===========================================================================
 
 §§ 2. HOW TO USE §§
 Open the file test_me.py and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to cite me if you are using this in a project!)
 
-==============================================================================
+===========================================================================
 
 §§ 3. KNOWN ISSUES §§
 The floating point is a #@!* and it breaks the accuracy of the computations when the number has a irrational norm, that is, the most of the time since the calculation of the norm needs a square root...
 
-==============================================================================
+===========================================================================
 
 §§ 4. THINGS TO DO §§
 Create a library!!!
@@ -48,7 +48,7 @@ Maybe use the @ operation?
 Floor division?
 Vector representation
 
-==============================================================================
+===========================================================================
 
 §§ 5. DESCRIPTION §§
 The quaternion number system is an extended version of the complex numbers, firstly introduced by Rowan Hamilton in 1843. A quaternion is a 4-tuple of informations:
@@ -74,7 +74,7 @@ and sadly it is not commutative since:
 
 Enjoy :)
 
-==============================================================================
+===========================================================================
 
 §§ 6. CHANGELOG §§
 
