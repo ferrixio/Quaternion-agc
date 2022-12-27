@@ -95,40 +95,76 @@ class Quaternion:
 
     
     #Binary operation magic methods
+    def scalarOperations(self, number, key:str):
+        '''Auxiliary function to get scalar operations.'''
+        match key:
+            case "add":
+                return self.real_part+number,self.i,self.j,self.k
+            case "sub":
+                return self.real_part-number,self.i,self.j,self.k
+            case "mult":
+                return self.real_part*number,self.i*number,self.j*number,self.k*number
+            case _:
+                raise Exception('Not valid key.')
+
     def __add__(self, other):
-        '''Magic method to sum quaternions using +.'''
-        return Quaternion(self.real_part+other.real_part, self.i+other.i, self.j+other.j, self.k+other.k)
+        '''Magic method to emulate the sum using +.'''
+        if type(other) in (int, float):
+            new_real,new_i,new_j,new_k = self.scalarOperations(other,'add')
+        else:
+            new_real = self.real_part+other.real_part
+            new_i = self.i+other.i
+            new_j = self.j+other.j
+            new_k = self.k+other.k
+
+        return Quaternion(new_real, new_i, new_j, new_k)
 
     def __iadd__(self, other):
         '''Magic method to sum quaternions using +=.'''
-        self.real_part += other.real_part
-        self.i += other.i
-        self.j += other.j
-        self.k += other.k
+        if type(other) in (int, float):
+            new_real,new_i,new_j,new_k = self.scalarOperations(other,'add')
+        else:
+            new_real = self.real_part+other.real_part
+            new_i = self.i+other.i
+            new_j = self.j+other.j
+            new_k = self.k+other.k
+            
+        self.real_part = new_real
+        self.i, self.j, self.k = new_i, new_j, new_k
 
         return self
 
     def __sub__(self, other):
         '''Magic method to subtract quaternions using -.'''
-        return Quaternion(self.real_part-other.real_part, self.i-other.i, self.j-other.j, self.k-other.k)
+        if type(other) in (int, float):
+            new_real,new_i,new_j,new_k = self.scalarOperations(other,'sub')
+        else:
+            new_real = self.real_part-other.real_part
+            new_i = self.i-other.i
+            new_j = self.j-other.j
+            new_k = self.k-other.k
+            
+        return Quaternion(new_real, new_i, new_j, new_k)
 
     def __isub__(self, other):
         '''Magic method to subtract quaternions using -=.'''
-        self.real_part -= other.real_part
-        self.i -= other.i
-        self.j -= other.j
-        self.k -= other.k
+        if type(other) in (int, float):
+            new_real,new_i,new_j,new_k = self.scalarOperations(other,'sub')
+        else:
+            new_real = self.real_part-other.real_part
+            new_i = self.i-other.i
+            new_j = self.j-other.j
+            new_k = self.k-other.k
+            
+        self.real_part = new_real
+        self.i, self.j, self.k = new_i, new_j, new_k
 
         return self
-
-    def scalarProduct(self, number) -> tuple:
-        '''Auxiliary function to get scalar multiplication.'''
-        return self.real_part*number,self.i*number,self.j*number,self.k*number
 
     def __mul__(self, other):
         '''Magic method to perform quaternionic left-multiplication x * y.'''
         if type(other) in (int, float):
-            new_real,new_i,new_j,new_k = self.scalarProduct(other)
+            new_real,new_i,new_j,new_k = self.scalarOperations(other,'mult')
 
         else:
             new_real = self.real_part*other.real_part - self.i*other.i - self.j*other.j - self.k*other.k
@@ -141,7 +177,7 @@ class Quaternion:
     def __rmul__(self, other):
         '''Magic method to perform quaternionic right-multiplication y * x.'''
         if type(other) in (int, float):
-            new_real,new_i,new_j,new_k = self.scalarProduct(other) 
+            new_real,new_i,new_j,new_k = self.scalarOperations(other,'mult')
 
         else:
             new_real = self.real_part*other.real_part - self.i*other.i - self.j*other.j - self.k*other.k
@@ -154,7 +190,7 @@ class Quaternion:
     def __imul__(self, other):
         '''Magic method to perform quaternionic left-multiplication x *= y.'''
         if type(other) in (int, float):
-            new_real,new_i,new_j,new_k = self.scalarProduct(other)
+            new_real,new_i,new_j,new_k = self.scalarOperations(other,'mult')
 
         else:
             new_real = self.real_part*other.real_part - self.i*other.i - self.j*other.j - self.k*other.k

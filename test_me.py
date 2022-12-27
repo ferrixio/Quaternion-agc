@@ -4,6 +4,7 @@ x = Quaternion(1,2,3,-4)
 y = Quaternion(1,-1,1)
 
 print(bool(y))
+print(f'x-1 = {x-1}\nx+1 = {x+1}')
 print(f'x*y = {x*y}\ny*x = {y*x}')
 print(f'x+y = {x+y}\nx-y = {x-y}')
 print(f'x/y = {x/y}\nx**2 = {x**2}')
