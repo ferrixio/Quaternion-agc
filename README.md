@@ -1,6 +1,6 @@
 # QUATERNIONS - A (small) Python 3.11 resource made by @ferrixio
 ## > Perform quaternionic arithmetic easily in Python!
-> Version 1.0
+> Version 1.1
 
 ===========================================================================
 
@@ -84,6 +84,12 @@ Enjoy :)
 
 ### 6. CHANGELOG
 
+§§ Version 1.1
+
+Minor changes in the boolean magic methods (thx to @Scarlet06)
+
+§§ Version 1.0
+
 Created the class Quaternion. It stores four elements: the real part and the three imaginary parts i, j, k.
 Build-in methods (ordered by utility):
 
@@ -99,8 +105,8 @@ Returns the norm of the quaternion. The magic method __abs__ grants user to get 
 > Normalize:
 Returns the normalized quaternion.
 
-> Conjugate:
-Conjugates quaternion, that is, if q = a+bi+cj+dk, then q* = a-bi-cj-dk. Moreover, x.conjugate().conjugate() = x.
+> Conj and Conjugate:
+Conjugates quaternion, that is, if q = a+bi+cj+dk, then q* = a-bi-cj-dk. Moreover, x.conj().conj() = x.
 
 > Inverse:
 Returns the inverse quaternion, that is, a quaternion h such that qh=hq=1. The magic method __inverse__ allows the user to get the inverse writing ~x.
