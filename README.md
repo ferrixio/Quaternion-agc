@@ -1,10 +1,11 @@
-### QUATERNIONS - A (small) Python resource made by Ferrixio ###
+### QUATERNIONS - A (small) Python 3.11 resource made by Ferrixio ###
 >> Version 1.0
 
--> The main goal of this resource is to use the quaternions in Python.
+--> The main goal of this resource is to perform quaternionic arithmetic in Python.
 ===========================================================================
 
 §§ TABLE OF CONTENTS §§
+
 1. Features
 2. How to use
 3. Known issues
@@ -15,7 +16,9 @@
 ===========================================================================
 
 §§ 1. FEATURES §§
-The class Quaternion allows user to emulate quaternionic arithmetic in Python, from sums to multiplication. Namely, the class can perform:
+
+This class allows user to emulate quaternionic algebruh in Python. The class can do:
+
 	> internal sums
 	> scalar multiplications
 	> internal left-multiplications
@@ -27,21 +30,24 @@ The class Quaternion allows user to emulate quaternionic arithmetic in Python, f
 	> inversions
 	> algebric prints
 
-Moreover, I used some magic methods to allow user to write x+y, x*y, y/x, ..., directly.
+I used mostly magic methods to allow user to write x+y, x*y, y/x, ..., directly.
 
 ===========================================================================
 
 §§ 2. HOW TO USE §§
+
 Open the file test_me.py and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to cite me if you are using this in a project!)
 
 ===========================================================================
 
 §§ 3. KNOWN ISSUES §§
+
 The floating point is a #@!* and it breaks the accuracy of the computations when the number has a irrational norm, that is, the most of the time since the calculation of the norm needs a square root...
 
 ===========================================================================
 
 §§ 4. THINGS TO DO §§
+
 Create a library!!!
 Quaternionic functions
 Plotting quaternions (stereographic projection?)
@@ -53,6 +59,7 @@ Vector representation
 ===========================================================================
 
 §§ 5. DESCRIPTION §§
+
 The quaternion number system is an extended version of the complex numbers, firstly introduced by Rowan Hamilton in 1843. A quaternion is a 4-tuple of informations:
 	q := a + bi + cj + dk
 where a, b, c, d are real numbers, and i, j, k are the basic quaternions.
@@ -62,17 +69,14 @@ Instead of having a single imaginary part, as a complex number, quaternions have
 
 Addition works componentwise and it is commutative, and so is the scalar multiplication.
 The Hamilton product, that is the multiplication between two quaternions, follows the expression:
-	(a1 + b1i + c1j + d1k) (a2 + b2i + c2j + d2k) = 
-		   a1a2 - b1b2 - c1c2 - d1d2
-		+ (b1a2 + b1a2 + c1d2 - d1c2)i
-		+ (a1c2 - b1d2 + c1a2 + d1b2)j
-		+ (a1d2 + b1c2 - c1b2 + d1a1)k
 
-and sadly it is not commutative since:
-	ij = k	ji = -k
-	jk = i	kj = -i
-	ki = j	ik = -j
+ > (a1 + b1i + c1j + d1k)*(a2 + b2i + c2j + d2k) = 
+	a1a2 - b1b2 - c1c2 - d1d2
+	+ (b1a2 + b1a2 + c1d2 - d1c2)i
+	+ (a1c2 - b1d2 + c1a2 + d1b2)j
+	+ (a1d2 + b1c2 - c1b2 + d1a1)k
 
+and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, ik = -j.
 
 Enjoy :)
 
@@ -80,38 +84,38 @@ Enjoy :)
 
 §§ 6. CHANGELOG §§
 
-Create the class Quaternion. It stores four elements: the real part and the three imaginary parts i, j, k.
-
+Created the class Quaternion. It stores four elements: the real part and the three imaginary parts i, j, k.
 Build-in methods (ordered by utility):
--> Components:
+
+> Components:
 Returns a 4-tuple with the components of the quaternions.
 
--> Algebric print:
+> Algebric print:
 Prints the algebric form of the quaternion, that is a+bi+cj+dk. The magic method __str__ calls this function to see it writing print(x) directly.
 
--> Norm:
+> Norm:
 Returns the norm of the quaternion. The magic method __abs__ grants user to get the norm writing abs(x).
 
--> Normalize:
+> Normalize:
 Returns the normalized quaternion.
 
--> Conjugate:
+> Conjugate:
 Conjugates quaternion, that is, if q = a+bi+cj+dk, then q* = a-bi-cj-dk. Moreover, x.conjugate().conjugate() = x.
 
--> Inverse:
+> Inverse:
 Returns the inverse quaternion, that is, a quaternion h such that qh=hq=1. The magic method __inverse__ allows the user to get the inverse writing ~x.
 
--> Internal sum:
+> Internal sum:
 Componentwise sum between quaternions. Also there are the magic methods
 __add__ 	== x + y
 __iadd__ 	== x += y
 __sub__ 	== x - y
 __isub__	== x -= y
 
--> Scalar product:
-Performs componentwise scalar multiplication
+> Scalar product:
+Performs componentwise scalar multiplication.
 
--> Multiplications:
+> Multiplications:
 Since multiplication between quaternions is not commutative, I have to distinquish between left and right multiplication. If the second argument of the multiplication is a scalar number, they return the standard scalar product.
 __mul__		== x * y
 __rmul__	== y * x
@@ -119,22 +123,21 @@ __imul__	== x *= y
 __pow__		== x ** c, where c is an integer
 __ipow__	== x **= c, where c is an integer
 
--> Division:
+> Division:
 Performs left-division between quaternions, that is, x / y = x * y^-1.
-__truediv__		== x / y
+__truediv__	== x / y
 __itruediv__	== x /= y
 
--> Booleans methods:
+> Booleans methods:
 is_unit		== checks if the quaternion has norm 1
 __eq__		== performs the componentwise check x == y
 __ne__		== performs the componentwise check x != y
 __bool__	== checks if the quaternion is non zero
 
--> Unary operations:
+> Unary operations:
 __pos__		== performs unary operation +x
 __neg__		== returns -x, that is, -a-bi-cj-dk (it's not the conjugate!)
 __round__	== rounds quaternion's decimals
 __floor__	== applies floor to each components of the quaternion
 __ceil__	== applies ceil to each components of the quaternion
-
 
