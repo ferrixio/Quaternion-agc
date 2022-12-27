@@ -1,10 +1,10 @@
 # QUATERNIONS - A (small) Python 3.11 resource made by @ferrixio
-### > The main goal of this resource is to perform quaternionic arithmetic in Python.
+## > Perform quaternionic arithmetic easily in Python!
 > Version 1.0
 
 ===========================================================================
 
-§§ TABLE OF CONTENTS §§
+### TABLE OF CONTENTS 
 
 1. Features
 2. How to use
@@ -15,7 +15,7 @@
 
 ===========================================================================
 
-§§ 1. FEATURES §§
+### 1. FEATURES
 
 This class allows user to emulate quaternionic algebruh in Python. The class can do:
 
@@ -34,19 +34,19 @@ I used mostly magic methods to allow user to write x+y, x*y, y/x, ..., directly.
 
 ===========================================================================
 
-§§ 2. HOW TO USE §§
+### 2. HOW TO USE
 
-Open the file test_me.py and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to cite me if you are using this in a project!)
+Open the file test_me.py and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to __cite me__ if you are using this in a project!)
 
 ===========================================================================
 
-§§ 3. KNOWN ISSUES §§
+### 3. KNOWN ISSUES
 
 The floating point is a #@!* and it breaks the accuracy of the computations when the number has a irrational norm, that is, the most of the time since the calculation of the norm needs a square root...
 
 ===========================================================================
 
-§§ 4. THINGS TO DO §§
+### 4. THINGS TO DO
 
 + Create a library!!!
 + Quaternionic functions
@@ -58,7 +58,7 @@ The floating point is a #@!* and it breaks the accuracy of the computations when
 
 ===========================================================================
 
-§§ 5. DESCRIPTION §§
+### 5. DESCRIPTION
 
 The quaternion number system is an extended version of the complex numbers, firstly introduced by Rowan Hamilton in 1843. A quaternion is a 4-tuple of informations:
 	q := a + bi + cj + dk
@@ -82,7 +82,7 @@ Enjoy :)
 
 ===========================================================================
 
-§§ 6. CHANGELOG §§
+### 6. CHANGELOG
 
 Created the class Quaternion. It stores four elements: the real part and the three imaginary parts i, j, k.
 Build-in methods (ordered by utility):
