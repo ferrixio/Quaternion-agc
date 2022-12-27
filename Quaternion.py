@@ -264,15 +264,15 @@ class Quaternion:
     #Boolean magic methods
     def __eq__(self, other) -> bool:
         '''Checks if all the components between the two quaternions are the same.'''
-        return bool((self.real_part==other.real_part)*(self.i==other.i)*(self.j==other.j)*(self.k==other.k))
+        return all(self.real_part==other.real_part,self.i==other.i,self.j==other.j,self.k==other.k)
 
     def __ne__(self, other) -> bool:
         '''Checks if one of the components between the two quaternions are different.'''
-        return not bool((self.real_part==other.real_part)*(self.i==other.i)*(self.j==other.j)*(self.k==other.k))
+        return any(self.real_part!=other.real_part,self.i!=other.i,self.j!=other.j,self.k!=other.k)
 
     def __bool__(self) -> bool:
         '''Checks if the quaternion is not zero.'''
-        return not bool((self.real_part==0)*(self.i==0)*(self.j==0)*(self.k==0))
+        return any(self.real_part,self.i,self.j,self.k)
 
 
 
@@ -287,19 +287,24 @@ class Quaternion:
 
     def normalize(self):
         '''Returns the normalized quaternion.'''
-        return Quaternion(self.real_part/self.norm(), self.i/self.norm(), self.j/self.norm(), self.k/self.norm())
+        t = self.norm()
+        return Quaternion(self.real_part/t, self.i/t, self.j/t, self.k/t)
 
     def is_unit(self) -> bool:
         '''Checks if the quaternion is unitary, that is, if it lies on the 3-sphere.'''
         return self.norm() == 1
 
-    def conjugate(self):
+    def conjugate_ip(self):
         '''Conjugates the quaternion.'''
         self.i *= -1
         self.j *= -1
         self.k *= -1
 
         return self
+
+    def coniugate(self):
+        '''Retruns the quaternion conjugates the quaternion.'''
+        return Quaternion(self.real_part,-self.i,-self.j,-self.k)
 
     def inverse(self):
         '''Returns the inverse quaternion with respect to multiplication.'''
