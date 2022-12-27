@@ -3,6 +3,7 @@
 
 -> The main goal of this resource is to use the quaternions in Python.
 ===========================================================================
+
 §§ TABLE OF CONTENTS §§
 1. Features
 2. How to use
@@ -10,6 +11,7 @@
 4. Things to do
 5. Description
 6. Changelog
+
 ===========================================================================
 
 §§ 1. FEATURES §§
