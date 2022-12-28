@@ -29,9 +29,9 @@ class Quaternion:
             if not part:                                #coefficiente nullo -> non scrive
                 continue
             elif not ans:
-                ans += f'{part}{terms[i]} '
+                ans += f'{part}{terms[i]}'
             else:
-                ans += f'{part:+}{terms[i]} '
+                ans += f' {part:+}{terms[i]}'
 
         if not ans:
             return '0'
