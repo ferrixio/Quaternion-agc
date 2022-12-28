@@ -1,7 +1,7 @@
 #Quaternion object
 
 class Quaternion:
-    '''Ver 1.0'''
+    '''Ver 1.1'''
 
     #Initializer
     def __init__(self, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0) -> None:
@@ -22,20 +22,16 @@ class Quaternion:
     #Type magic methods
     def __str__(self) -> str:
         '''Magic method to print a quaternion using print().'''
-        return self.algebric_print()
-
-    def algebric_print(self) -> str:
-        '''Show the algebric form of the quaternion.'''
         ans = ''
         terms = {0:'', 1:'i', 2:'j', 3:'k'}
 
         for i,part in enumerate(self.components()):
             if not part:                                #coefficiente nullo -> non scrive
-                pass
-            elif part > 0 and i != 0:                   #coeff positivo e non in prima posizione
-                ans += f'+{part}{terms[i]} '
-            else:                                       #coeff negativo
+                continue
+            elif not ans:
                 ans += f'{part}{terms[i]} '
+            else:
+                ans += f'{part:+}{terms[i]} '
 
         if not ans:
             return '0'
@@ -48,11 +44,11 @@ class Quaternion:
     #Unary operation magic methods
     def __pos__(self):
         '''Magic method to perform unary operation +object.'''
-        return self
+        return Quaternion(self.real_part, self.i, self.j, self.k)
 
     def __neg__(self):
         '''Magic method to return the opposite quaternion with respect to the sum.'''
-        return self*-1
+        return Quaternion(-self.real_part, -self.i, -self.j, -self.k)
 
     def __invert__(self):
         '''Magic method to get the inverse quaternion using ~.'''
@@ -65,37 +61,20 @@ class Quaternion:
     def __round__(self, n:int=2):
         '''Magic method to round the decimals of every components of the quaternion.
         If n is not given, n = 2.'''
-        self.real_part = round(self.real_part,n)
-        self.i = round(self.i,n)
-        self.j = round(self.j,n)
-        self.k = round(self.k,n)
-
-        return self
+        return Quaternion(round(self.real_part,n), round(self.i,n), round(self.j,n), round(self.k,n))
 
     def __floor__(self):
         '''Magic method to round to the floor every components of the quaternion.'''
-        from math import floor
-        self.real_part = floor(self.real_part)
-        self.i = floor(self.i)
-        self.j = floor(self.j)
-        self.k = floor(self.k)
-
-        return self
+        return Quaternion(self.real_part.__floor__(), self.i.__floor__(), self.j.__floor__(), self.k.__floor__())
 
     def __ceil__(self):
         '''Magic method to round to the ceiling every components of the quaternion.'''
-        from math import ceil
-        self.real_part = ceil(self.real_part)
-        self.i = ceil(self.i)
-        self.j = ceil(self.j)
-        self.k = ceil(self.k)
-
-        return self
+        return Quaternion(self.real_part.__ceil__(), self.i.__ceil__(), self.j.__ceil__(), self.k.__ceil__())
 
 
     
     #Binary operation magic methods
-    def scalarOperations(self, number, key:str):
+    def scalarOperations(self, number:float | int, key:str):
         '''Auxiliary function to get scalar operations.'''
         match key:
             case "add":
@@ -264,15 +243,15 @@ class Quaternion:
     #Boolean magic methods
     def __eq__(self, other) -> bool:
         '''Checks if all the components between the two quaternions are the same.'''
-        return all(self.real_part==other.real_part,self.i==other.i,self.j==other.j,self.k==other.k)
+        return all((self.real_part==other.real_part,self.i==other.i,self.j==other.j,self.k==other.k))
 
     def __ne__(self, other) -> bool:
         '''Checks if one of the components between the two quaternions are different.'''
-        return any(self.real_part!=other.real_part,self.i!=other.i,self.j!=other.j,self.k!=other.k)
+        return any((self.real_part!=other.real_part,self.i!=other.i,self.j!=other.j,self.k!=other.k))
 
     def __bool__(self) -> bool:
         '''Checks if the quaternion is not zero.'''
-        return any(self.real_part,self.i,self.j,self.k)
+        return any((self.real_part,self.i,self.j,self.k))
 
 
 
@@ -294,7 +273,7 @@ class Quaternion:
         '''Checks if the quaternion is unitary, that is, if it lies on the 3-sphere.'''
         return self.norm() == 1
 
-    def conjugate_ip(self):
+    def conj(self):
         '''Conjugates the quaternion.'''
         self.i *= -1
         self.j *= -1
@@ -302,8 +281,8 @@ class Quaternion:
 
         return self
 
-    def coniugate(self):
-        '''Retruns the quaternion conjugates the quaternion.'''
+    def conjugate(self):
+        '''Returns the conjugated quaternion.'''
         return Quaternion(self.real_part,-self.i,-self.j,-self.k)
 
     def inverse(self):
