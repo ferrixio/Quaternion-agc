@@ -86,7 +86,7 @@ Enjoy :)
 
 §§ Version 1.2
 
-Lowered execution time for all operations, removed _scalarProduct_ (thx to @Scarlet06).
+Lowered execution time for all operations, removed _scalarProduct_ and _algebricPrint_ (thx to @Scarlet06).
 
 §§ Version 1.1
 
