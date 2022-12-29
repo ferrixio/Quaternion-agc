@@ -86,7 +86,7 @@ Enjoy :)
 
 §§ Version 1.2
 
-Lowered execution time for all operations (thx to @Scarlet06).
+Lowered execution time for all operations, removed _scalarProduct_ (thx to @Scarlet06).
 
 §§ Version 1.1
 
@@ -117,37 +117,42 @@ Returns the inverse quaternion, that is, a quaternion h such that qh=hq=1. The m
 
 > Internal sum:
 Componentwise sum between quaternions. Also there are the magic methods
-__add__ 	== x + y
-__iadd__ 	== x += y
-__sub__ 	== x - y
-__isub__	== x -= y
+
+	__add__ 	== x + y
+ 	__iadd__ 	== x += y
+ 	__sub__ 	== x - y
+	__isub__	== x -= y
 
 > Scalar product:
 Performs componentwise scalar multiplication.
 
 > Multiplications:
-Since multiplication between quaternions is not commutative, I have to distinquish between left and right multiplication. If the second argument of the multiplication is a scalar number, they return the standard scalar product.
-__mul__		== x * y
-__rmul__	== y * x
-__imul__	== x *= y
-__pow__		== x ** c, where c is an integer
-__ipow__	== x **= c, where c is an integer
+Since multiplication between quaternions is not commutative, I have to distinquish between left and right multiplication. If the second argument of the multiplication is a scalar number, they return the standard scalar product. Magic methods:
+
+	__mul__		== x * y
+	__rmul__	== y * x
+	__imul__	== x *= y
+	__pow__		== x ** c, where c is an integer
+	__ipow__	== x **= c, where c is an integer
 
 > Division:
-Performs left-division between quaternions, that is, x / y = x * y^-1.
-__truediv__	== x / y
-__itruediv__	== x /= y
+Performs left-division between quaternions, that is, x / y = x * y^-1. Magic methods:
+
+	__truediv__	== x / y
+	__itruediv__	== x /= y
 
 > Booleans methods:
-is_unit		== checks if the quaternion has norm 1
-__eq__		== performs the componentwise check x == y
-__ne__		== performs the componentwise check x != y
-__bool__	== checks if the quaternion is non zero
+is_unit		== checks if the quaternion has norm 1. Magic methods:
+
+	__eq__		== performs the componentwise check x == y
+	__ne__		== performs the componentwise check x != y
+	__bool__	== checks if the quaternion is non zero
 
 > Unary operations:
-__pos__		== performs unary operation +x
-__neg__		== returns -x, that is, -a-bi-cj-dk (it's not the conjugate!)
-__round__	== rounds quaternion's decimals
-__floor__	== applies floor to each components of the quaternion
-__ceil__	== applies ceil to each components of the quaternion
+
+	__pos__		== performs unary operation +x
+	__neg__		== returns -x, that is, -a-bi-cj-dk (it's not the conjugate!)
+	__round__	== rounds quaternion's decimals
+	__floor__	== applies floor to each components of the quaternion
+	__ceil__	== applies ceil to each components of the quaternion
 
