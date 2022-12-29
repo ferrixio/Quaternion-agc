@@ -1,7 +1,7 @@
 #Quaternion object
 
 class Quaternion:
-    '''Ver 1.2'''
+    '''Ver 1.3'''
 
     #Initializer
     def __init__(self, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0) -> None:
@@ -165,38 +165,40 @@ class Quaternion:
             h = Quaternion(1)
 
             if power > 0:
-                for i in range(power):
+                h = +self
+                for _ in range(power-1):
                     h *= self
 
             elif power < 0:
-                q = self.inverse()
-                for i in range(-power):
+                h = self.inverse()
+                q = +h
+                for _ in range(-power-1):
                     h *= q
 
-            return Quaternion(h.real_part, h.i, h.j, h.k)
+            return h
 
-        else:
-            raise Exception('The power must be a positive or a negative integer.')
+        raise Exception('The power must be a positive or a negative integer.')
 
     def __ipow__(self, power):
-        '''Magic method to implement exponentiation operation **=, by applying left-multiplication.'''
+        '''Magic method to implement int-exponentiation operation **=, by applying left-multiplication.'''
         if type(power) is int:
             h = Quaternion(1)
 
             if power > 0:
-                for i in range(power):
+                h = +self
+                for _ in range(power-1):
                     h *= self
 
             elif power < 0:
-                q = self.inverse()
-                for i in range(-power):
+                h = self.inverse()
+                q = +h
+                for _ in range(-power-1):
                     h *= q
 
             self.real_part, self.i, self.j, self.k = h.real_part, h.i, h.j, h.k        
             return self
 
-        else:
-            raise Exception('The power must be a positive or a negative integer.')
+        raise Exception('The power must be a positive or a negative integer.')
         
     def __truediv__(self, other):
         '''Magic method to perform quaternionic division x / y.'''
@@ -222,15 +224,15 @@ class Quaternion:
     #Boolean magic methods
     def __eq__(self, other) -> bool:
         '''Checks if all the components between the two quaternions are the same.'''
-        return all((self.real_part==other.real_part,self.i==other.i,self.j==other.j,self.k==other.k))
+        return self.real_part==other.real_part and self.i==other.i and self.j==other.j and self.k==other.k
 
     def __ne__(self, other) -> bool:
         '''Checks if one of the components between the two quaternions are different.'''
-        return any((self.real_part!=other.real_part,self.i!=other.i,self.j!=other.j,self.k!=other.k))
+        return self.real_part!=other.real_part or self.i!=other.i or self.j!=other.j or self.k!=other.k
 
     def __bool__(self) -> bool:
         '''Checks if the quaternion is not zero.'''
-        return any((self.real_part,self.i,self.j,self.k))
+        return bool(self.real_part or self.i or self.j or self.k)
 
 
 
@@ -241,7 +243,11 @@ class Quaternion:
 
     def norm(self) -> float:
         '''Returns the norm of the quaternion.'''
-        return (self.real_part**2 + self.i**2 + self.j**2 + self.k**2)**0.5
+        return self.square_norm()**0.5
+
+    def square_norm(self) -> float:
+        '''Returns the square norm of the quaternion'''
+        return self.real_part**2 + self.i**2 + self.j**2 + self.k**2
 
     def normalize(self):
         '''Returns the normalized quaternion.'''
@@ -257,15 +263,23 @@ class Quaternion:
         self.i *= -1
         self.j *= -1
         self.k *= -1
-
         return self
 
     def conjugate(self):
         '''Returns the conjugated quaternion.'''
         return Quaternion(self.real_part,-self.i,-self.j,-self.k)
 
+    def flip(self):
+        '''Inverts the quaternion with respect to multiplication.'''
+        n = self.square_norm()
+        self.real_part /= n
+        self.i /= -n
+        self.j /= -n
+        self.k /= -n
+        return self
+
     def inverse(self):
         '''Returns the inverse quaternion with respect to multiplication.'''
-        n = self.norm()**2
+        n = self.square_norm()
         return Quaternion(self.real_part/n, -self.i/n, -self.j/n, -self.k/n)
 
