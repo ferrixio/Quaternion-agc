@@ -1,6 +1,6 @@
 from Quaternion import Quaternion
 
-x = Quaternion(1,2,3,-4)
+x = Quaternion(1,0,0,-4)
 y = Quaternion(1,-1,1)
 
 print(bool(y))
