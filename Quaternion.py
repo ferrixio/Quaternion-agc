@@ -1,7 +1,7 @@
 #Quaternion object
 
 class Quaternion:
-    '''Ver 1.3'''
+    '''Ver 1.4'''
 
     #Initializer
     def __init__(self, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0) -> None:
@@ -26,11 +26,11 @@ class Quaternion:
         terms = {0:'', 1:'i', 2:'j', 3:'k'}
 
         for i,part in enumerate(self.components()):
-            if not part:                                #coefficiente nullo -> non scrive
+            if not part:                                #if zero coeff, it doesn't write
                 continue
-            elif not ans:                               #coeff positivo e non in prima posizione
+            elif not ans:                               #positive coeff and not in first place
                 ans += f'{part}{terms[i]}'
-            else:                                       #coeff negativo
+            else:                                       #negative coeff
                 ans += f'{part:+}{terms[i]}'
 
         if not ans:
@@ -77,7 +77,15 @@ class Quaternion:
     
     #Binary operation magic methods
     def __add__(self, other):
-        '''Magic method to emulate the sum using +.'''
+        '''Magic method to emulate the left sum.'''
+        if type(other) in (int, float):
+            return Quaternion(self.real_part+other,self.i,self.j,self.k)
+
+        return Quaternion(self.real_part+other.real_part,\
+                    self.i+other.i, self.j+other.j, self.k+other.k)
+
+    def __radd__(self, other):
+        '''Magic method to emulate the right sum.'''
         if type(other) in (int, float):
             return Quaternion(self.real_part+other,self.i,self.j,self.k)
 
@@ -85,7 +93,7 @@ class Quaternion:
                     self.i+other.i, self.j+other.j, self.k+other.k)
 
     def __iadd__(self, other):
-        '''Magic method to sum quaternions using +=.'''
+        '''Magic method to left-sum quaternions using +=.'''
         if type(other) in (int, float):
             self.real_part += other
             return self
@@ -97,12 +105,21 @@ class Quaternion:
         return self
 
     def __sub__(self, other):
-        '''Magic method to subtract quaternions using -.'''
+        '''Magic method to emulate left subtraction.'''
         if type(other) in (int, float):
             return Quaternion(self.real_part-other,self.i,self.j,self.k)
 
         return Quaternion(self.real_part-other.real_part, \
                     self.i-other.i, self.j-other.j, self.k-other.k)
+
+    def __rsub__(self, other):
+        '''Magic method to emulate right subtraction.'''
+        if type(other) in (int, float):
+            return Quaternion(self.real_part-other,self.i,self.j,self.k)
+
+        return Quaternion(self.real_part-other.real_part, \
+                    self.i-other.i, self.j-other.j, self.k-other.k)
+
 
     def __isub__(self, other):
         '''Magic method to subtract quaternions using -=.'''
@@ -258,8 +275,8 @@ class Quaternion:
         '''Checks if the quaternion is unitary, that is, if it lies on the 3-sphere.'''
         return self.norm() == 1
 
-    def conj(self):
-        '''Conjugates the quaternion.'''
+    def conjugate_ip(self):
+        '''Conjugates the quaternion (in place).'''
         self.i *= -1
         self.j *= -1
         self.k *= -1
@@ -269,8 +286,8 @@ class Quaternion:
         '''Returns the conjugated quaternion.'''
         return Quaternion(self.real_part,-self.i,-self.j,-self.k)
 
-    def flip(self):
-        '''Inverts the quaternion with respect to multiplication.'''
+    def inverse_ip(self):
+        '''Inverts (in place) the quaternion with respect to multiplication.'''
         n = self.square_norm()
         self.real_part /= n
         self.i /= -n
@@ -282,4 +299,3 @@ class Quaternion:
         '''Returns the inverse quaternion with respect to multiplication.'''
         n = self.square_norm()
         return Quaternion(self.real_part/n, -self.i/n, -self.j/n, -self.k/n)
-

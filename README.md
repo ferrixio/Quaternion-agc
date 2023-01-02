@@ -1,6 +1,6 @@
 # QUATERNIONS - A (small) Python 3.11 resource made by @ferrixio
 ## > Perform quaternionic arithmetic easily in Python!
-> Version 1.3
+> Version 1.4
 
 ===========================================================================
 
@@ -43,6 +43,7 @@ Open the file test_me.py and try it, or simply copy and paste the class in the f
 ### 3. KNOWN ISSUES
 
 The floating point is a #@!* and it breaks the accuracy of the computations when the number has a irrational norm, that is, the most of the time since the calculation of the norm needs a square root...
+The operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
 
 ===========================================================================
 
@@ -83,6 +84,10 @@ Enjoy :)
 ===========================================================================
 
 ### 6. CHANGELOG
+
+§§ Version 1.4
+
+Minor bug fixed. Added right sum and subtraction. Added the method __inverse_ip__, that inverse the quaternion in place. Changed the name of conj to conjugate_ip.
 
 §§ Version 1.3
 

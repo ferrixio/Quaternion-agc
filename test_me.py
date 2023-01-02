@@ -1,10 +1,7 @@
 from Quaternion import Quaternion
-from sys import getsizeof
 
 x = Quaternion(1,0,0,-4)
 y = Quaternion(1,-1,1)
-
-print(f'peso = {getsizeof(Quaternion())} byte')
 
 print(bool(y))
 print(f'x-1 = {x-1}\nx+1 = {x+1}')
@@ -24,4 +21,4 @@ x *= y
 print(f'x *= y: {x}')
 print(f'is_unit(y): {y.is_unit()}\nnorm(y): {y.norm()}\nnormalize(y): {y.normalize()}')
 
-print(f'h inverse inverse = {h.flip().flip()}')
+print(f'h inverse inverse = {h.inverse_ip().inverse_ip()}')
