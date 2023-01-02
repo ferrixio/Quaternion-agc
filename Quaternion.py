@@ -1,7 +1,7 @@
 #Quaternion object
 
 class Quaternion:
-    '''Ver 1.5'''
+    '''Ver 1.5.1'''
 
     #Initializer
     def __new__(cls, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0):
@@ -45,7 +45,7 @@ class Quaternion:
 
         del terms
         return ans
-    
+
 
 
     #Unary operation magic methods
@@ -86,10 +86,8 @@ class Quaternion:
     def __add__(self, other):
         '''Magic method to emulate the left sum.'''
         if type(other) in (int, float):
-            if not self.i and self.j and self.k: #The quaternion is a real number
-                return self.real_part + other
-
-            return Quaternion(self.real_part+other,self.i,self.j,self.k)
+            if self.i or self.j or self.k:          #The quaternion is a real number
+                return Quaternion(self.real_part+other,self.i,self.j,self.k)
 
         return Quaternion(self.real_part+other.real_part,\
                     self.i+other.i, self.j+other.j, self.k+other.k)
@@ -97,10 +95,8 @@ class Quaternion:
     def __radd__(self, other):
         '''Magic method to emulate the right sum.'''
         if type(other) in (int, float):
-            if not self.i and self.j and self.k:  #The quaternion is a real number
-                return self.real_part + other
-
-            return Quaternion(self.real_part+other,self.i,self.j,self.k)
+            if self.i or self.j or self.k:          #The quaternion is a real number
+                return Quaternion(other+self.real_part,self.i,self.j,self.k)
 
         return Quaternion(self.real_part+other.real_part,\
                     self.i+other.i, self.j+other.j, self.k+other.k)
@@ -120,10 +116,8 @@ class Quaternion:
     def __sub__(self, other):
         '''Magic method to emulate left subtraction.'''
         if type(other) in (int, float):
-            if not self.i and self.j and self.k:
-                return self.real_part - other
-
-            return Quaternion(self.real_part-other,self.i,self.j,self.k)
+            if self.i or self.j or self.k:          #The quaternion is a real number
+                return Quaternion(self.real_part-other,self.i,self.j,self.k)
 
         return Quaternion(self.real_part-other.real_part, \
                     self.i-other.i, self.j-other.j, self.k-other.k)
@@ -131,14 +125,11 @@ class Quaternion:
     def __rsub__(self, other):
         '''Magic method to emulate right subtraction.'''
         if type(other) in (int, float):
-            if not self.i and self.j and self.k:
-                return other - self.real_part
+            if self.i or self.j or self.k:          #The quaternion is a real number
+                return Quaternion(other-self.real_part,-self.i,-self.j,-self.k)
 
-            return Quaternion(other - self.real_part,self.i,self.j,self.k)
-
-        return Quaternion(other.real_part -self.real_part, \
+        return Quaternion(other.real_part-self.real_part, \
                     other.i-self.i, other.j-self.j, other.k-self.k)
-
 
     def __isub__(self, other):
         '''Magic method to subtract quaternions using -=.'''
@@ -198,7 +189,7 @@ class Quaternion:
     def __pow__(self, power):
         '''Magic method to implement int-exponentiation operation **, by applying left-multiplication.'''
         if type(power) is int:
-            h = Quaternion(1)
+            h = 1
 
             if power > 0:
                 h = +self
@@ -218,21 +209,23 @@ class Quaternion:
     def __ipow__(self, power):
         '''Magic method to implement int-exponentiation operation **=, by applying left-multiplication.'''
         if type(power) is int:
-            h = Quaternion(1)
-
+            h = 1
             if power > 0:
                 h = +self
                 for _ in range(power-1):
                     h *= self
+                self.real_part, self.i, self.j, self.k = h.real_part, h.i, h.j, h.k
+                return self
 
             elif power < 0:
                 h = self.inverse()
                 q = +h
                 for _ in range(-power-1):
                     h *= q
+                self.real_part, self.i, self.j, self.k = h.real_part, h.i, h.j, h.k
+                return self
 
-            self.real_part, self.i, self.j, self.k = h.real_part, h.i, h.j, h.k        
-            return self
+            return Quaternion(1)
 
         raise Exception('The power must be a positive or a negative integer.')
         
@@ -279,7 +272,7 @@ class Quaternion:
 
     def norm(self) -> float:
         '''Returns the norm of the quaternion.'''
-        return round(self.square_norm()**0.5,6)
+        return round(self.square_norm()**0.5,5)
 
     def square_norm(self) -> float:
         '''Returns the square norm of the quaternion'''
@@ -292,7 +285,7 @@ class Quaternion:
 
     def is_unit(self) -> bool:
         '''Checks if the quaternion is unitary, that is, if it lies on the 3-sphere.'''
-        return self.norm() == 1
+        return self.square_norm() == 1
 
     def conjugate_ip(self):
         '''Conjugates the quaternion (in place).'''
@@ -321,7 +314,9 @@ class Quaternion:
 
 
 if __name__ == "__main__":
-    x = Quaternion(1,2,3,4)
-    y = Quaternion(1.2,0,0,0)
+    x = Quaternion(1,0,0,2)
+    y = Quaternion(4)
 
-    print(y, type(y))
+    print(x**3)
+    x **= 1
+    print(x)
