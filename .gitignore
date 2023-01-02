@@ -3,6 +3,7 @@
 *.ini
 *.env
 *.save
+*.gitignore
 
 
 # Test stuff #
