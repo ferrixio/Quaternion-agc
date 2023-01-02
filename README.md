@@ -1,6 +1,6 @@
 # QUATERNIONS - A (small) Python 3.11 resource made by @ferrixio
 ## > Perform quaternionic arithmetic easily in Python!
-> Version 1.4
+> Version 1.5
 
 ===========================================================================
 
@@ -84,6 +84,9 @@ Enjoy :)
 ===========================================================================
 
 ### 6. CHANGELOG
+
+§§ Version 1.5
+Minor bug fixed. Added the magic method _new_ to return real numbers when Quaternion(x,0,0,0) is initialized.
 
 §§ Version 1.4
 

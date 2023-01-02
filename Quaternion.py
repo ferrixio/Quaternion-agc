@@ -1,9 +1,16 @@
 #Quaternion object
 
 class Quaternion:
-    '''Ver 1.4'''
+    '''Ver 1.5'''
 
     #Initializer
+    def __new__(cls, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0):
+        if i_img or j_img or k_img:
+            return super().__new__(cls)
+
+        return real_part
+        
+
     def __init__(self, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0) -> None:
         '''Quaternion's inputs:\n
         real_part   = real part of the number,
@@ -79,6 +86,9 @@ class Quaternion:
     def __add__(self, other):
         '''Magic method to emulate the left sum.'''
         if type(other) in (int, float):
+            if not self.i and self.j and self.k: #The quaternion is a real number
+                return self.real_part + other
+
             return Quaternion(self.real_part+other,self.i,self.j,self.k)
 
         return Quaternion(self.real_part+other.real_part,\
@@ -87,6 +97,9 @@ class Quaternion:
     def __radd__(self, other):
         '''Magic method to emulate the right sum.'''
         if type(other) in (int, float):
+            if not self.i and self.j and self.k:  #The quaternion is a real number
+                return self.real_part + other
+
             return Quaternion(self.real_part+other,self.i,self.j,self.k)
 
         return Quaternion(self.real_part+other.real_part,\
@@ -107,6 +120,9 @@ class Quaternion:
     def __sub__(self, other):
         '''Magic method to emulate left subtraction.'''
         if type(other) in (int, float):
+            if not self.i and self.j and self.k:
+                return self.real_part - other
+
             return Quaternion(self.real_part-other,self.i,self.j,self.k)
 
         return Quaternion(self.real_part-other.real_part, \
@@ -115,10 +131,13 @@ class Quaternion:
     def __rsub__(self, other):
         '''Magic method to emulate right subtraction.'''
         if type(other) in (int, float):
-            return Quaternion(self.real_part-other,self.i,self.j,self.k)
+            if not self.i and self.j and self.k:
+                return other - self.real_part
 
-        return Quaternion(self.real_part-other.real_part, \
-                    self.i-other.i, self.j-other.j, self.k-other.k)
+            return Quaternion(other - self.real_part,self.i,self.j,self.k)
+
+        return Quaternion(other.real_part -self.real_part, \
+                    other.i-self.i, other.j-self.j, other.k-self.k)
 
 
     def __isub__(self, other):
@@ -260,7 +279,7 @@ class Quaternion:
 
     def norm(self) -> float:
         '''Returns the norm of the quaternion.'''
-        return self.square_norm()**0.5
+        return round(self.square_norm()**0.5,6)
 
     def square_norm(self) -> float:
         '''Returns the square norm of the quaternion'''
@@ -299,3 +318,10 @@ class Quaternion:
         '''Returns the inverse quaternion with respect to multiplication.'''
         n = self.square_norm()
         return Quaternion(self.real_part/n, -self.i/n, -self.j/n, -self.k/n)
+
+
+if __name__ == "__main__":
+    x = Quaternion(1,2,3,4)
+    y = Quaternion(1.2,0,0,0)
+
+    print(y, type(y))
