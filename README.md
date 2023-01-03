@@ -1,8 +1,7 @@
 # QUATERNIONS - A (small) Python 3.11 resource
 ## > Perform quaternionic arithmetic easily in Python!
-> Author: @ferrixio
-
-> Version 1.5.1
+## > Author: @ferrixio
+> Version 1.5.2
 
 ===========================================================================
 
@@ -86,6 +85,9 @@ Enjoy :)
 ===========================================================================
 
 ### 6. CHANGELOG
+
+§§ Version 1.5.2
+Minor bug fixed (again).
 
 §§ Version 1.5.1
 Minor bug fixed (arised after the implementatio on _new_).

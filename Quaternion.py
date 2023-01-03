@@ -1,7 +1,7 @@
 #Quaternion object
 
 class Quaternion:
-    '''Ver 1.5.1'''
+    '''Ver 1.5.2'''
 
     #Initializer
     def __new__(cls, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0):
@@ -209,23 +209,19 @@ class Quaternion:
     def __ipow__(self, power):
         '''Magic method to implement int-exponentiation operation **=, by applying left-multiplication.'''
         if type(power) is int:
-            h = 1
-            if power > 0:
+            if power < 0:
+                self.inverse_ip()
+                power *= -1
+
+            if power:
                 h = +self
                 for _ in range(power-1):
-                    h *= self
-                self.real_part, self.i, self.j, self.k = h.real_part, h.i, h.j, h.k
+                    self *= h
+
                 return self
 
-            elif power < 0:
-                h = self.inverse()
-                q = +h
-                for _ in range(-power-1):
-                    h *= q
-                self.real_part, self.i, self.j, self.k = h.real_part, h.i, h.j, h.k
-                return self
-
-            return Quaternion(1)
+            self.real_part, self.i, self.j, self.k = 1, 0, 0, 0
+            return self
 
         raise Exception('The power must be a positive or a negative integer.')
         
@@ -312,11 +308,3 @@ class Quaternion:
         n = self.square_norm()
         return Quaternion(self.real_part/n, -self.i/n, -self.j/n, -self.k/n)
 
-
-if __name__ == "__main__":
-    x = Quaternion(1,0,0,2)
-    y = Quaternion(4)
-
-    print(x**3)
-    x **= 1
-    print(x)

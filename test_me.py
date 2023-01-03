@@ -21,4 +21,7 @@ x *= y
 print(f'x *= y: {x}')
 print(f'is_unit(y): {y.is_unit()}\nnorm(y): {y.norm()}\nnormalize(y): {y.normalize()}')
 
-print(f'h inverse inverse = {h.inverse_ip().inverse_ip()}')
+print(f'h inverse = {h.inverse_ip()}')
+
+y **= 0
+print(y, type(y), y.conjugate())
