@@ -1,13 +1,13 @@
 from Quaternion import Quaternion
 
-x = Quaternion(2,0,6,4)
+x = Quaternion(2,1,1,0)
 y = Quaternion(1.0,-1,1)
 
 print(x, type(x))
 print(bool(y))
 
-d = Quaternion()
-print(d.norm())
+d = Quaternion(-3)
+print(f'{d} is real = {d.is_real()}')
 
 print(f'x-1 = {x-1}\nx+1 = {x+1}')
 print(f'x*y = {x*y}\ny*x = {y*x}')
