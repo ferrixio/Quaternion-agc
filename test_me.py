@@ -1,9 +1,14 @@
 from Quaternion import Quaternion
 
-x = Quaternion(1,0,0,-4)
-y = Quaternion(1,-1,1)
+x = Quaternion(2,0,6,4)
+y = Quaternion(1.0,-1,1)
 
+print(x, type(x))
 print(bool(y))
+
+d = Quaternion()
+print(d.norm())
+
 print(f'x-1 = {x-1}\nx+1 = {x+1}')
 print(f'x*y = {x*y}\ny*x = {y*x}')
 print(f'x+y = {x+y}\nx-y = {x-y}')

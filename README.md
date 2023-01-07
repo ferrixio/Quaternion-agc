@@ -1,7 +1,7 @@
 # QUATERNIONS - A (small) Python 3.11 resource
 ## > Perform quaternionic arithmetic easily in Python!
 ## > Author: @ferrixio
-> Version 1.5.2
+> Version 1.6
 
 ===========================================================================
 
@@ -30,6 +30,7 @@ This class allows user to emulate quaternionic algebruh in Python. The class can
 	> conjugations
 	> inversions
 	> algebric prints
+	> type casting
 
 I used mostly magic methods to allow user to write x+y, x*y, y/x, ..., directly.
 
@@ -37,13 +38,12 @@ I used mostly magic methods to allow user to write x+y, x*y, y/x, ..., directly.
 
 ### 2. HOW TO USE
 
-Open the file test_me.py and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to __cite me__ if you are using this in a project!)
+Open the file test_me.py and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to _cite me_ if you are using this in a project!)
 
 ===========================================================================
 
 ### 3. KNOWN ISSUES
 
-The floating point is a #@!* and it breaks the accuracy of the computations when the number has a irrational norm, that is, the most of the time since the calculation of the norm needs a square root...
 The operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
 
 ===========================================================================
@@ -57,6 +57,7 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 + Maybe use the @ operation?
 + Floor division?
 + Vector representation
++ Cast to complex number
 
 ===========================================================================
 
@@ -85,6 +86,15 @@ Enjoy :)
 ===========================================================================
 
 ### 6. CHANGELOG
+
+§§ Version 1.6
+The norm method evaluate the square-root using math.sqrt (more accuracy and time-saving).
+Added an optional argument "__to_real__" in the initialization of the quaternion. If it is True, the creation returns real_part as int/float number; this means that the item lives outside from the class Quaternion. 
+Added
+
+	__int__ 	== to cast a quaternion in integer
+ 	__float__ 	== to cast a quaternion in float
+
 
 §§ Version 1.5.2
 Minor bug fixed (again).

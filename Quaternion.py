@@ -1,26 +1,29 @@
 #Quaternion object
 
 class Quaternion:
-    '''Ver 1.5.2'''
+    '''Ver 1.6'''
 
     #Initializer
-    def __new__(cls, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0):
-        if i_img or j_img or k_img:
+    def __new__(cls, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0, to_real:bool = False):
+        '''Pre-generation of the quaternion.'''
+        if i_img or j_img or k_img or not to_real:
             return super().__new__(cls)
 
         return real_part
         
 
-    def __init__(self, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0) -> None:
+    def __init__(self, real_part:float=0, i_img:float=0, j_img:float=0, k_img:float=0, to_real:bool = False) -> None:
         '''Quaternion's inputs:\n
         real_part   = real part of the number,
         i_img       = first imaginary part,
         j_img       = second imaginary part,
-        k_img       = third imaginary part.\n
+        k_img       = third imaginary part,
+        to_real     = switch to create the quaternion as int|float.\n
 
         Remember that i**2 = j**2 = k**2 = ijk = -1\n
 
-        The attributes of the quaternion are: real_part, i, j, k.
+        The attributes of the quaternion are: real_part, i, j, k. The boolean to_real, if set to True, \
+            returns an int|float if the quaternion is composed only by a real part.
         '''
         self.real_part, self.i, self.j, self.k = real_part, i_img, j_img, k_img
 
@@ -45,6 +48,14 @@ class Quaternion:
 
         del terms
         return ans
+
+    def __int__(self) -> int:
+        '''Magic method to cast a quaternion to integer.'''
+        return int(self.real_part)
+
+    def __float__(self) -> float:
+        '''Magic method to cast a quaternion to float.'''
+        return float(self.real_part)
 
 
 
@@ -268,7 +279,8 @@ class Quaternion:
 
     def norm(self) -> float:
         '''Returns the norm of the quaternion.'''
-        return round(self.square_norm()**0.5,5)
+        from math import sqrt
+        return sqrt(self.square_norm())
 
     def square_norm(self) -> float:
         '''Returns the square norm of the quaternion'''
