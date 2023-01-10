@@ -5,7 +5,7 @@
 
 > Version 2.0
 
-📜 Check this useful file: 
+📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
 ===========================================================================
 
