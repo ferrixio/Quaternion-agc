@@ -3,7 +3,6 @@ Quaternion class
 
 Author:     Samuele Ferri (@ferrixio)
 Version:    2.0
-Read me:    ---
 '''
 
 from math import sqrt, pi, sin, cos
