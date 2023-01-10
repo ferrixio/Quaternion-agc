@@ -14,7 +14,7 @@
 1. Features
 2. How to use
 3. Known issues
-4. Things to do
+4. Future ideas
 5. Description
 6. Changelog
 
@@ -52,13 +52,15 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 
 ===========================================================================
 
-## 4. THINGS TO DO
+## 4. FUTURE IDEAS
 
-+ Create a library!!!
-+ Quaternionic functions
-+ Plotting quaternions (stereographic projection?)
-+ Floor division?
-+ Vector representation
++ [ ] Create a library!!!
++ [ ] Quaternionic functions
++ [ ] Plotting quaternions (stereographic projection?)
++ [ ] Floor division?
++ [ ] Vector representation
++ [x] Add complex compatibility
++ [x] Add @ operator
 
 ===========================================================================
 
