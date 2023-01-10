@@ -1,7 +1,7 @@
 from Quaternion import Quaternion
 
 x = Quaternion(2,1,1,0)
-y = Quaternion(1.0,-1,1)
+y = Quaternion(1,-1,1,4)
 
 print(x, type(x))
 print(bool(y))
@@ -26,7 +26,8 @@ x *= y
 print(f'x *= y: {x}')
 print(f'is_unit(y): {y.is_unit()}\nnorm(y): {y.norm()}\nnormalize(y): {y.normalize()}')
 
-print(f'h inverse = {h.inverse_ip()}')
+print(f'h inverse_ip = {h.inverse_ip()}')
+print(f'h conjugate_ip = {h.conjugate_ip()}')
 
 y **= 0
-print(y, type(y), y.conjugate())
+print(y, y.conjugate())
