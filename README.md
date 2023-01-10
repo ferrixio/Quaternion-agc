@@ -60,7 +60,7 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 + [ ] Floor division?
 + [ ] Vector representation
 + [x] Add complex compatibility
-+ [x] Add @ operator
++ [ ] Add @ operator
 
 ===========================================================================
 
@@ -90,47 +90,58 @@ Enjoy :)
 
 ## 6. CHANGELOG
 
-§§ Version 2.0
-incoming...
+### Version 2.0
+Major changes in everything. Now the object quaternion is initialized with the list of its components. A quaternion can be built from four numbers, from a list, from a tuple or from a complex number, using the classmethod `from_complex`. In the latter case, the user can specify which quaternion-imaginary part is the complex-imaginary one. The optional argument `to_real`has been removed.
 
-§§ Version 1.6.1
-Minor changes. Added the method __is_real__ to get if a quaternion is a real number.
+Added the classmethod `random()`, that generates a uniformly random unitary quaternion.
 
-§§ Version 1.6
+Now, the real part, i, j, k and the norm are defined as `properties` of the Quaternion. Added the property `vector` to return the list of imaginary parts of the Quaternion.
+
+Every operation is compatible with complex numbers.
+
+Added the conversion from Quaternion to complex number. Added `__repr__` magic method.
+
+Boolean magic methods have been improved, and the methods `is_real` and `is_imagy` have been added.
+
+### Version 1.6.1
+Minor changes. Added the method `is_real` to check if a quaternion is a real number.
+
+### Version 1.6
 The norm method evaluate the square-root using math.sqrt (more accuracy and time-saving).
-Added an optional argument "_to real_" in the initialization of the quaternion. If it is True, the creation returns real_part as int/float number; this means that the item lives outside from the class Quaternion. 
+Added an optional argument `to_real` in the initialization of the quaternion. If it is True, the creation returns real_part as int/float number; this means that the item lives outside from the class Quaternion. 
 Added
 
-	__int__ 	== to cast a quaternion in integer
- 	__float__ 	== to cast a quaternion in float
+```py
+__int__ 	== to cast a quaternion in integer
+__float__ 	== to cast a quaternion in float
+```
 
-
-§§ Version 1.5.2
+### Version 1.5.2
 Minor bug fixed (again).
 
-§§ Version 1.5.1
-Minor bug fixed (arised after the implementatio on _new_).
+### Version 1.5.1
+Minor bug fixed (arised after the implementation of `__new__`).
 
-§§ Version 1.5
-Minor bug fixed. Added the magic method __new__ to return real numbers when Quaternion(x,0,0,0) is initialized.
+### Version 1.5
+Minor bug fixed. Added the magic method `__new__` to return real numbers when `Quaternion(x,0,0,0)` is initialized.
 
-§§ Version 1.4
+### Version 1.4
 
-Minor bug fixed. Added right sum and subtraction. Added the method __inverse_ip__, that inverse the quaternion in place. Changed the name of conj to conjugate_ip.
+Minor bug fixed. Added right sum and subtraction. Added the method `__inverse_ip__`, that inverse the quaternion in place. Changed the name of conj to conjugate_ip.
 
-§§ Version 1.3
+### Version 1.3
 
 Minor changes, saved some computational cost (thx to @Scarlet06).
 
-§§ Version 1.2
+### Version 1.2
 
-Lowered execution time for all operations, removed __scalarProduct__ and __algebricPrint__ (thx to @Scarlet06).
+Lowered execution time for all operations, removed `__scalarProduct__` and `__algebricPrint__` (thx to @Scarlet06).
 
-§§ Version 1.1
+### Version 1.1
 
 Minor changes in the boolean magic methods (thx to @Scarlet06).
 
-§§ Version 1.0
+### Version 1.0
 
 Created the class Quaternion. It stores four elements: the real part and the three imaginary parts i, j, k.
 Build-in methods (ordered by utility):
@@ -139,10 +150,10 @@ Build-in methods (ordered by utility):
 Returns a 4-tuple with the components of the quaternions.
 
 > Algebric print:
-Prints the algebric form of the quaternion, that is a+bi+cj+dk. The magic method __str__ calls this function to see it writing print(x) directly.
+Prints the algebric form of the quaternion, that is a+bi+cj+dk. The magic method `__str__` calls this function to see it writing `print(x)` directly.
 
 > Norm:
-Returns the norm of the quaternion. The magic method __abs__ grants user to get the norm writing abs(x).
+Returns the norm of the quaternion. The magic method `__abs__` grants user to get the norm writing `abs(x)`.
 
 > Normalize:
 Returns the normalized quaternion.
@@ -156,10 +167,12 @@ Returns the inverse quaternion, that is, a quaternion h such that qh=hq=1. The m
 > Internal sum:
 Componentwise sum between quaternions. Also there are the magic methods
 
-	__add__ 	== x + y
- 	__iadd__ 	== x += y
- 	__sub__ 	== x - y
-	__isub__	== x -= y
+```py
+__add__ 	== x + y
+__iadd__ 	== x += y
+__sub__ 	== x - y
+__isub__	== x -= y
+```
 
 > Scalar product:
 Performs componentwise scalar multiplication.
@@ -167,30 +180,37 @@ Performs componentwise scalar multiplication.
 > Multiplications:
 Since multiplication between quaternions is not commutative, I have to distinquish between left and right multiplication. If the second argument of the multiplication is a scalar number, they return the standard scalar product. Magic methods:
 
-	__mul__		== x * y
-	__rmul__	== y * x
-	__imul__	== x *= y
-	__pow__		== x ** c, where c is an integer
-	__ipow__	== x **= c, where c is an integer
+```py
+__mul__		== x * y
+__rmul__	== y * x
+__imul__	== x *= y
+__pow__		== x ** c, where c is an integer
+__ipow__	== x **= c, where c is an integer
+```
 
 > Division:
 Performs left-division between quaternions, that is, x / y = x * y^-1. Magic methods:
 
-	__truediv__	== x / y
-	__itruediv__	== x /= y
+```py
+__truediv__	== x / y
+__itruediv__	== x /= y
+```
 
 > Booleans methods:
 is_unit		== checks if the quaternion has norm 1. Magic methods:
 
-	__eq__		== performs the componentwise check x == y
-	__ne__		== performs the componentwise check x != y
-	__bool__	== checks if the quaternion is non zero
+```py
+__eq__		== performs the componentwise check x == y
+__ne__		== performs the componentwise check x != y
+__bool__	== checks if the quaternion is non zero
+```
 
 > Unary operations:
 
-	__pos__		== performs unary operation +x
-	__neg__		== returns -x, that is, -a-bi-cj-dk (it's not the conjugate!)
-	__round__	== rounds quaternion's decimals
-	__floor__	== applies floor to each components of the quaternion
-	__ceil__	== applies ceil to each components of the quaternion
-
+```py
+__pos__		== performs unary operation +x
+__neg__		== returns -x, that is, -a-bi-cj-dk (it's not the conjugate!)
+__round__	== rounds quaternion's decimals
+__floor__	== applies floor to each components of the quaternion
+__ceil__	== applies ceil to each components of the quaternion
+```
