@@ -1,10 +1,15 @@
-# QUATERNIONS - A (small) Python 3.11 resource
-## > Perform quaternionic arithmetic easily in Python!
-> Version 1.6.1
+# Quaternion class - A (small) Python 3.11 resource
+### Perform quaternionic arithmetic easily in Python
+
+> Author: Samuele Ferri (@ferrixio)
+
+> Version 2.0
+
+📜 Check this useful file: 
 
 ===========================================================================
 
-### TABLE OF CONTENTS 
+## TABLE OF CONTENTS 
 
 1. Features
 2. How to use
@@ -15,7 +20,7 @@
 
 ===========================================================================
 
-### 1. FEATURES
+## 1. FEATURES
 
 This class allows user to emulate quaternionic algebruh in Python. The class can do:
 
@@ -35,34 +40,31 @@ I used mostly magic methods to allow user to write x+y, x*y, y/x, ..., directly.
 
 ===========================================================================
 
-### 2. HOW TO USE
+## 2. HOW TO USE
 
 Open the file test_me.py and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to _cite me_ if you are using this in a project!)
 
 ===========================================================================
 
-### 3. KNOWN ISSUES
+## 3. KNOWN ISSUES
 
 The operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
 
 ===========================================================================
 
-### 4. THINGS TO DO
+## 4. THINGS TO DO
 
 + Create a library!!!
 + Quaternionic functions
 + Plotting quaternions (stereographic projection?)
-+ Find a solution for floating point accuracy errors
-+ Maybe use the @ operation?
 + Floor division?
 + Vector representation
-+ Cast to complex number
 
 ===========================================================================
 
-### 5. DESCRIPTION
+## 5. DESCRIPTION
 
-The quaternion number system is an extended version of the complex numbers, firstly introduced by Rowan Hamilton in 1843. A quaternion is a 4-tuple of informations:
+The [quaternion number system](https://en.wikipedia.org/wiki/Quaternion) is an extended version of the complex numbers, firstly introduced by Rowan Hamilton in 1843. A quaternion is a 4-tuple of informations:
 	q := a + bi + cj + dk
 where a, b, c, d are real numbers, and i, j, k are the basic quaternions.
 
@@ -84,7 +86,10 @@ Enjoy :)
 
 ===========================================================================
 
-### 6. CHANGELOG
+## 6. CHANGELOG
+
+§§ Version 2.0
+incoming...
 
 §§ Version 1.6.1
 Minor changes. Added the method __is_real__ to get if a quaternion is a real number.
