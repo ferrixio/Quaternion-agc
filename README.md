@@ -1,9 +1,9 @@
 # Quaternion class - A (small) Python 3.11 resource
 ### Perform quaternionic arithmetic easily in Python
 
-> Author: Samuele Ferri (@ferrixio)
+:dragon: Author: Samuele Ferri (@ferrixio)
 
-> Version 2.0
+:star: Version 2.0
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -56,13 +56,13 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 
 ## 4. FUTURE IDEAS
 
-+ [ ] Create a library!!!
-+ [ ] Quaternionic functions
-+ [ ] Plotting quaternions (stereographic projection?)
-+ [ ] Floor division?
-+ [ ] Vector representation
-+ [x] Add complex compatibility
-+ [ ] Add @ operator
++ :o: Create a library!!!
++ :o: Quaternionic functions
++ :o: Plotting quaternions (stereographic projection?)
++ :o: Floor division?
++ :o: Vector representation
++ :white_check_mark: Add complex compatibility
++ :black_nib: Add @ operator
 
 ===========================================================================
 
