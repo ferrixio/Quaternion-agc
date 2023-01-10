@@ -1,8 +1,8 @@
 # How to assemble a quaternion
 
-> Author: Samuele Ferri (@ferrixio)
+🐉 Author: Samuele Ferri (@ferrixio)
 
-### Basic construction
+## Basic construction
 
 A quaternion can be defined in the _standard_ way using integers, floats, lists or tuples. The main constructor has five (optional) arguments:
 
