@@ -86,8 +86,6 @@ The Hamilton product, that is the multiplication between two quaternions, follow
 
 and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, ik = -j.
 
-Enjoy :)
-
 ===========================================================================
 
 ## 6. CHANGELOG
