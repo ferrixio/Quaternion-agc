@@ -36,7 +36,9 @@ This class allows user to emulate quaternionic algebruh in Python. The class can
 	> algebric prints
 	> type casting
 
-I used mostly magic methods to allow user to write x+y, x*y, y/x, ..., directly.
+I used mostly magic methods to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
+
+I recommend reading this file to better understand how to construct a quaternion.
 
 ===========================================================================
 
@@ -146,25 +148,25 @@ Minor changes in the boolean magic methods (thx to @Scarlet06).
 Created the class Quaternion. It stores four elements: the real part and the three imaginary parts i, j, k.
 Build-in methods (ordered by utility):
 
-> Components:
++ Components:
 Returns a 4-tuple with the components of the quaternions.
 
-> Algebric print:
++ Algebric print:
 Prints the algebric form of the quaternion, that is a+bi+cj+dk. The magic method `__str__` calls this function to see it writing `print(x)` directly.
 
-> Norm:
++ Norm:
 Returns the norm of the quaternion. The magic method `__abs__` grants user to get the norm writing `abs(x)`.
 
-> Normalize:
++ Normalize:
 Returns the normalized quaternion.
 
-> Conj and Conjugate:
++ Conj and Conjugate:
 Conjugates quaternion, that is, if q = a+bi+cj+dk, then q* = a-bi-cj-dk. Moreover, x.conj().conj() = x.
 
-> Inverse:
++ Inverse:
 Returns the inverse quaternion, that is, a quaternion h such that qh=hq=1. The magic method __inverse__ allows the user to get the inverse writing ~x.
 
-> Internal sum:
++ Internal sum:
 Componentwise sum between quaternions. Also there are the magic methods
 
 ```py
@@ -174,10 +176,10 @@ __sub__ 	== x - y
 __isub__	== x -= y
 ```
 
-> Scalar product:
++ Scalar product:
 Performs componentwise scalar multiplication.
 
-> Multiplications:
++ Multiplications:
 Since multiplication between quaternions is not commutative, I have to distinquish between left and right multiplication. If the second argument of the multiplication is a scalar number, they return the standard scalar product. Magic methods:
 
 ```py
@@ -188,7 +190,7 @@ __pow__		== x ** c, where c is an integer
 __ipow__	== x **= c, where c is an integer
 ```
 
-> Division:
++ Division:
 Performs left-division between quaternions, that is, x / y = x * y^-1. Magic methods:
 
 ```py
@@ -196,7 +198,7 @@ __truediv__	== x / y
 __itruediv__	== x /= y
 ```
 
-> Booleans methods:
++ Booleans methods:
 is_unit		== checks if the quaternion has norm 1. Magic methods:
 
 ```py
@@ -205,7 +207,7 @@ __ne__		== performs the componentwise check x != y
 __bool__	== checks if the quaternion is non zero
 ```
 
-> Unary operations:
++ Unary operations:
 
 ```py
 __pos__		== performs unary operation +x
