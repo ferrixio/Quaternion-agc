@@ -2,7 +2,7 @@
 Quaternion class
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    2.0
+Version:    2.0.1
 '''
 
 from math import sqrt, pi, sin, cos
@@ -116,17 +116,15 @@ class Quaternion:
     #Type magic methods
     def __str__(self) -> str:
         '''Magic method to print a quaternion using print().'''
-
-        ans = ''
-        terms = {0:'', 1:'i', 2:'j', 3:'k'}
+        ans, terms = '', {0:'', 1:'i', 2:'j', 3:'k'}
 
         for i,part in enumerate(self.q):
             if not part:                                #if zero coeff, it doesn't write
                 continue
             elif not ans:                               #positive coeff and not in first place
                 ans += f'{part}{terms[i]}'
-            else:                                       #negative coeff
-                ans += f'{part:+}{terms[i]}'
+                continue
+            ans += f'{part:+}{terms[i]}'
 
         if not ans:
             return '0'
@@ -171,23 +169,13 @@ class Quaternion:
 
     def __abs__(self):
         '''Magic method to perform abs(). The absolute value of a quaternion is it's norm.'''
-        return self.norm()
+        return self.norm
 
     def __round__(self, n:int=2):
         '''Magic method to round the decimals of every components of the quaternion.
         If n is not given, n = 2.'''
         return Quaternion(round(self.real,n), round(self.i,n), round(self.j,n), 
                 round(self.k,n))
-
-    def __floor__(self):
-        '''Magic method to round to the floor every components of the quaternion.'''
-        return Quaternion(self.real.__floor__(),
-                self.i.__floor__(), self.j.__floor__(), self.k.__floor__())
-
-    def __ceil__(self):
-        '''Magic method to round to the ceiling every components of the quaternion.'''
-        return Quaternion(self.real.__ceil__(),
-                self.i.__ceil__(), self.j.__ceil__(), self.k.__ceil__())
 
 
     
@@ -202,8 +190,7 @@ class Quaternion:
         if type(other) is complex:
             return Quaternion(self.real+other.real,self.i+other.imag,self.j,self.k)
 
-        return Quaternion(self.real+other.real,
-                    self.i+other.i, self.j+other.j, self.k+other.k)
+        return Quaternion(self.real+other.real, self.i+other.i, self.j+other.j, self.k+other.k)
 
     def __radd__(self, other):
         '''Magic method to emulate the right sum.'''
@@ -213,8 +200,7 @@ class Quaternion:
         if type(other) is complex:
             return Quaternion(self.real+other.real,self.i+other.imag,self.j,self.k)
 
-        return Quaternion(self.real+other.real,
-                    self.i+other.i, self.j+other.j, self.k+other.k)
+        return Quaternion(self.real+other.real, self.i+other.i, self.j+other.j, self.k+other.k)
 
     def __iadd__(self, other):
         '''Magic method to left-sum quaternions using +=.'''
@@ -328,8 +314,7 @@ class Quaternion:
         n_k = self.real*other.k + self.k*other.real + self.i*other.j - self.j*other.i
 
         del other
-        self.real = n_real
-        self.i, self.j, self.k = n_i, n_j, n_k
+        self.real, self.i, self.j, self.k  = n_real, n_i, n_j, n_k
         return self
 
 
@@ -446,7 +431,7 @@ class Quaternion:
 
     def normalize(self):
         '''Returns the normalized quaternion.'''
-        t = self.norm()
+        t = self.norm
         if t != 1.0:
             return Quaternion(self.real/t, self.i/t, self.j/t, self.k/t)
 
@@ -486,3 +471,4 @@ class Quaternion:
     # def distance_L2(q1, q2):
     #     '''Returns the L2-distance, that is the norm-2, between two given (unitary) quaternions.'''
     #     return abs(q1-q2)
+
