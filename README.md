@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.0.1
+:star: Version 2.1.0
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -35,6 +35,8 @@ This class allows user to emulate quaternionic algebruh in Python. The class can
 	> inversions
 	> algebric prints
 	> type casting
+	> exponential and logarithmic functions
+	> dot product, cross product and commutator
 
 I used mostly magic methods to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
@@ -57,11 +59,11 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 ## 4. FUTURE IDEAS
 
 + :o: Create a library!!!
-+ :o: Quaternionic functions
 + :o: Plotting quaternions (stereographic projection?)
 + :o: Floor division?
-+ :o: Vector representation
++ :white_check_mark: Vector representation
 + :white_check_mark: Add complex compatibility
++ :white_check_mark: Quaternionic functions
 + :black_nib: Add @ operator
 
 ===========================================================================
@@ -90,11 +92,14 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 
 ## 6. CHANGELOG
 
+### Version 2.1.0
+Added dot/cross product, commutator and exponential/logarithmic function.
+
 ### Version 2.0.1
 Corrected a type error in the using of property `norm`. Removed methods `__floor__` and `__ceil__`.
 
 ### Version 2.0
-Major changes in everything. Now the object quaternion is initialized with the list of its components. A quaternion can be built from four numbers, from a list, from a tuple or from a complex number, using the classmethod `from_complex`. In the latter case, the user can specify which quaternion-imaginary part is the complex-imaginary one. The optional argument `to_real`has been removed.
+Major changes in everything. Now the object quaternion is initialized with the list of its components. A quaternion can be built from four numbers, from a list, from a tuple or from a complex number, using the classmethod `from_complex`. In the latter case, the user can specify which quaternion-imaginary part is the complex-imaginary one. The optional argument `to_real` has been removed.
 
 Added the classmethod `random()`, that generates a uniformly random unitary quaternion.
 
