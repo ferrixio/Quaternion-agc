@@ -53,6 +53,7 @@ Open the file test_me.py and try it, or simply copy and paste the class in the f
 ## 3. KNOWN ISSUES
 
 The operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
+The `@classmethod random()` sometimes does not generate an unitary quaternion, by floating point accuracy. 
 
 ===========================================================================
 
@@ -61,6 +62,7 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 + :o: Create a library!!!
 + :o: Plotting quaternions (stereographic projection?)
 + :o: Floor division?
++ :o: Make a more understandable collection of examples files
 + :white_check_mark: Vector representation
 + :white_check_mark: Add complex compatibility
 + :white_check_mark: Quaternionic functions
@@ -91,6 +93,9 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ===========================================================================
 
 ## 6. CHANGELOG
+
+### Version 2.1.1
+Added geodesic distance calculator. Riarranged the code in a more understandable way. Discovered the floating point issue in random number generator.
 
 ### Version 2.1.0
 Added dot/cross product, commutator and exponential/logarithmic function.
