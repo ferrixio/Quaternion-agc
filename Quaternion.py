@@ -14,14 +14,14 @@ class Quaternion:
         '''Pre-generation of the quaternion.'''
 
         if not isinstance(real, float|int):
-            raise TypeError('The real part must be an integer or a float')
+            raise TypeError("The real part must be an integer or a float")
 
         if not all((isinstance(i_img, float|int), isinstance(j_img, float|int),
                 isinstance(k_img, float|int))):
-            raise TypeError('All imaginary parts must be integers or floats')
+            raise TypeError("All imaginary parts must be integers or floats")
 
         if type(seq) in (list,tuple) and len(seq)>4:
-            raise IndexError('Invalid length: it must be from 0 to 4')
+            raise IndexError("Invalid length: it must be from 0 to 4")
 
         return super().__new__(cls)
 
@@ -59,7 +59,7 @@ class Quaternion:
             case 'k':
                 return cls(real=cplx.real, k_img=cplx.imag)
             case _:
-                raise KeyboardInterrupt('Why?')
+                raise AttributeError("invalid attribute given: imag must be 'i', 'j', or 'k'")
                 
 
     @classmethod
@@ -89,25 +89,25 @@ class Quaternion:
     @real.setter
     def real(self, a):
         if not isinstance(a,(int,float,chr)):
-            raise ValueError('Real part must be int, float or chr')
+            raise ValueError("Real part must be of type 'int', 'float' or 'chr'")
         self.q[0] = a
         
     @i.setter
     def i(self, a):
         if not isinstance(a,(int,float,chr)):
-            raise ValueError('i must be int, float or chr')
+            raise ValueError("i must be of type 'int', 'float' or 'chr'")
         self.q[1] = a
         
     @j.setter
     def j(self, a):
         if not isinstance(a,(int,float,chr)):
-            raise ValueError('j must be int, float or chr')
+            raise ValueError("j must be of type 'int', 'float' or 'chr'")
         self.q[2] = a      
 
     @k.setter
     def k(self, a):
         if not isinstance(a,(int,float,chr)):
-            raise ValueError('k must be int, float or chr')
+            raise ValueError("k must be of type 'int', 'float' or 'chr'")
         self.q[3] = a
 
     @property
@@ -325,7 +325,7 @@ class Quaternion:
     def __pow__(self, power):
         '''Magic method to implement int-exponentiation operation **, by applying left-multiplication.'''
         if type(power) is not int:
-            raise Exception('The power must be a positive or a negative integer')
+            raise TypeError('The power must be a positive or a negative integer')
 
         h = Quaternion(1)
         if power > 0:
@@ -345,7 +345,7 @@ class Quaternion:
         '''Magic method to implement int-exponentiation operation **=, by applying 
         left-multiplication.'''
         if type(power) is not int:
-            raise Exception('The power must be a positive or a negative integer')
+            raise TypeError('The power must be a positive or a negative integer')
 
         if power < 0:
             self.inverse_ip()
@@ -445,7 +445,7 @@ class Quaternion:
     def inverse_ip(self):
         '''Inverts (in place) the quaternion with respect to multiplication.'''
         if not self.__bool__():
-            raise ZeroDivisionError('It is not possible to invert the zero quaternion')
+            raise ZeroDivisionError("It's not possible to invert the zero quaternion")
 
         n = self.square_norm()
         self.real /= n
@@ -457,7 +457,7 @@ class Quaternion:
     def inverse(self):
         '''Returns the inverse quaternion with respect to multiplication.'''
         if not self.__bool__():
-            raise ZeroDivisionError('It is not possible to invert the zero quaternion')
+            raise ZeroDivisionError("It's not possible to invert the zero quaternion")
 
         n = self.square_norm()
         return Quaternion(self.real/n, -self.i/n, -self.j/n, -self.k/n)
@@ -539,7 +539,7 @@ class Quaternion:
             raise TypeError("unsupported operand type(s) for geodesic_dist: arguments must be 'Quaternion'")
 
         if not q1.is_unit() or not q2.is_unit():
-            raise ArithmeticError("invalid argument(s) given: both must be unitary")
+            raise ArithmeticError("invalid argument(s) given: both quaternions must be unitary")
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
 
