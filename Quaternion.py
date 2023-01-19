@@ -2,7 +2,7 @@
 Quaternion class
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    2.1.1
+Version:    2.1.2
 '''
 
 from math import sqrt, pi, sin, cos, e, log2, acos
@@ -118,7 +118,7 @@ class Quaternion:
 
     ## Type magic methods ##
     def __str__(self) -> str:
-        '''Magic method to print a quaternion using print().'''
+        '''Magic method to show a quaternion using print().'''
         ans, terms = '', {0:'', 1:'i', 2:'j', 3:'k'}
 
         for i,part in enumerate(self.q):
@@ -149,9 +149,9 @@ class Quaternion:
         Truncates the quaternion object by only considering its real part as float.'''
         return float(self.real)
 
-    def __complex__(self):
+    def __complex__(self) -> complex:
         '''Magic method to convert a quaternion to a complex number.
-        Truncates the quaternion object by only considering the first complex part,
+        Truncates the quaternion object by only considering its first complex part,
         that is, a projection from the 3-sphere to the complex plane.'''
         return complex(self.real, self.i)
 
@@ -183,10 +183,21 @@ class Quaternion:
 
     
     ## Binary operation magic methods ##
+    @staticmethod
+    def check_other(T_other:type, operation:str) -> None:
+        '''Auxiliary function to raise full exceptions during arithmetic.'''
+        if T_other in (int, float, complex, Quaternion):
+            return
+
+        raise TypeError(f"unsupported operand type(s) for {operation}: \
+            'Quaternion' and '{T_other.__name__}'")
+
 
     # Addition
     def __add__(self, other):
         '''Magic method to emulate the left sum.'''
+        self.check_other(type(other), '+')
+
         if type(other) in (int, float):
             return Quaternion(self.real+other,self.i,self.j,self.k)
 
@@ -197,6 +208,8 @@ class Quaternion:
 
     def __radd__(self, other):
         '''Magic method to emulate the right sum.'''
+        self.check_other(type(other), 'r+')
+
         if type(other) in (int, float):
             return Quaternion(other+self.real,self.i,self.j,self.k)
 
@@ -207,6 +220,8 @@ class Quaternion:
 
     def __iadd__(self, other):
         '''Magic method to left-sum quaternions using +=.'''
+        self.check_other(type(other), '+=')
+
         if type(other) in (int, float):
             self.real += other
             return self
@@ -226,6 +241,8 @@ class Quaternion:
     # Subtraction
     def __sub__(self, other):
         '''Magic method to emulate left subtraction.'''
+        self.check_other(type(other), '-')
+
         if type(other) in (int, float):
             return Quaternion(self.real-other,self.i,self.j,self.k)
 
@@ -237,6 +254,8 @@ class Quaternion:
 
     def __rsub__(self, other):
         '''Magic method to emulate right subtraction.'''
+        self.check_other(type(other), 'r-')
+
         if type(other) in (int, float):
             return Quaternion(other-self.real,-self.i,-self.j,-self.k)
 
@@ -248,6 +267,8 @@ class Quaternion:
 
     def __isub__(self, other):
         '''Magic method to subtract quaternions using -=.'''
+        self.check_other(type(other), '-=')
+
         if type(other) in (int, float):
             self.real -= other
             return self
@@ -266,6 +287,8 @@ class Quaternion:
 
     # Multiplication
     def __mul__(self, other):
+        self.check_other(type(other), '*')
+
         '''Magic method to perform quaternionic left-multiplication x * y.'''
         if type(other) in (int, float):
             return Quaternion(self.real*other,self.i*other,self.j*other,self.k*other)
@@ -284,6 +307,8 @@ class Quaternion:
 
     def __rmul__(self, other):
         '''Magic method to perform quaternionic right-multiplication y * x.'''
+        self.check_other(type(other), 'r*')
+
         if type(other) in (int, float):
             return Quaternion(self.real*other,self.i*other,self.j*other,self.k*other)
 
@@ -301,6 +326,8 @@ class Quaternion:
 
     def __imul__(self, other):
         '''Magic method to perform quaternionic left-multiplication x *= y.'''
+        self.check_other(type(other), '*=')
+
         if type(other) in (int, float):
             self.real *= other
             self.i *= other
@@ -324,6 +351,8 @@ class Quaternion:
     # Powers
     def __pow__(self, power):
         '''Magic method to implement int-exponentiation operation **, by applying left-multiplication.'''
+        self.check_other(type(power), '**')
+
         if type(power) is not int:
             raise TypeError('The power must be a positive or a negative integer')
 
@@ -344,6 +373,8 @@ class Quaternion:
     def __ipow__(self, power):
         '''Magic method to implement int-exponentiation operation **=, by applying 
         left-multiplication.'''
+        self.check_other(type(power), '=**')
+
         if type(power) is not int:
             raise TypeError('The power must be a positive or a negative integer')
 
@@ -364,6 +395,8 @@ class Quaternion:
     # Division
     def __truediv__(self, other):
         '''Magic method to perform left quaternionic division x / y.'''
+        self.check_other(type(other), '/')
+
         if type(other) in (int, float):
             return Quaternion(self.real/other, self.i/other, self.j/other, self.k/other)
 
@@ -374,6 +407,8 @@ class Quaternion:
 
     def __itruediv__(self, other):
         '''Magic method to perform quaternionic division x /= y.'''
+        self.check_other(type(other), '/=')
+
         if type(other) in (int, float):
             self.real /= other
             self.i /= other
@@ -466,7 +501,6 @@ class Quaternion:
 
     ## Geometry (functions) ##
     # They are @staticmethods since they "exit" from the object
-
     @staticmethod
     def dot(q1, q2) -> float:
         '''Performs dot product between vector parts of the two given quaternions.
@@ -543,3 +577,6 @@ class Quaternion:
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
 
+
+if __name__ == "__main__":
+    x = Quaternion(1,2,3,4)

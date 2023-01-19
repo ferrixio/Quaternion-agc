@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.1.1
+:star: Version 2.1.2
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -94,10 +94,13 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 
 ## 6. CHANGELOG
 
+### Version 2.1.2
+Added the method `check_other` to handle with unsupported type errors in arithmetic.
+
 ### Version 2.1.1
 Added geodesic distance calculator. Riarranged the code in a more understandable way. Discovered the floating point issue in random number generator.
 
-### Version 2.1.0
+### Version 2.1
 Added dot/cross product, commutator and exponential/logarithmic function.
 
 ### Version 2.0.1
