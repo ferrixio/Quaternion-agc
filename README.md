@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.1.3
+:star: Version 2.1.4
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -30,11 +30,12 @@ This class allows user to emulate quaternionic algebruh in Python. The class can
 	> internal right-multiplications
 	> integer powers
 	> divisions
+	> modulo
 	> normalizations
 	> conjugations
 	> inversions
 	> algebric prints
-	> type casting
+	> type casting (int, float, complex)
 	> exponential and logarithmic functions
 	> dot product, cross product and commutator
 
@@ -93,6 +94,9 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ===========================================================================
 
 ## 6. CHANGELOG
+
+### Version 2.1.4
+Added modulo operation %.
 
 ### Version 2.1.3
 Minor change: used `isinstance()` instead of `type()`.

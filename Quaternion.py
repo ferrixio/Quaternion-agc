@@ -2,7 +2,7 @@
 Quaternion class
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    2.1.3
+Version:    2.1.4
 '''
 
 from math import sqrt, pi, sin, cos, e, log2, acos
@@ -49,8 +49,8 @@ class Quaternion:
     @classmethod
     def from_complex(cls, cplx:complex=0j, imag:str='i'):
         '''Generates a quaternion from a complex number. imag is a string used to specify 
-        which imaginary part is to be used (i, j or k). As default, it is the first.
-        '''
+        which imaginary part is to be used (i, j or k). As default, it is the first.'''
+
         match imag:
             case 'i':
                 return cls(real=cplx.real, i_img=cplx.imag)
@@ -65,6 +65,7 @@ class Quaternion:
     @classmethod
     def random(cls):
         '''Random unitary quaternion generator.'''
+
         from random import random
         a,b,c = random(), random(), random()
 
@@ -422,6 +423,32 @@ class Quaternion:
         return self.__imul__(~other)
 
 
+    # Module
+    def __mod__(self, other):
+        '''Magic method to implement int-modulo operation %. Since there is not a true
+        modulo operation in H, it returns a quaternion whose components are processed with %.'''
+        self.check_other(other, '%')
+
+        if not isinstance(other, int) or other < 0:
+            raise TypeError('The modulo must be a positive integer')
+
+        return Quaternion(self.real%other, self.i%other, self.j%other, self.k%other)
+
+    def __imod__(self, other):
+        '''Magic method to implement int-modulo operation %=.'''
+        self.check_other(other, '%=')
+
+        if not isinstance(other, int) or other < 0:
+            raise TypeError('The modulo must be a positive integer')
+
+        self.real %= other
+        self.i %= other
+        self.j %= other
+        self.k %= other
+        return self
+
+
+
 
     ## Boolean magic methods ##
     def __eq__(self, other) -> bool:
@@ -577,6 +604,3 @@ class Quaternion:
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
 
-
-if __name__ == "__main__":
-    x = Quaternion(1,2,3,4)

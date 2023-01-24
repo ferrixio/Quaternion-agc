@@ -27,5 +27,3 @@ To get its principal elements, five properties were added:
 ### From a complex number
 
 It is possible to build a quaternion from a complex number, using the classmethod `from_complex`. It takes in input a complex number and an optional string representing which quaternionic-imaginary part the complex-j represents.
-
-See ya :)
