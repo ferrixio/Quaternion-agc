@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.1.2
+:star: Version 2.1.3
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -93,6 +93,9 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ===========================================================================
 
 ## 6. CHANGELOG
+
+### Version 2.1.3
+Minor change: used `isinstance()` instead of `type()`.
 
 ### Version 2.1.2
 Added the method `check_other` to handle with unsupported type errors in arithmetic.

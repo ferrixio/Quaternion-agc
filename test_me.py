@@ -29,3 +29,5 @@ print(f'is_unit(y): {y.is_unit()}\nnorm(y): {y.norm}\nnormalize(y): {y.normalize
 print(f'h inverse_ip = {h.inverse_ip()}')
 print(f'h conjugate_ip = {h.conjugate_ip()}')
 
+c = Quaternion(seq=[1,3])
+print(c)

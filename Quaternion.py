@@ -2,7 +2,7 @@
 Quaternion class
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    2.1.2
+Version:    2.1.3
 '''
 
 from math import sqrt, pi, sin, cos, e, log2, acos
@@ -20,7 +20,7 @@ class Quaternion:
                 isinstance(k_img, float|int))):
             raise TypeError("All imaginary parts must be integers or floats")
 
-        if type(seq) in (list,tuple) and len(seq)>4:
+        if isinstance(seq, list|tuple) and len(seq) > 4:
             raise IndexError("Invalid length: it must be from 0 to 4")
 
         return super().__new__(cls)
@@ -29,7 +29,7 @@ class Quaternion:
     def __init__(self, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0, seq=None):
         '''Quaternion's initialization.'''
             
-        if type(seq) in (list, tuple):
+        if isinstance(seq, list|tuple):
             match len(seq):
                 case 0:
                     self.q = [0, 0, 0, 0]
@@ -88,26 +88,26 @@ class Quaternion:
 
     @real.setter
     def real(self, a):
-        if not isinstance(a,(int,float,chr)):
-            raise ValueError("Real part must be of type 'int', 'float' or 'chr'")
+        if not isinstance(a, int|float|str):
+            raise ValueError("Real part must be of type 'int', 'float' or 'str'")
         self.q[0] = a
         
     @i.setter
     def i(self, a):
-        if not isinstance(a,(int,float,chr)):
-            raise ValueError("i must be of type 'int', 'float' or 'chr'")
+        if not isinstance(a, int|float|str):
+            raise ValueError("i must be of type 'int', 'float' or 'str'")
         self.q[1] = a
         
     @j.setter
     def j(self, a):
-        if not isinstance(a,(int,float,chr)):
-            raise ValueError("j must be of type 'int', 'float' or 'chr'")
+        if not isinstance(a, int|float|str):
+            raise ValueError("j must be of type 'int', 'float' or 'str'")
         self.q[2] = a      
 
     @k.setter
     def k(self, a):
-        if not isinstance(a,(int,float,chr)):
-            raise ValueError("k must be of type 'int', 'float' or 'chr'")
+        if not isinstance(a, int|float|str):
+            raise ValueError("k must be of type 'int', 'float' or 'str'")
         self.q[3] = a
 
     @property
@@ -184,9 +184,9 @@ class Quaternion:
     
     ## Binary operation magic methods ##
     @staticmethod
-    def check_other(T_other:type, operation:str) -> None:
+    def check_other(T_other, operation:str) -> None:
         '''Auxiliary function to raise full exceptions during arithmetic.'''
-        if T_other in (int, float, complex, Quaternion):
+        if isinstance(T_other, int|float|complex|Quaternion):
             return
 
         raise TypeError(f"unsupported operand type(s) for {operation}: \
@@ -196,37 +196,37 @@ class Quaternion:
     # Addition
     def __add__(self, other):
         '''Magic method to emulate the left sum.'''
-        self.check_other(type(other), '+')
+        self.check_other(other, '+')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             return Quaternion(self.real+other,self.i,self.j,self.k)
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             return Quaternion(self.real+other.real,self.i+other.imag,self.j,self.k)
 
         return Quaternion(self.real+other.real, self.i+other.i, self.j+other.j, self.k+other.k)
 
     def __radd__(self, other):
         '''Magic method to emulate the right sum.'''
-        self.check_other(type(other), 'r+')
+        self.check_other(other, 'r+')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             return Quaternion(other+self.real,self.i,self.j,self.k)
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             return Quaternion(self.real+other.real,self.i+other.imag,self.j,self.k)
 
         return Quaternion(self.real+other.real, self.i+other.i, self.j+other.j, self.k+other.k)
 
     def __iadd__(self, other):
         '''Magic method to left-sum quaternions using +=.'''
-        self.check_other(type(other), '+=')
+        self.check_other(other, '+=')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             self.real += other
             return self
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             self.real += other.real
             self.i += other.imag
             return self
@@ -241,12 +241,12 @@ class Quaternion:
     # Subtraction
     def __sub__(self, other):
         '''Magic method to emulate left subtraction.'''
-        self.check_other(type(other), '-')
+        self.check_other(other, '-')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             return Quaternion(self.real-other,self.i,self.j,self.k)
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             return Quaternion(self.real-other.real,self.i-other.imag,self.j,self.k)
 
         return Quaternion(self.real-other.real,
@@ -254,12 +254,12 @@ class Quaternion:
 
     def __rsub__(self, other):
         '''Magic method to emulate right subtraction.'''
-        self.check_other(type(other), 'r-')
+        self.check_other(other, 'r-')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             return Quaternion(other-self.real,-self.i,-self.j,-self.k)
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             return Quaternion(other.real-self.real,other.imag-self.i,self.j,self.k)
 
         return Quaternion(other.real-self.real,
@@ -267,13 +267,13 @@ class Quaternion:
 
     def __isub__(self, other):
         '''Magic method to subtract quaternions using -=.'''
-        self.check_other(type(other), '-=')
+        self.check_other(other, '-=')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             self.real -= other
             return self
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             self.real -= other.real
             self.i -= other.imag
             return self
@@ -287,13 +287,13 @@ class Quaternion:
 
     # Multiplication
     def __mul__(self, other):
-        self.check_other(type(other), '*')
+        self.check_other(other, '*')
 
         '''Magic method to perform quaternionic left-multiplication x * y.'''
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             return Quaternion(self.real*other,self.i*other,self.j*other,self.k*other)
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             return Quaternion(self.real*other.real - self.i*other.imag, 
                 self.real*other.imag + self.i*other.real,
                 self.j*other.real + self.k*other.imag,
@@ -307,12 +307,12 @@ class Quaternion:
 
     def __rmul__(self, other):
         '''Magic method to perform quaternionic right-multiplication y * x.'''
-        self.check_other(type(other), 'r*')
+        self.check_other(other, 'r*')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             return Quaternion(self.real*other,self.i*other,self.j*other,self.k*other)
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             return Quaternion(self.real*other.real - self.i*other.imag,
                 self.real*other.imag + self.i*other.real,
                 self.j*other.real - self.k*other.imag,
@@ -326,16 +326,16 @@ class Quaternion:
 
     def __imul__(self, other):
         '''Magic method to perform quaternionic left-multiplication x *= y.'''
-        self.check_other(type(other), '*=')
+        self.check_other(other, '*=')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             self.real *= other
             self.i *= other
             self.j *= other
             self.k *= other
             return self
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             other = self.from_complex(other)
 
         n_real = self.real*other.real - self.i*other.i - self.j*other.j - self.k*other.k
@@ -351,9 +351,9 @@ class Quaternion:
     # Powers
     def __pow__(self, power):
         '''Magic method to implement int-exponentiation operation **, by applying left-multiplication.'''
-        self.check_other(type(power), '**')
+        self.check_other(power, '**')
 
-        if type(power) is not int:
+        if not isinstance(power, int):
             raise TypeError('The power must be a positive or a negative integer')
 
         h = Quaternion(1)
@@ -373,9 +373,9 @@ class Quaternion:
     def __ipow__(self, power):
         '''Magic method to implement int-exponentiation operation **=, by applying 
         left-multiplication.'''
-        self.check_other(type(power), '=**')
+        self.check_other(power, '**=')
 
-        if type(power) is not int:
+        if not isinstance(power, int):
             raise TypeError('The power must be a positive or a negative integer')
 
         if power < 0:
@@ -395,28 +395,28 @@ class Quaternion:
     # Division
     def __truediv__(self, other):
         '''Magic method to perform left quaternionic division x / y.'''
-        self.check_other(type(other), '/')
+        self.check_other(other, '/')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             return Quaternion(self.real/other, self.i/other, self.j/other, self.k/other)
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             return self.__mul__(self.from_complex(other).inverse_ip())
 
         return self.__mul__(~other)
 
     def __itruediv__(self, other):
         '''Magic method to perform quaternionic division x /= y.'''
-        self.check_other(type(other), '/=')
+        self.check_other(other, '/=')
 
-        if type(other) in (int, float):
+        if isinstance(other, int|float):
             self.real /= other
             self.i /= other
             self.j /= other
             self.k /= other
             return self
 
-        if type(other) is complex:
+        if isinstance(other, complex):
             return self.__imul__(self.from_complex(other).inverse_ip())
 
         return self.__imul__(~other)
