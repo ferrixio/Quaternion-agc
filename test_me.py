@@ -29,5 +29,10 @@ print(f'is_unit(y): {y.is_unit()}\nnorm(y): {y.norm}\nnormalize(y): {y.normalize
 print(f'h inverse_ip = {h.inverse_ip()}')
 print(f'h conjugate_ip = {h.conjugate_ip()}')
 
-c = Quaternion(seq=[1,3])
-print(c)
+c = Quaternion(seq=[1,3,7,-2])
+c //= 2
+print(f'x//2 : {c}\nx.norm: {c.norm}')
+
+c = Quaternion.randint()
+d = c.inverse()
+print(f'c = {c}\nc^-1 = {d}\nc*d = {c*d}\nd*c = {d*c}')

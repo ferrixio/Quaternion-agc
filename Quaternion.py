@@ -2,7 +2,7 @@
 Quaternion class
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    2.1.4
+Version:    2.1.5
 '''
 
 from math import sqrt, pi, sin, cos, e, log2, acos
@@ -65,14 +65,27 @@ class Quaternion:
     @classmethod
     def random(cls):
         '''Random unitary quaternion generator.'''
-
         from random import random
-        a,b,c = random(), random(), random()
+        while True:
+            a,b,c = random(), random(), random()
+            r = sqrt(1-a)*sin(2*pi*b)
+            i = sqrt(1-a)*cos(2*pi*b)
+            j = sqrt(a)*sin(2*pi*c)
+            k = sqrt(a)*cos(2*pi*c)
 
-        return cls(sqrt(1-a)*sin(2*pi*b), \
-            sqrt(1-a)*cos(2*pi*b), sqrt(a)*sin(2*pi*c), sqrt(a)*cos(2*pi*c))
+            if r**2+i**2+j**2+k**2 == 1.0:
+                break    
 
-    
+        return cls(r,i,j,k)
+
+
+    @classmethod
+    def randint(cls, a:int = -50, b:int = 50):
+        '''Random integer quaternion generator.'''
+        from random import randint
+        return cls(randint(a,b), randint(a,b), randint(a,b), randint(a,b))
+
+
 
     ## Properties ##
     @property
@@ -119,11 +132,12 @@ class Quaternion:
 
     ## Type magic methods ##
     def __str__(self) -> str:
-        '''Magic method to show a quaternion using print().'''
+        '''Magic method to show a quaternion using print().
+        Numbers below 1e-10 will be printed as 0.'''
         ans, terms = '', {0:'', 1:'i', 2:'j', 3:'k'}
 
         for i,part in enumerate(self.q):
-            if not part:                                #if zero coeff, it doesn't write
+            if not part or abs(part) < 1e-10:           #if zero coeff (or almost there), it doesn't write
                 continue
             elif not ans:                               #positive coeff and not in first place
                 ans += f'{part}{terms[i]}'
@@ -175,9 +189,9 @@ class Quaternion:
         '''Magic method to perform abs(). The absolute value of a quaternion is it's norm.'''
         return self.norm
 
-    def __round__(self, n:int=2):
+    def __round__(self, n:int=3):
         '''Magic method to round the decimals of every components of the quaternion.
-        If n is not given, n = 2.'''
+        If n is not given, n = 3.'''
         return Quaternion(round(self.real,n), round(self.i,n), round(self.j,n), 
                 round(self.k,n))
 
@@ -209,15 +223,7 @@ class Quaternion:
 
     def __radd__(self, other):
         '''Magic method to emulate the right sum.'''
-        self.check_other(other, 'r+')
-
-        if isinstance(other, int|float):
-            return Quaternion(other+self.real,self.i,self.j,self.k)
-
-        if isinstance(other, complex):
-            return Quaternion(self.real+other.real,self.i+other.imag,self.j,self.k)
-
-        return Quaternion(self.real+other.real, self.i+other.i, self.j+other.j, self.k+other.k)
+        return self.__add__(other)
 
     def __iadd__(self, other):
         '''Magic method to left-sum quaternions using +=.'''
@@ -423,9 +429,9 @@ class Quaternion:
         return self.__imul__(~other)
 
 
-    # Module
+    # Modulo
     def __mod__(self, other):
-        '''Magic method to implement int-modulo operation %. Since there is not a true
+        '''Magic method to implement int-modulo operation x % y. Since there is not a true
         modulo operation in H, it returns a quaternion whose components are processed with %.'''
         self.check_other(other, '%')
 
@@ -435,7 +441,7 @@ class Quaternion:
         return Quaternion(self.real%other, self.i%other, self.j%other, self.k%other)
 
     def __imod__(self, other):
-        '''Magic method to implement int-modulo operation %=.'''
+        '''Magic method to implement int-modulo operation x %= y.'''
         self.check_other(other, '%=')
 
         if not isinstance(other, int) or other < 0:
@@ -447,6 +453,26 @@ class Quaternion:
         self.k %= other
         return self
 
+
+    # Floordivision
+    def __floordiv__(self, other):
+        '''Magic method to implement floordivision x // y. Since floordivision doesn't exist in H,
+        it performs an homotethy on x to the sphere of radius y.'''
+        self.check_other(other, '//')
+
+        if not isinstance(other, int|float) or other < 0:
+            raise TypeError('The divisor must be a positive number')
+
+        return self.normalize_ip().__mul__(other)
+
+    def __ifloordiv__(self, other):
+        '''Magic method to implement floordivision x //= y.'''
+        self.check_other(other, '//=')
+
+        if not isinstance(other, int|float) or other < 0:
+            raise TypeError('The divisor must be a positive number')
+
+        return self.normalize_ip().__imul__(other)
 
 
 
@@ -484,7 +510,7 @@ class Quaternion:
         return sqrt(self.square_norm())
 
     def square_norm(self) -> float:
-        '''Returns the square norm of the quaternion'''
+        '''Returns the square norm of the quaternion.'''
         return self.real**2 + self.i**2 + self.j**2 + self.k**2
 
     def normalize(self):
@@ -493,16 +519,36 @@ class Quaternion:
         if t != 1.0:
             return Quaternion(self.real/t, self.i/t, self.j/t, self.k/t)
 
+    def normalize_ip(self):
+        '''Normalizes the quaternion in place.'''
+        t = self.norm
+        if t != 1.0:
+            self.real /= t
+            self.i /= t
+            self.j /= t
+            self.k /= t
+        return self
+
+
+    def conjugate(self):
+        '''Returns the conjugated quaternion.'''
+        return Quaternion(self.real,-self.i,-self.j,-self.k)
+
     def conjugate_ip(self):
         '''Conjugates the quaternion in place.'''
         self.i *= -1
         self.j *= -1
         self.k *= -1
         return self
+    
 
-    def conjugate(self):
-        '''Returns the conjugated quaternion.'''
-        return Quaternion(self.real,-self.i,-self.j,-self.k)
+    def inverse(self):
+        '''Returns the inverse quaternion with respect to multiplication.'''
+        if not self.__bool__():
+            raise ZeroDivisionError("It's not possible to invert the zero quaternion")
+
+        n = self.square_norm()
+        return Quaternion(self.real/n, -self.i/n, -self.j/n, -self.k/n)
 
     def inverse_ip(self):
         '''Inverts (in place) the quaternion with respect to multiplication.'''
@@ -516,15 +562,7 @@ class Quaternion:
         self.k /= -n
         return self
 
-    def inverse(self):
-        '''Returns the inverse quaternion with respect to multiplication.'''
-        if not self.__bool__():
-            raise ZeroDivisionError("It's not possible to invert the zero quaternion")
-
-        n = self.square_norm()
-        return Quaternion(self.real/n, -self.i/n, -self.j/n, -self.k/n)
-
-
+    
 
     ## Geometry (functions) ##
     # They are @staticmethods since they "exit" from the object
@@ -603,4 +641,5 @@ class Quaternion:
             raise ArithmeticError("invalid argument(s) given: both quaternions must be unitary")
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
+
 

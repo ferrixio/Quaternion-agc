@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.1.4
+:star: Version 2.1.5
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -30,7 +30,8 @@ This class allows user to emulate quaternionic algebruh in Python. The class can
 	> internal right-multiplications
 	> integer powers
 	> divisions
-	> modulo
+	> floordivisions
+	> modulos
 	> normalizations
 	> conjugations
 	> inversions
@@ -54,7 +55,6 @@ Open the file test_me.py and try it, or simply copy and paste the class in the f
 ## 3. KNOWN ISSUES
 
 The operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
-The `@classmethod random()` sometimes does not generate an unitary quaternion, by floating point accuracy. 
 
 ===========================================================================
 
@@ -62,11 +62,11 @@ The `@classmethod random()` sometimes does not generate an unitary quaternion, b
 
 + :o: Create a library!!!
 + :o: Plotting quaternions (stereographic projection?)
-+ :o: Floor division?
 + :o: Make a more understandable collection of examples files
 + :white_check_mark: Vector representation
 + :white_check_mark: Add complex compatibility
 + :white_check_mark: Quaternionic functions
++ :white_check_mark: Floor division
 + :black_nib: Add @ operator
 
 ===========================================================================
@@ -94,6 +94,12 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ===========================================================================
 
 ## 6. CHANGELOG
+
+### Version 2.1.5
+Added // operation. x // y performs an homotethy of x to a quaternion with norm y.
+Changed the default decimals of `round()` to 3.
+Added the classmethod `randint()`, that generates a random quaternion with integer values.
+Fixed the bug in `random()` method.
 
 ### Version 2.1.4
 Added modulo operation %.
