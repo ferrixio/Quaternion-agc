@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.1.5
+:star: Version 2.1.6
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -37,12 +37,15 @@ This class allows user to emulate quaternionic algebruh in Python. The class can
 	> inversions
 	> algebric prints
 	> type casting (int, float, complex)
+	> random generations
 	> exponential and logarithmic functions
 	> dot product, cross product and commutator
 
 I used mostly magic methods to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
 I recommend reading [this file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
+
+Every value below 1e-15 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
 ===========================================================================
 
@@ -67,7 +70,7 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 + :white_check_mark: Add complex compatibility
 + :white_check_mark: Quaternionic functions
 + :white_check_mark: Floor division
-+ :black_nib: Add @ operator
++ :white_check_mark: Add @ operator
 
 ===========================================================================
 
@@ -95,11 +98,16 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 
 ## 6. CHANGELOG
 
+### Version 2.1.6
+Corrected the // and % operations. In the real numbers, `x / y = (k, r)`, where `k = x // y` is the quotient and `r = x % y` is the reminder. Since in H this kind of operations don't exist, I move the problem in HP1 and look for two quaternions `k` and `r` such that the previous relation is fullfilled. With this method, `k` belongs to the same equivalence class of `q` in HP1, that is, it lies on the same line that starts from the origin and passes through `q`.
+Added the magic method `__matmul__`: x @ y performs an homotethy on x to the sphere of radius y.
+Fixed a little bit of floating point in `__bool__`, `__eq__` and `__str__`.
+
 ### Version 2.1.5
 Added // operation. x // y performs an homotethy of x to a quaternion with norm y.
 Changed the default decimals of `round()` to 3.
 Added the classmethod `randint()`, that generates a random quaternion with integer values.
-Fixed the bug in `random()` method.
+Fixed a bug in `random()` method.
 
 ### Version 2.1.4
 Added modulo operation %.

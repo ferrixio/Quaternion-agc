@@ -36,3 +36,11 @@ print(f'x//2 : {c}\nx.norm: {c.norm}')
 c = Quaternion.randint()
 d = c.inverse()
 print(f'c = {c}\nc^-1 = {d}\nc*d = {c*d}\nd*c = {d*c}')
+
+x = Quaternion(1.2, 5.0, 2, -1)
+y = x % 3
+z = x // 3
+w = x @ 3
+
+print(f'x = {x}\nx % 3 = {y}\nx // 3 = {z}\nx @ 3 = {w}\nnorm(x @ 3) = {w.norm}')
+print(f'x ~ x//3 in HP1? {x.normalize()==z.normalize()}')

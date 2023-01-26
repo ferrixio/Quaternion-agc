@@ -2,7 +2,7 @@
 Quaternion class
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    2.1.5
+Version:    2.1.6
 '''
 
 from math import sqrt, pi, sin, cos, e, log2, acos
@@ -432,54 +432,57 @@ class Quaternion:
     # Modulo
     def __mod__(self, other):
         '''Magic method to implement int-modulo operation x % y. Since there is not a true
-        modulo operation in H, it returns a quaternion whose components are processed with %.'''
+        modulo operation in H, it returns the reminder of an hipotetical division along
+        the line, in HP1, through the given quaternion.'''
         self.check_other(other, '%')
 
-        if not isinstance(other, int) or other < 0:
+        if not isinstance(other, int|float) or other < 0:
             raise TypeError('The modulo must be a positive integer')
 
-        return Quaternion(self.real%other, self.i%other, self.j%other, self.k%other)
-
-    def __imod__(self, other):
-        '''Magic method to implement int-modulo operation x %= y.'''
-        self.check_other(other, '%=')
-
-        if not isinstance(other, int) or other < 0:
-            raise TypeError('The modulo must be a positive integer')
-
-        self.real %= other
-        self.i %= other
-        self.j %= other
-        self.k %= other
-        return self
+        f = self.norm % other
+        return self.normalize().__mul__(f)
 
 
     # Floordivision
     def __floordiv__(self, other):
-        '''Magic method to implement floordivision x // y. Since floordivision doesn't exist in H,
-        it performs an homotethy on x to the sphere of radius y.'''
+        '''Magic method to implement int-modulo operation x // y. Since there is not a true
+        modulo operation in H, it returns the quotient of an hipotetical division along
+        the line, in HP1, through the given quaternion.'''
         self.check_other(other, '//')
 
         if not isinstance(other, int|float) or other < 0:
-            raise TypeError('The divisor must be a positive number')
+            raise TypeError('The divisor must be a positive integer')
 
-        return self.normalize_ip().__mul__(other)
+        f = self.__mod__(other)
+        return self.__sub__(f).__truediv__(other)
 
-    def __ifloordiv__(self, other):
-        '''Magic method to implement floordivision x //= y.'''
-        self.check_other(other, '//=')
+
+    # Matmul
+    def __matmul__(self, other):
+        '''Magic method to implement matmul x @ y. Since floordivision doesn't exist in H,
+        it performs an homotethy on x to the sphere of radius y.'''
+        self.check_other(other, '@')
 
         if not isinstance(other, int|float) or other < 0:
             raise TypeError('The divisor must be a positive number')
 
-        return self.normalize_ip().__imul__(other)
+        return self.normalize().__mul__(other)
+
+    def __imatmul__(self, other):
+        '''Magic method to implement matmul x @= y.'''
+        self.check_other(other, '@=')
+
+        if not isinstance(other, int|float) or other < 0:
+            raise TypeError('The divisor must be a positive number')
+
+        return self.normalize().__imul__(other)
 
 
 
     ## Boolean magic methods ##
     def __eq__(self, other) -> bool:
         '''Checks if all the components between the two quaternions are the same.'''
-        return self.q == other.q
+        return self.__sub__(other).__abs__() < 1e-15
 
     def __ne__(self, other) -> bool:
         '''Checks if one of the components between the two quaternions are different.'''
@@ -487,7 +490,7 @@ class Quaternion:
 
     def __bool__(self) -> bool:
         '''Checks if the quaternion is not zero.'''
-        return self.q != [0,0,0,0]
+        return any(map(lambda x: abs(x) > 1e-15, self.q))
 
     def is_unit(self) -> bool:
         '''Checks if the quaternion is unitary, that is, if it lies on the 3-sphere.'''
