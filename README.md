@@ -101,7 +101,7 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ### Version 2.1.6
 Corrected the // and % operations. In the real numbers, `x / y = (k, r)`, where `k = x // y` is the quotient and `r = x % y` is the reminder. Since in H this kind of operations don't exist, I move the problem in HP1 and look for two quaternions `k` and `r` such that the previous relation is fullfilled. With this method, `k` belongs to the same equivalence class of `q` in HP1, that is, it lies on the same line that starts from the origin and passes through `q`.
 
-Added the magic method `__matmul__`: x @ y performs an homotethy on x to the sphere of radius y.
+Added the magic method `__matmul__`: `x @ y` performs an homotethy on x to the sphere of radius y.
 
 Fixed a little bit of floating point in `__bool__`, `__eq__` and `__str__`.
 
