@@ -2,9 +2,11 @@ from Quaternion import Quaternion
 
 x = Quaternion(2,1,1,0)
 y = Quaternion(1,-1,1,4)
+z = Quaternion(0)
 
-print(x, type(x))
-print(bool(y))
+print(x, type(x), repr(x))
+print(y, bool(y))
+print(z, bool(z))
 
 d = Quaternion(-3)
 print(f'{d} is real = {d.is_real()}')

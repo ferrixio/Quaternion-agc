@@ -65,7 +65,7 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 
 + :o: Create a library!!!
 + :o: Plotting quaternions (stereographic projection?)
-+ :o: Make a more understandable collection of examples files
++ :o: Implementing rotation of 3D objects
 + :white_check_mark: Vector representation
 + :white_check_mark: Add complex compatibility
 + :white_check_mark: Quaternionic functions
