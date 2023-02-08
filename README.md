@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.1.6
+:star: Version 2.1.7
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -40,6 +40,7 @@ This class allows user to emulate quaternionic algebruh in Python. The class can
 	> random generations
 	> exponential and logarithmic functions
 	> dot product, cross product and commutator
+	> extraction or generation from 3D rotations
 
 I used mostly magic methods to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
@@ -65,7 +66,7 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 
 + :o: Create a library!!!
 + :o: Plotting quaternions (stereographic projection?)
-+ :o: Implementing rotation of 3D objects
++ :hammer_and_wrench: Implementing rotation of 3D objects
 + :white_check_mark: Vector representation
 + :white_check_mark: Add complex compatibility
 + :white_check_mark: Quaternionic functions
@@ -97,6 +98,11 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ===========================================================================
 
 ## 6. CHANGELOG
+
+### Version 2.1.7
+Implemented some elements of 3D geometry. Added the property `rotation` which returns a tuple with the four elements of a rotation: the angle and the 3D axis. By the equivalence `3D rotation == versor quaternion`, the method automatically normalizes the quaternion if it is not unitary (and raises a warning to the user).
+
+Added the classmethod `from_rotation()` which generates a quaternion from a rotation.
 
 ### Version 2.1.6
 Corrected the // and % operations. In the real numbers, `x / y = (k, r)`, where `k = x // y` is the quotient and `r = x % y` is the reminder. Since in H this kind of operations don't exist, I move the problem in HP1 and look for two quaternions `k` and `r` such that the previous relation is fullfilled. With this method, `k` belongs to the same equivalence class of `q` in HP1, that is, it lies on the same line that starts from the origin and passes through `q`.

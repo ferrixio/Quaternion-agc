@@ -2,7 +2,7 @@
 Quaternion class
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    2.1.6
+Version:    2.1.7
 '''
 
 from math import sqrt, pi, sin, cos, e, log2, acos
@@ -43,7 +43,7 @@ class Quaternion:
                     self.q = [seq[0], seq[1], seq[2], seq[3]]
             return
 
-        self.q = [real, i_img, j_img, k_img]
+        self.q: list = [real, i_img, j_img, k_img]
 
 
     @classmethod
@@ -61,6 +61,16 @@ class Quaternion:
             case _:
                 raise AttributeError("invalid attribute given: imag must be 'i', 'j', or 'k'")
                 
+                
+    @classmethod
+    def from_rotation(cls, theta:float=0, x1:float=1, x2:float=0, x3:float=0):
+        '''Generates a quaternion from a 3D rotation. theta is the angle, while x1, x2 and x3
+        are the three coordinates in R3.'''
+
+        a = cos(theta/2)
+        b,c,d = x1*sin(theta/2), x2*sin(theta/2), x3*sin(theta/2)
+        return cls(a,b,c,d)
+
 
     @classmethod
     def random(cls):
@@ -100,6 +110,7 @@ class Quaternion:
     @property
     def k(self): return self.q[3]
 
+
     @real.setter
     def real(self, a):
         if not isinstance(a, int|float|str):
@@ -127,6 +138,23 @@ class Quaternion:
     @property
     def vector(self):
         return self.q[1:]
+
+    @property
+    def rotation(self) -> tuple:
+        '''Returns the rotation associated to the quaternion.'''
+        if self.real == 1.0:
+            return 0,1,0,0
+
+        if self.norm != 1.0:
+            from warnings import warn
+            rawr = 'Warning: the quaternion is not unitary. It is only possible to extract rotations \
+                from versors, so the quaternion has been normalized.'
+            warn(rawr)
+            del rawr
+            self.normalize_ip()
+
+        theta = 2*acos(self.real)
+        return theta, self.i/sin(theta/2), self.j/sin(theta/2), self.k/sin(theta/2)
 
 
 
@@ -644,5 +672,4 @@ class Quaternion:
             raise ArithmeticError("invalid argument(s) given: both quaternions must be unitary")
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
-
 

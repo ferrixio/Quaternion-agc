@@ -39,10 +39,17 @@ c = Quaternion.randint()
 d = c.inverse()
 print(f'c = {c}\nc^-1 = {d}\nc*d = {c*d}\nd*c = {d*c}')
 
-x = Quaternion(1.2, 5.0, 2, -1)
+x = Quaternion(3,3,3,3)
 y = x % 3
 z = x // 3
 w = x @ 3
-
 print(f'x = {x}\nx % 3 = {y}\nx // 3 = {z}\nx @ 3 = {w}\nnorm(x @ 3) = {w.norm}')
 print(f'x ~ x//3 in HP1? {x.normalize()==z.normalize()}')
+print(f'x ~ x@3 in HP1? {x.normalize()==w.normalize()}')
+
+x = Quaternion(1,2,3,4)
+y = Quaternion(2,1,3,4)
+print(f'x.rotation = {x.rotation}\ny.rotation = {y.rotation}')
+
+r = Quaternion.from_rotation(112, 1,2,3)
+print(f'from_rotation(112,1,2,3) = {r}')

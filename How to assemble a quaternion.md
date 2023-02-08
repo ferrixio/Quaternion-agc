@@ -28,6 +28,19 @@ To get its principal elements, five properties were added:
 
 It is possible to build a quaternion from a complex number, using the classmethod `from_complex`. It takes in input a complex number and an optional string representing which quaternionic-imaginary part the complex-j represents.
 
+### From a rotation
+
+Any 3D rotation (theta, x1, x2, x3) is indeed a unitary quaternion (a, b, c, d). Its components are:
+
+    ```py
+    a = cos(theta/2)
+    b = x1*sin(theta/2)
+    c = x2*sin(theta/2)
+    d = x3*sin(theta/2)
+    ```
+
+In the opposite direction, inverting the previous equations, the method fails when the real part of the quaternion is 1. In these cases, the rotation is set to (0,1,0,0).
+
 ### Using random()
 
 With this method, three numbers between 0 and 1 are randomly generated. Then, the quaternion is setted to be unitary.
