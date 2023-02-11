@@ -37,7 +37,7 @@ a = cos(theta/2)
 b = x1*sin(theta/2)
 c = x2*sin(theta/2)
 d = x3*sin(theta/2)
-    ```
+```
 
 In the opposite direction, inverting the previous equations, the method fails when the real part of the quaternion is 1. In these cases, the rotation is set to (0,1,0,0).
 
