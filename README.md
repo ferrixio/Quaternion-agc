@@ -71,7 +71,7 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 + :white_check_mark: Quaternionic functions
 + :white_check_mark: Floor division
 + :white_check_mark: Add @ operator
-+ :white_check_mark: Create a library!!!
++ :white_check_mark: Create a library
 
 ===========================================================================
 
