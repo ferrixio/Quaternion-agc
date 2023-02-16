@@ -16,13 +16,15 @@ The "pre-constructor" `__new__` checks if the arguments in input are valid, else
 
 After the object is constructed, it will only have one attribute in the `self` variable, called `q`, representing the list of the four components of the quaternion.
 
-To get its principal elements, five properties were added:
+To get its principal elements, seven properties were added:
 
 + **real**, to get the real part
-+ **i_img**, to get the first imaginary part;
-+ **j_img**, to get the second imaginary part;
-+ **k_img**, to get the third imaginary part;
-+ **norm**, to get the euclidean norm of the quaternion as 4D-vector.
++ **i**, to get the first imaginary part;
++ **j**, to get the second imaginary part;
++ **k**, to get the third imaginary part;
++ **norm**, to get the euclidean norm of the quaternion as 4D-vector;
++ **vector**, to get a three dimensional array containing the three imaginary parts;
++ **rotation**, to get the rotation associated to the quaternion.
 
 ### From a complex number
 
