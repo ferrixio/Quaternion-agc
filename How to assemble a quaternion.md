@@ -26,11 +26,11 @@ To get its principal elements, seven properties were added:
 + **vector**, to get a three dimensional array containing the three imaginary parts;
 + **rotation**, to get the rotation associated to the quaternion.
 
-### From a complex number
+### :pencil2: From a complex number
 
 It is possible to build a quaternion from a complex number, using the classmethod `from_complex`. It takes in input a complex number and an optional string representing which quaternionic-imaginary part the complex-j represents.
 
-### From a rotation
+### :pencil2: From a rotation
 
 Any 3D rotation (theta, x1, x2, x3) is indeed a unitary quaternion (a, b, c, d). Its components are:
 
@@ -43,11 +43,11 @@ d = x3*sin(theta/2)
 
 In the opposite direction, inverting the previous equations, the method fails when the real part of the quaternion is 1. In these cases, the rotation is set to (0,1,0,0).
 
-### Using random()
+### :pencil2: Using random()
 
 With this method, three numbers between 0 and 1 are randomly generated. Then, the quaternion is setted to be unitary.
 To avoid floating point accuracy, the procedure repeats the generation until it gets an unitary quaternion. 
 
-### Using randint()
+### :pencil2: Using randint()
 
 Similar to the previous one, this method generates a quaternion whose components are random integers. Those numbers are in range -50 to 50, but the user can extend (o reduce) these bounds.
