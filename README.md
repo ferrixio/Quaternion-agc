@@ -64,7 +64,6 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 
 ## 4. FUTURE IDEAS
 
-+ :o: Create a library!!!
 + :o: Plotting quaternions (stereographic projection?)
 + :hammer_and_wrench: Implementing rotation of 3D objects
 + :white_check_mark: Vector representation
@@ -72,6 +71,7 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 + :white_check_mark: Quaternionic functions
 + :white_check_mark: Floor division
 + :white_check_mark: Add @ operator
++ :white_check_mark: Create a library!!!
 
 ===========================================================================
 
