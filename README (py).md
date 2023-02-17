@@ -1,4 +1,4 @@
-# Quaternion class - A (small) Python 3.11 resource
+# Quaternionic python - A (small) Python 3.11 resource
 ### Perform quaternionic arithmetic easily in Python
 
 :dragon: Author: Samuele Ferri (@ferrixio)
@@ -52,7 +52,7 @@ Every value below 1e-15 is treated as 0, especially during logical checks. This 
 
 ## 2. HOW TO USE
 
-Open the file test_me.py and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to _cite me_ if you are using this in a project!)
+Open the file `test_me.py` and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to __cite me__ if you are using this in a project!)
 
 ===========================================================================
 

@@ -1,5 +1,5 @@
 '''
-Quaternion class
+Quaternion class for python 3.11
 
 Author:     Samuele Ferri (@ferrixio)
 Version:    2.1.7
@@ -673,3 +673,8 @@ class Quaternion:
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
 
+
+# The future is now?!?
+# class Rotation(Quaternion):
+#     def __init__(self, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0, seq=None):
+#         super().__init__(real, i_img, j_img, k_img, seq)
