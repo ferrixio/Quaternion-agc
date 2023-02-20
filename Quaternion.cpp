@@ -104,9 +104,10 @@ class Quaternion{
     // Bitwise operators
     friend std::ostream &operator << (std::ostream &output, Quaternion const &obj) {
         /*Overloading cout statement*/
+        std::cout.precision(dbl::max_digits10);
         output << obj.real << (obj.i>=0 ? "+" : "") << obj.i << "i" << \
                     (obj.j>=0 ? "+" : "") << obj.j << "j" << \
-                    (obj.k>=0 ? "+" : "") << obj.k << "k\t";
+                    (obj.k>=0 ? "+" : "") << obj.k << "k\n";
         return output;
     }
 
