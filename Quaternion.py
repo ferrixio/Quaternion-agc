@@ -1,9 +1,7 @@
-'''
-Quaternion class for python 3.11
+# Quaternion class for python 3.11
 
-Author:     Samuele Ferri (@ferrixio)
-Version:    2.1.7
-'''
+# Author:     Samuele Ferri (@ferrixio)
+# Version:    2.1.7
 
 from math import sqrt, pi, sin, cos, e, log2, acos
 
@@ -165,9 +163,9 @@ class Quaternion:
         ans, terms = '', {0:'', 1:'i', 2:'j', 3:'k'}
 
         for i,part in enumerate(self.q):
-            if not part or abs(part) < 1e-10:           #if zero coeff (or almost there), it doesn't write
+            if not part or abs(part) < 1e-10:  #if zero coeff (or almost there), it doesn't write
                 continue
-            elif not ans:                               #positive coeff and not in first place
+            elif not ans:                      #positive coeff and not in first place
                 ans += f'{part}{terms[i]}'
                 continue
             ans += f'{part:+}{terms[i]}'
@@ -672,9 +670,3 @@ class Quaternion:
             raise ArithmeticError("invalid argument(s) given: both quaternions must be unitary")
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
-
-
-# The future is now?!?
-# class Rotation(Quaternion):
-#     def __init__(self, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0, seq=None):
-#         super().__init__(real, i_img, j_img, k_img, seq)

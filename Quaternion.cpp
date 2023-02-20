@@ -214,6 +214,6 @@ class Quaternion{
 int main(){
     Quaternion x(0,1,1,1), y(1,-1,1,4);
 
-    std::cout << (x*y) << std::endl;
+    std::cout << (x/y) << (y/x) << std::endl;
     return 0;
 }
