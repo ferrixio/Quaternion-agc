@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 1.0
+:star: Version 1.0.1
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -59,7 +59,9 @@ I'm NOT an expert of C++.
 
 ## 4. FUTURE IDEAS
 
-+ _empty_
++ :o: Multiple construtors
++ :o: Complex number implementation
++ :o: Rotations and geometry
 
 ===========================================================================
 
@@ -86,6 +88,10 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ===========================================================================
 
 ## 6. CHANGELOG
+
+### Version 1.0.1
+
+Discovered the difference between `int(x)` and `static_cast<int>(x)`.
 
 ### Version 1.0
 
