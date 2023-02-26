@@ -63,7 +63,8 @@ I'm NOT an expert of C++.
 
 ## 4. FUTURE IDEAS
 
-+ :o: Complex number implementation
++ :o: Complex number compatibility
++ :o: Floor division and modulo
 + :o: Geometry methods
 + :white_check_mark: Rotations
 + :warning: Multiple construtors
