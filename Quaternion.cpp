@@ -17,12 +17,21 @@ typedef std::numeric_limits<double> dbl;
 
 class Quaternion{
     public:
-    // Components
-    double real, i, j, k;
+    //Components
+    /*Real part*/
+    double real;
+    /*First imaginary part*/
+    double i;
+    /*Second imaginary part*/
+    double j;
+    /*Third imaginary part*/
+    double k;
+
 
     /*Standard initializer*/
     Quaternion(double real_part=0, double i_img=0, double j_img=0, double k_img=0){
         real = real_part, i = i_img, j = j_img, k = k_img;}
+
 
     /*Random quaternion replacement. INPUT:
     bool integer=false : if true, the random numbers will be integers
@@ -251,5 +260,5 @@ class Quaternion{
 
 int main(){
     Quaternion x(3,1,2,-6);
-    std::cout << x.get_k();
+    std::cout << x.k;
 }
