@@ -34,10 +34,10 @@ class Quaternion{
 
 
     /*Random quaternion replacement. INPUT:
-    bool integer=false : if true, the random numbers will be integers
+    bool integer=true : if false, the random numbers will be integers
     int xL=-50 : left limit of the integer generation interval
     int xR=50 : right limit of the integer generation interval*/
-    void random(bool integer=false, int xL=-50, int xR=50){
+    void random(bool integer=true, int xL=-50, int xR=50){
         std::srand(time(0));
         double r, i_img, j_img, k_img, h;
         if (integer){
