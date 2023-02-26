@@ -2,7 +2,7 @@
 Quaternion class for C++
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    1.1
+Version:    1.1.1
 */
 #define _USE_MATH_DEFINES
 
@@ -16,7 +16,19 @@ typedef std::numeric_limits<double> dbl;
 
 
 class Quaternion{
+
+    private:
+    /*Floating point limiter*/
+    double FP_BOUND = 1e-13;
+
     public:
+    /*Get the floating point limiter*/
+    double get_bound(){return FP_BOUND;}
+
+    /*Changes the floating point limiter. If no value is passed, it restores to the default value*/
+    void change_bound(double fp=1e-13){FP_BOUND = fp;}
+
+
     //Components
     /*Real part*/
     double real;
@@ -33,35 +45,38 @@ class Quaternion{
         real = real_part, i = i_img, j = j_img, k = k_img;}
 
 
-    /*Random quaternion replacement. INPUT:
-    bool integer=true : if false, the random numbers will be integers
-    int xL=-50 : left limit of the integer generation interval
-    int xR=50 : right limit of the integer generation interval*/
-    void random(bool integer=true, int xL=-50, int xR=50){
+    /*Unitary random quaternion replacement*/
+    void random_unit(){
         std::srand(time(0));
-        double r, i_img, j_img, k_img, h;
-        if (integer){
-            double a, b, c;
-            while(true){
-                a = rand()/static_cast<double>(RAND_MAX);
-                b = rand()/static_cast<double>(RAND_MAX);
-                c = rand()/static_cast<double>(RAND_MAX);
-                r = sqrt(1-a)*sin(2*M_PI*b);
-                i_img = sqrt(1-a)*cos(2*M_PI*b);
-                j_img = sqrt(a)*sin(2*M_PI*c);
-                k_img = sqrt(a)*cos(2*M_PI*c);
+        double r, i_img, j_img, k_img, a, b, c;
+        while(true){
+            a = rand()/static_cast<double>(RAND_MAX);
+            b = rand()/static_cast<double>(RAND_MAX);
+            c = rand()/static_cast<double>(RAND_MAX);
+            r = sqrt(1-a)*sin(2*M_PI*b);
+            i_img = sqrt(1-a)*cos(2*M_PI*b);
+            j_img = sqrt(a)*sin(2*M_PI*c);
+            k_img = sqrt(a)*cos(2*M_PI*c);
 
-                if (r*r + i_img*i_img + j_img*j_img + k_img*k_img == 1.0){break;}
-            }
+            if (r*r + i_img*i_img + j_img*j_img + k_img*k_img == 1.0){break;}
         }
+        real = r, i = i_img, j = j_img, k = k_img;
+
+    }
+    /*Random quaternion replacement. INPUT:
+    int xL=-50 : left limit of the generation interval
+    int xR=50 : right limit of the generation interval*/
+    void random(float xL=-50, float xR=50){
+        if (xL==xR){real=xL, i=xL, j=xL, k=xL;}
         else{
-            int h = xR-xL;
-            r = rand()%h + xL;
-            i_img = rand()%h + xL;
-            j_img = rand()%h + xL;
-            k_img = rand()%h + xL;
-        }
-        real = r, i = i_img, j = j_img, k = k_img;}
+            std::srand(time(0));
+            float h = (xR-xL)*(xR>xL) + (xL-xR)*(xR<xL);
+            float lefty = xL*(xR>xL) + xR*(xR<xL);
+            real = rand()/static_cast<double>(RAND_MAX) *h + lefty;
+            i = rand()/static_cast<double>(RAND_MAX) *h + lefty;
+            j = rand()/static_cast<double>(RAND_MAX) *h + lefty;
+            k = rand()/static_cast<double>(RAND_MAX) *h + lefty;}
+    }
 
     /*Returns an array whose components are the three imaginary parts of the quaternion*/
     double* vector(){
@@ -125,19 +140,19 @@ class Quaternion{
         return *this;}
 
     /*Boolean check x == y*/
-    bool operator == (Quaternion const &obj) {return (*this-obj).norm() <= 1e-15;}
+    bool operator == (Quaternion const &obj) {return (*this-obj).norm() <= FP_BOUND;}
 
     /*Boolean check x != y*/
-    bool operator != (Quaternion const &obj) {return (*this-obj).norm() > 1e-15;}
+    bool operator != (Quaternion const &obj) {return (*this-obj).norm() > FP_BOUND;}
 
     /*Checks if the quaternion is unitary*/
     bool is_unit(){return square_norm() == 1.0;}
 
     /*Checks if the quaternion is a real number*/
-    bool is_real(){return i <= 1e-15 && j <= 1e-15 && k <= 1e-15;}
+    bool is_real(){return abs(i) <= FP_BOUND && abs(j) <= FP_BOUND && abs(k) <= FP_BOUND;}
 
     /*Checks if the quaternion has only imaginary parts*/
-    bool is_imagy(){return real <= 1e-15 && (i!=0 || j!=0 || k!=0);}
+    bool is_imagy(){return abs(real) <= FP_BOUND && !this->is_real();}
  
     
 
@@ -219,13 +234,13 @@ class Quaternion{
     /*Returns the inverse quaternion*/
     Quaternion inverse(){
         double n2 = square_norm();
-        if (n2 <= 1e-15){throw std::domain_error("Zero division error");}
+        if (n2 <= FP_BOUND){throw std::domain_error("Zero division error");}
         return Quaternion(real/n2, -i/n2, -j/n2, -k/n2);}
 
     /*Inverts the quaternion*/
     Quaternion inverse_ip(){
         double n2 = square_norm();
-        if (n2 <= 1e-15){throw std::domain_error("Zero division error");}
+        if (n2 <= FP_BOUND){throw std::domain_error("Zero division error");}
         real /= n2, i /= -n2, j /= -n2, k /= -n2;
         return *this;}
 
@@ -242,14 +257,14 @@ class Quaternion{
     /*Returns the normalized quaternion*/
     Quaternion normalize() {
         double n = norm();
-        if (n <= 1e-15){throw std::domain_error("Zero division error");}
+        if (n <= FP_BOUND){throw std::domain_error("Zero division error");}
         return Quaternion(real/n, i/n, j/n, k/n);
     }
 
     /*Normalizes the quaternion*/
     Quaternion normalize_ip(){
         double n = norm();
-        if (n <= 1e-15){throw std::domain_error("Zero division error");}
+        if (n <= FP_BOUND){throw std::domain_error("Zero division error");}
         (real /= n, i /= n, j /= n, k /= n)*(n != 1.0);
         return *this;
     }
@@ -259,6 +274,11 @@ class Quaternion{
 
 
 int main(){
-    Quaternion x(3,1,2,-6);
-    std::cout << x.k;
+    Quaternion x(-3);
+    Quaternion y(0,1,2,-5);
+    Quaternion z(0);
+    std::cout << x.is_real() << x.is_imagy() << std::endl;
+    std::cout << y.is_real() << y.is_imagy() << std::endl;
+    std::cout << z.is_real() << z.is_imagy();
+    
 }

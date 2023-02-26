@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.1.7
+:star: Version 2.1.8
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -46,7 +46,7 @@ I used mostly magic methods to allow users to write `x+y`, `x*y`, `x/y`, ..., di
 
 I recommend reading [this file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
 
-Every value below 1e-15 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
+Every value below 1e-13 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
 ===========================================================================
 
@@ -100,6 +100,11 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ===========================================================================
 
 ## 6. CHANGELOG
+
+### Version 2.1.8
+Extended the random number generator to float numbers. Renamed `random` to `random_unit` and `randint` to `random`.
+
+Added the variable `FP_BOUND` to easily handle the floating point during logical checks. The user can edit it with the method `change_bound`.
 
 ### Version 2.1.7
 Implemented some elements of 3D geometry. Added the property `rotation` which returns a tuple with the four elements of a rotation: the angle and the 3D axis. By the equivalence `3D rotation == versor quaternion`, the method automatically normalizes the quaternion if it is not unitary (and raises a warning to the user).

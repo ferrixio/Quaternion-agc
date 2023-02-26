@@ -43,7 +43,7 @@ I overload some operators to allow users to write `x+y`, `x*y`, `x/y`, ..., dire
 
 I recommend reading [this file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
 
-Every value below 1e-15 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
+Every value below 1e-13 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
 ===========================================================================
 
@@ -97,8 +97,14 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 
 ## 6. CHANGELOG
 
-### Version 1.1
+### Versione 1.1.1
+Minor bug fixed.
 
+Added the variable `FP_BOUND` to easily handle the floating point during logical checks. The user can edit it with the void method `change_bound`.
+
+Splitted the random quaternion generators. Use `random_unit` for unitary random quaternions and `random` for float random quaternions.
+
+### Version 1.1
 Discovered the difference between `int(x)` and `static_cast<int>(x)`.
 
 I tried to convert the `@classmethods` `random()` and `randint()` from python to C++, but I could not overload the constructor. So I create the void method `random()` to rewrite the parameters of the quaternion. If the boolean `integer` is set to `true`, an unitary random quaternion is generated, instead of generating a quaternion with integer values (between -50 and 50).
@@ -108,5 +114,4 @@ Implemented the methods `power`, `power_ip`, `homotethy`, `homotethy_ip`, `vecto
 Changed to `public` the four components of the quaternion, to remove the four getter methods. 
 
 ### Version 1.0
-
 Converted most of my quaternion class from python to C++ language.

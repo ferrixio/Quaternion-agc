@@ -9,7 +9,13 @@ print(y, bool(y))
 print(z, bool(z))
 
 d = Quaternion(-3)
-print(f'{d} is real = {d.is_real()}')
+print(f'{d} is_real = {d.is_real()}, is_imagy = {d.is_imagy()}')
+
+e = Quaternion(0,-2,-3,5)
+print(f'{e} is_real = {e.is_real()}, is_imagy = {e.is_imagy()}')
+
+zero = Quaternion(0)
+print(f'0 is_real: {zero.is_real()}, is_imagy: {zero.is_imagy()}')
 
 print(f'x-1 = {x-1}\nx+1 = {x+1}')
 print(f'x*y = {x*y}\ny*x = {y*x}')
@@ -35,7 +41,7 @@ c = Quaternion(seq=[1,3,7,-2])
 c //= 2
 print(f'x//2 : {c}\nx.norm: {c.norm}')
 
-c = Quaternion.randint()
+c = Quaternion.random()
 d = c.inverse()
 print(f'c = {c}\nc^-1 = {d}\nc*d = {c*d}\nd*c = {d*c}')
 
