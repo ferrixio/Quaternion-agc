@@ -1,4 +1,4 @@
-# Quaternionic C++ - A (small) C++ resource
+# Quaternionic C++ : a (small) C++ resource
 ### Perform quaternionic arithmetic easily in C++
 
 :dragon: Author: Samuele Ferri (@ferrixio)
