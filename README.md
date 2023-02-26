@@ -22,7 +22,7 @@
 
 ## 1. FEATURES
 
-This class allows user to emulate quaternionic algebruh in Python. The class can do:
+This class allows user to emulate quaternionic algebra in Python. The class can do:
 
 	> internal and external sums
 	> scalar multiplications
@@ -65,13 +65,15 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 ## 4. FUTURE IDEAS
 
 + :o: Plotting quaternions (stereographic projection?)
-+ :hammer_and_wrench: Implementing rotation of 3D objects
++ :o: Implementing rotation of 3D objects
 + :white_check_mark: Vector representation
 + :white_check_mark: Add complex compatibility
 + :white_check_mark: Quaternionic functions
 + :white_check_mark: Floor division
 + :white_check_mark: Add @ operator
-+ :white_check_mark: Create a library
++ :warning: Create a library
+
+Legend: :o: = solution not (yet) found, :white_check_mark: = solution found and implemented, :warning: = solution found but the implementation needs to be improved
 
 ===========================================================================
 

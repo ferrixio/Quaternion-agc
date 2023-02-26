@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 1.0.1
+:star: Version 1.1
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -22,18 +22,22 @@
 
 ## 1. FEATURES
 
-This class allows user to emulate quaternionic algebruh in C++. The class can do:
+This class allows user to emulate quaternionic algebra in C++. The class can do:
 
 	> internal and external sums
 	> scalar multiplications
 	> internal left-multiplications
 	> internal right-multiplications
 	> divisions
+	> integer powers
 	> normalizations
 	> conjugations
 	> inversions
 	> algebric prints
 	> type casting (int, float, double)
+	> random generations
+	> homotethies
+	> conversion to rotation
 
 I overload some operators to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
@@ -59,9 +63,12 @@ I'm NOT an expert of C++.
 
 ## 4. FUTURE IDEAS
 
-+ :o: Multiple construtors
 + :o: Complex number implementation
-+ :o: Rotations and geometry
++ :o: Geometry methods
++ :white_check_mark: Rotations
++ :warning: Multiple construtors
+
+Legend: :o: = solution not (yet) found, :white_check_mark: = solution found and implemented, :warning: = solution found but the implementation needs to be improved
 
 ===========================================================================
 
@@ -89,10 +96,16 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 
 ## 6. CHANGELOG
 
-### Version 1.0.1
+### Version 1.1
 
 Discovered the difference between `int(x)` and `static_cast<int>(x)`.
 
+I tried to convert the `@classmethods` `random()` and `randint()` from python to C++, but I could not overload the constructor. So I create the void method `random()` to rewrite the parameters of the quaternion. If the boolean `integer` is set to `true`, an unitary random quaternion is generated, instead of generating a quaternion with integer values (between -50 and 50).
+
+Implemented the methods `power`, `power_ip`, `homotethy`, `homotethy_ip`, `vector`, `rotation`.
+
+Changed to `public` the four components of the quaternion, to remove the four getter methods. 
+
 ### Version 1.0
 
-Converted most of my quaternion class from `python` to `C++` language.
+Converted most of my quaternion class from python to C++ language.

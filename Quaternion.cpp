@@ -2,7 +2,7 @@
 Quaternion class for C++
 
 Author:     Samuele Ferri (@ferrixio)
-Version:    1.0.1
+Version:    1.1
 */
 #define _USE_MATH_DEFINES
 
@@ -12,27 +12,66 @@ Version:    1.0.1
 #include <string>
 #include <ctime>
 
-typedef std::numeric_limits< double > dbl;
+typedef std::numeric_limits<double> dbl;
 
 
 class Quaternion{
-
-    private:
-    double real, i, j, k;
-    
     public:
+    // Components
+    double real, i, j, k;
+
     /*Standard initializer*/
     Quaternion(double real_part=0, double i_img=0, double j_img=0, double k_img=0){
         real = real_part, i = i_img, j = j_img, k = k_img;}
 
+    /*Random quaternion replacement. INPUT:
+    bool integer=false : if true, the random numbers will be integers
+    int xL=-50 : left limit of the integer generation interval
+    int xR=50 : right limit of the integer generation interval*/
+    void random(bool integer=false, int xL=-50, int xR=50){
+        std::srand(time(0));
+        double r, i_img, j_img, k_img, h;
+        if (integer){
+            double a, b, c;
+            while(true){
+                a = rand()/static_cast<double>(RAND_MAX);
+                b = rand()/static_cast<double>(RAND_MAX);
+                c = rand()/static_cast<double>(RAND_MAX);
+                r = sqrt(1-a)*sin(2*M_PI*b);
+                i_img = sqrt(1-a)*cos(2*M_PI*b);
+                j_img = sqrt(a)*sin(2*M_PI*c);
+                k_img = sqrt(a)*cos(2*M_PI*c);
 
-    double get_real(){return real;}
+                if (r*r + i_img*i_img + j_img*j_img + k_img*k_img == 1.0){break;}
+            }
+        }
+        else{
+            int h = xR-xL;
+            r = rand()%h + xL;
+            i_img = rand()%h + xL;
+            j_img = rand()%h + xL;
+            k_img = rand()%h + xL;
+        }
+        real = r, i = i_img, j = j_img, k = k_img;}
 
-    double get_i(){return i;}
+    /*Returns an array whose components are the three imaginary parts of the quaternion*/
+    double* vector(){
+        static double v[3] = {i,j,k};
+        return v;}
 
-    double get_j(){return j;}
+    /*Returns the rotation associated to the quaternion.
+    Automatically normalizes (not in place) the quaternion*/
+    double* rotation(){
+        static double r[4] = {0,1,0,0};
+        if (real == 1.0){return r;}
 
-    double get_k(){return k;}
+        Quaternion q = *this;
+        if (q.norm() != 1.0){q.normalize_ip();}
+        r[0] = 2*acos(q.real);
+        r[1] = q.i/sin(r[0]/2);
+        r[2] = q.j/sin(r[0]/2);
+        r[3] = q.k/sin(r[0]/2);
+        return r;}
 
 
 
@@ -67,7 +106,7 @@ class Quaternion{
     /*Overloading of ~x operator to get the inverse quaternion*/
     Quaternion operator ~(){return inverse();}
 
-    
+
 
     // Boolean methods
     /*Overloading = operator to variable assignment*/
@@ -97,8 +136,7 @@ class Quaternion{
     /*Overloading of += : H x H -> H */
     Quaternion& operator += (Quaternion const &obj)& {
         real += obj.real, i+=obj.i, j+=obj.j, k+=obj.k;
-        return *this;
-    }
+        return *this;}
 
     /*Overloading of + : H x H -> H */
     friend Quaternion operator + (Quaternion self, Quaternion const &obj) {return self += obj;}
@@ -106,8 +144,7 @@ class Quaternion{
     /*Overloading of -= : H x H -> H */
     Quaternion& operator -= (Quaternion const &obj)& {
         real -= obj.real, i-=obj.i, j-=obj.j, k-=obj.k;
-        return *this;
-    }
+        return *this;}
 
     /*Overloading of - : H x H -> H */
     friend Quaternion operator - (Quaternion self, Quaternion const &obj) {return self -= obj;}    
@@ -120,8 +157,7 @@ class Quaternion{
         double n_k = real*obj.k + k*obj.real + i*obj.j - j*obj.i;
 
         real = n_real, i = n_i, j = n_j, k = n_k;
-        return *this;
-    }
+        return *this;}
 
     /*Overloading * : H x H -> H */
     friend Quaternion operator * (Quaternion self, Quaternion const &obj) {return self *= obj;}
@@ -135,21 +171,42 @@ class Quaternion{
         double n_k = real*obj.k + k*obj.real + i*obj.j - j*obj.i;
 
         real = n_real, i = n_i, j = n_j, k = n_k;
-        return *this;
-    }
+        return *this;}
 
     /*Overloading of / : H x H -> H */
     friend Quaternion operator / (Quaternion self, Quaternion obj) {return self /= obj;}
 
+    /*Integer power function*/
+    Quaternion power(int p){
+        Quaternion h(1);
+        Quaternion q = *this*(p>0) + (this->inverse())*(p<0);
+        for(int i=0; i<abs(p); i++){h *= q;}
+        return h;        
+    }
+
+    /*Integer power function in place*/
+    Quaternion power_ip(int p){
+        Quaternion w = this->power(p);
+        real = w.real, i = w.i, j = w.j, k = w.k;
+        return *this;
+    }
+
+    /*Performs an homotethy on x to the sphere of radius y*/
+    Quaternion homotethy(double r){return (this->normalize())*r;}
+
+    /*Performs an homotethy in place on x to the sphere of radius y*/
+    Quaternion homotethy_ip(double r){return (this->normalize_ip())*r;}
 
 
-    // Algebruh
+
+    // Algebra
     /*Evaluates the square norm of the quaternion*/
     double square_norm(){return real*real + i*i + j*j + k*k;}
 
     /*Evaluates the norm of the quaternion*/
     double norm(){return pow(square_norm(), 0.5);}
     
+
     /*Returns the inverse quaternion*/
     Quaternion inverse(){
         double n2 = square_norm();
@@ -163,6 +220,7 @@ class Quaternion{
         real /= n2, i /= -n2, j /= -n2, k /= -n2;
         return *this;}
 
+
     /*Returns the conjugated quaternion*/
     Quaternion conjugate() {return Quaternion(real, -i, -j, -k);}
 
@@ -171,27 +229,27 @@ class Quaternion{
         i *= -1, j *= -1, k *= -1;
         return *this;}
 
+
     /*Returns the normalized quaternion*/
     Quaternion normalize() {
         double n = norm();
         if (n <= 1e-15){throw std::domain_error("Zero division error");}
-        if (n != 1.0){return Quaternion(real/n, i/n, j/n, k/n);}}
+        return Quaternion(real/n, i/n, j/n, k/n);
+    }
 
     /*Normalizes the quaternion*/
     Quaternion normalize_ip(){
         double n = norm();
         if (n <= 1e-15){throw std::domain_error("Zero division error");}
-        if (n != 1.0){
-            real /= n, i /= n, j /= n, k /= n;
-            return *this;
-        }}
-
+        (real /= n, i /= n, j /= n, k /= n)*(n != 1.0);
+        return *this;
+    }
 
 
 };
 
 
 int main(){
-    Quaternion x(0,1,1,1), y(1,-1,1,4);
-    std::cout << (x/y) << (y/x) << std::endl;
+    Quaternion x(3,1,2,-6);
+    std::cout << x.get_k();
 }

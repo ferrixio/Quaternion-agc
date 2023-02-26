@@ -134,8 +134,7 @@ class Quaternion:
         self.q[3] = a
 
     @property
-    def vector(self):
-        return self.q[1:]
+    def vector(self): return self.q[1:]
 
     @property
     def rotation(self) -> tuple:
@@ -541,6 +540,7 @@ class Quaternion:
     def square_norm(self) -> float:
         '''Returns the square norm of the quaternion.'''
         return self.real**2 + self.i**2 + self.j**2 + self.k**2
+
 
     def normalize(self):
         '''Returns the normalized quaternion.'''
