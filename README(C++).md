@@ -49,7 +49,7 @@ Every value below 1e-15 is treated as 0, especially during logical checks. This 
 
 ## 2. HOW TO USE
 
-Open the file `Quaternion.cpp` and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to __cite me__ if you are using this in a project!)
+Open the file `Quaternion.cpp` and try it, or simply copy and paste the class in the file you want to use. (Don't forget to __cite me__ if you are using this in a project!)
 
 ===========================================================================
 
