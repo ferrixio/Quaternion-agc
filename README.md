@@ -1,4 +1,4 @@
-# Quaternionic python - A (small) Python 3.11 resource
+# Quaternionic python : a (small) Python 3.11 resource
 ### Perform quaternionic arithmetic easily in Python
 
 :dragon: Author: Samuele Ferri (@ferrixio)
