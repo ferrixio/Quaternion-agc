@@ -104,7 +104,7 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ### Version 2.1.8
 Extended the random number generator to float numbers. Renamed `random` to `random_unit` and `randint` to `random`.
 
-Added the variable `FP_BOUND` to easily handle the floating point during logical checks. The user can edit it with the method `change_bound`.
+Added the variable `ACCURACY` to easily handle the floating point during logical checks. The user can edit it with the method `change_bound`.
 
 ### Version 2.1.7
 Implemented some elements of 3D geometry. Added the property `rotation` which returns a tuple with the four elements of a rotation: the angle and the 3D axis. By the equivalence `3D rotation == versor quaternion`, the method automatically normalizes the quaternion if it is not unitary (and raises a warning to the user).

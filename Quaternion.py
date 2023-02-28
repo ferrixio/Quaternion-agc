@@ -42,7 +42,7 @@ class Quaternion:
             return
 
         self.q: list = [real, i_img, j_img, k_img]
-        self.FP_BOUND = 1e-13       ## Floating point limiter ##
+        self.ACCURACY = 1e-13       ## Floating point limiter ##
 
 
     @classmethod
@@ -156,7 +156,7 @@ class Quaternion:
 
     def change_bound(self, fp:float=1e-13):
         '''Changes the floating point limiter. If no value is passed, it restores to the default value.'''
-        self.FP_BOUND = fp
+        self.ACCURACY = fp
 
 
     ## Type magic methods ##
@@ -166,7 +166,7 @@ class Quaternion:
         ans, terms = '', {0:'', 1:'i', 2:'j', 3:'k'}
 
         for i,part in enumerate(self.q):
-            if not part or abs(part)<self.FP_BOUND:  #if zero coeff (or almost there), it doesn't write
+            if not part or abs(part)<self.ACCURACY:  #if zero coeff (or almost there), it doesn't write
                 continue
             elif not ans:                      #positive coeff and not in first place
                 ans += f'{part}{terms[i]}'
@@ -511,7 +511,7 @@ class Quaternion:
     ## Boolean magic methods ##
     def __eq__(self, other) -> bool:
         '''Checks if all the components between the two quaternions are the same.'''
-        return self.__sub__(other).__abs__() < self.FP_BOUND
+        return self.__sub__(other).__abs__() < self.ACCURACY
 
     def __ne__(self, other) -> bool:
         '''Checks if one of the components between the two quaternions are different.'''
@@ -519,7 +519,7 @@ class Quaternion:
 
     def __bool__(self) -> bool:
         '''Checks if the quaternion is not zero.'''
-        return any(map(lambda x: abs(x) > self.FP_BOUND, self.q))
+        return any(map(lambda x: abs(x) > self.ACCURACY, self.q))
 
     def is_unit(self) -> bool:
         '''Checks if the quaternion is unitary, that is, if it lies on the 3-sphere.'''
@@ -527,11 +527,11 @@ class Quaternion:
 
     def is_real(self) -> bool:
         '''Checks if the quaternion is a real number.'''
-        return abs(self.i)<=self.FP_BOUND and abs(self.j)<=self.FP_BOUND and abs(self.k)<=self.FP_BOUND
+        return abs(self.i)<=self.ACCURACY and abs(self.j)<=self.ACCURACY and abs(self.k)<=self.ACCURACY
 
     def is_imagy(self) -> bool:
         '''Checks if the quaternion has only imginary parts.'''
-        return abs(self.real)<=self.FP_BOUND and not self.is_real()
+        return abs(self.real)<=self.ACCURACY and not self.is_real()
 
 
 

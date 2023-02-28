@@ -19,14 +19,14 @@ class Quaternion{
 
     private:
     /*Floating point limiter*/
-    double FP_BOUND = 1e-13;
+    double ACCURACY = 1e-13;
 
     public:
     /*Get the floating point limiter*/
-    double get_bound(){return FP_BOUND;}
+    double get_bound(){return ACCURACY;}
 
     /*Changes the floating point limiter. If no value is passed, it restores to the default value*/
-    void change_bound(double fp=1e-13){FP_BOUND = fp;}
+    void change_bound(double fp=1e-13){ACCURACY = fp;}
 
 
     //Components
@@ -140,19 +140,19 @@ class Quaternion{
         return *this;}
 
     /*Boolean check x == y*/
-    bool operator == (Quaternion const &obj) {return (*this-obj).norm() <= FP_BOUND;}
+    bool operator == (Quaternion const &obj) {return (*this-obj).norm() <= ACCURACY;}
 
     /*Boolean check x != y*/
-    bool operator != (Quaternion const &obj) {return (*this-obj).norm() > FP_BOUND;}
+    bool operator != (Quaternion const &obj) {return (*this-obj).norm() > ACCURACY;}
 
     /*Checks if the quaternion is unitary*/
     bool is_unit(){return square_norm() == 1.0;}
 
     /*Checks if the quaternion is a real number*/
-    bool is_real(){return abs(i) <= FP_BOUND && abs(j) <= FP_BOUND && abs(k) <= FP_BOUND;}
+    bool is_real(){return abs(i) <= ACCURACY && abs(j) <= ACCURACY && abs(k) <= ACCURACY;}
 
     /*Checks if the quaternion has only imaginary parts*/
-    bool is_imagy(){return abs(real) <= FP_BOUND && !this->is_real();}
+    bool is_imagy(){return abs(real) <= ACCURACY && !this->is_real();}
  
     
 
@@ -234,13 +234,13 @@ class Quaternion{
     /*Returns the inverse quaternion*/
     Quaternion inverse(){
         double n2 = square_norm();
-        if (n2 <= FP_BOUND){throw std::domain_error("Zero division error");}
+        if (n2 <= ACCURACY){throw std::domain_error("Zero division error");}
         return Quaternion(real/n2, -i/n2, -j/n2, -k/n2);}
 
     /*Inverts the quaternion*/
     Quaternion inverse_ip(){
         double n2 = square_norm();
-        if (n2 <= FP_BOUND){throw std::domain_error("Zero division error");}
+        if (n2 <= ACCURACY){throw std::domain_error("Zero division error");}
         real /= n2, i /= -n2, j /= -n2, k /= -n2;
         return *this;}
 
@@ -257,14 +257,14 @@ class Quaternion{
     /*Returns the normalized quaternion*/
     Quaternion normalize() {
         double n = norm();
-        if (n <= FP_BOUND){throw std::domain_error("Zero division error");}
+        if (n <= ACCURACY){throw std::domain_error("Zero division error");}
         return Quaternion(real/n, i/n, j/n, k/n);
     }
 
     /*Normalizes the quaternion*/
     Quaternion normalize_ip(){
         double n = norm();
-        if (n <= FP_BOUND){throw std::domain_error("Zero division error");}
+        if (n <= ACCURACY){throw std::domain_error("Zero division error");}
         (real /= n, i /= n, j /= n, k /= n)*(n != 1.0);
         return *this;
     }

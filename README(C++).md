@@ -100,7 +100,7 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ### Versione 1.1.1
 Minor bug fixed.
 
-Added the variable `FP_BOUND` to easily handle the floating point during logical checks. The user can edit it with the void method `change_bound`.
+Added the variable `ACCURACY` to easily handle the floating point during logical checks. The user can edit it with the void method `change_bound`.
 
 Splitted the random quaternion generators. Use `random_unit` for unitary random quaternions and `random` for float random quaternions.
 
