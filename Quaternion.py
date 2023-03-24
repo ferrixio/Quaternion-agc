@@ -191,11 +191,10 @@ class Quaternion:
         if self.real == 1.0:
             return 0,(1,0,0)
 
-        if self.norm != 1.0:
-            self.normalize_ip()
+        self_copy = +self.normalize()
 
-        theta = 2*acos(self.real)
-        return theta, (self.i/sin(theta/2), self.j/sin(theta/2), self.k/sin(theta/2))
+        theta = 2*acos(self_copy.real)
+        return theta, (self_copy.i/sin(theta/2), self_copy.j/sin(theta/2), self_copy.k/sin(theta/2))
 
     def change_bound(self, fp:float=1e-13):
         '''Changes the floating point limiter. If no value is passed, it sets to the value 1e-13.'''
@@ -628,8 +627,7 @@ class Quaternion:
     def normalize(self):
         '''Returns the normalized quaternion.'''
         t = self.norm
-        if t != 1.0:
-            return Quaternion(self.real/t, self.i/t, self.j/t, self.k/t)
+        return Quaternion(self.real/t, self.i/t, self.j/t, self.k/t)
 
     def normalize_ip(self):
         '''Normalizes the quaternion in place.'''
@@ -690,14 +688,12 @@ class Quaternion:
             raise TypeError("point must be a 3-dimensional iterable of floats")
         
         p = Quaternion(seq=(0,*point))
-        
-        if not self.norm==1.0:
-            self.normalize_ip()
+        self_copy = +self.normalize()
 
         if not passive:
-            return (self.__invert__() * p * self).vector
+            return (self_copy.inverse() * p * self_copy).vector
         
-        return (self * p * self.__invert__()).vector
+        return (self_copy * p * self_copy.inverse()).vector
 
 
     # They are @staticmethods since they "exit" from the object
