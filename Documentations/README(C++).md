@@ -5,7 +5,7 @@
 
 :star: Version 1.1.1
 
-📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
+📜 Check this [useful file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/Documentations/How%20to%20assemble%20a%20quaternion.md)
 
 ===========================================================================
 
@@ -41,7 +41,7 @@ This class allows user to emulate quaternionic algebra in C++. The class can do:
 
 I overload some operators to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
-I recommend reading [this file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
+I recommend reading [this file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/Documentations/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
 
 Every value below 1e-13 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
@@ -69,7 +69,10 @@ I'm NOT an expert of C++.
 + :white_check_mark: Rotations
 + :warning: Multiple construtors
 
-Legend: :o: = solution not (yet) found, :white_check_mark: = solution found and implemented, :warning: = solution found but the implementation needs to be improved
+### Legend:
++ :o: = solution not (yet) found,
++ :white_check_mark: = solution found and implemented,
++ :warning: = solution found but the implementation needs to be improved
 
 ===========================================================================
 
