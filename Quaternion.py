@@ -191,7 +191,7 @@ class Quaternion:
         if self.real == 1.0:
             return 0,(1,0,0)
 
-        self_copy = +self.normalize()
+        self_copy = self.normalize()
 
         theta = 2*acos(self_copy.real)
         return theta, (self_copy.i/sin(theta/2), self_copy.j/sin(theta/2), self_copy.k/sin(theta/2))
@@ -688,7 +688,7 @@ class Quaternion:
             raise TypeError("point must be a 3-dimensional iterable of floats")
         
         p = Quaternion(seq=(0,*point))
-        self_copy = +self.normalize()
+        self_copy = self.normalize()
 
         if not passive:
             return (self_copy.inverse() * p * self_copy).vector
