@@ -4,6 +4,8 @@ x = Quaternion(2,1,1,0)
 y = Quaternion(1,-1,1,4)
 z = Quaternion(0)
 
+print(z.vector, x.vector)
+
 print(x, type(x), repr(x))
 print(y, bool(y))
 print(z, bool(z))
@@ -57,5 +59,11 @@ x = Quaternion(1,2,3,4)
 y = Quaternion(2,1,3,4)
 print(f'x.rotation = {x.rotation}\ny.rotation = {y.rotation}')
 
-r = Quaternion.from_rotation(112, 1,2,3)
-print(f'from_rotation(112,1,2,3) = {r}')
+axis = (1,0,0)
+angle = 180
+r = Quaternion.from_rotation(angle, axis)
+print(f'from_rotation({angle},{axis}) = {r}')
+
+p = (1,0,0)
+q = Quaternion.from_rotation(180, (0,1,0))
+print(f'rotate_point {p} along {q.rotation} = {q.rotate_point(p)}')

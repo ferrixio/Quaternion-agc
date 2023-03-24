@@ -1,14 +1,25 @@
 # Quaternion class for python 3.11
 
 # Author:     Samuele Ferri (@ferrixio)
-# Version:    2.1.8
+# Version:    2.2
 
 from math import sqrt, pi, sin, cos, e, log2, acos
+from typing import Iterable
 
 class Quaternion:
+    '''Class to represent quaternions.
+    
+    Quaternion object is a 4D number and a 3D rotation.
+    
+    Attributes:
+    - q: 4-dimensional list
+    - ACCURACY: range to handle with floating point
+
+    '''
 
     ## Initializers ##
-    def __new__(cls, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0, seq=None):
+    def __new__(cls, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0,
+                seq = None, acc:float=1e-13):
         '''Pre-generation of the quaternion.'''
 
         if not isinstance(real, float|int):
@@ -20,13 +31,19 @@ class Quaternion:
 
         if isinstance(seq, list|tuple) and len(seq) > 4:
             raise IndexError("Invalid length: it must be from 0 to 4")
+        
+        if not isinstance(acc, float):
+            raise TypeError("Accuracy must be a float")
 
         return super().__new__(cls)
 
-        
-    def __init__(self, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0, seq=None):
-        '''Quaternion's initialization.'''
-            
+
+    def __init__(self, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0,
+                 seq=None, acc:float=1e-13) -> object:
+        '''Initializer of Quaternion object.
+
+        See [How to assemble a quaternion](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md) doc for complete behaviour:
+        '''
         if isinstance(seq, list|tuple):
             match len(seq):
                 case 0:
@@ -42,14 +59,16 @@ class Quaternion:
             return
 
         self.q: list = [real, i_img, j_img, k_img]
-        self.ACCURACY = 1e-13       ## Floating point limiter ##
+        self.ACCURACY = acc       ## Floating point limiter ##
 
 
     @classmethod
-    def from_complex(cls, cplx:complex=0j, imag:str='i'):
-        '''Generates a quaternion from a complex number. imag is a string used to specify 
-        which imaginary part is to be used (i, j or k). As default, it is the first.'''
-
+    def from_complex(cls, cplx:complex=0j, imag:str='i') -> object:
+        '''Generates a quaternion from a complex number.
+        
+        The string imag is used to specify which imaginary part is to be used (i, j or k).
+        As default, it is the first.
+        '''
         match imag:
             case 'i':
                 return cls(real=cplx.real, i_img=cplx.imag)
@@ -62,17 +81,23 @@ class Quaternion:
                 
                 
     @classmethod
-    def from_rotation(cls, theta:float=0, x1:float=1, x2:float=0, x3:float=0):
-        '''Generates a quaternion from a 3D rotation. theta is the angle, while x1, x2 and x3
-        are the three coordinates in R3.'''
+    def from_rotation(cls, theta:float=0, axis:Iterable[float]=(0,0,0)) -> object:
+        '''Generates a quaternion from a 3D rotation.
+        
+        The float theta is the angle (in degrees), while axis is the (x,y,z) vector in R3.
+        '''
+        theta_rad = (theta/180)*pi
+        a = cos(theta_rad/2)
 
-        a = cos(theta/2)
-        b,c,d = x1*sin(theta/2), x2*sin(theta/2), x3*sin(theta/2)
+        if not len(axis)==3:
+            raise TypeError("invalid length of axis: must be 3")
+        
+        b,c,d = axis[0]*sin(theta_rad/2), axis[1]*sin(theta_rad/2), axis[2]*sin(theta_rad/2)
         return cls(a,b,c,d)
 
 
     @classmethod
-    def random_unit(cls):
+    def random_unit(cls) -> object:
         '''Random unitary quaternion generator.'''
         from random import random
         while True:
@@ -89,8 +114,11 @@ class Quaternion:
 
 
     @classmethod
-    def random(cls, a:float = -50, b:float = 50):
-        '''Random quaternion generator.'''
+    def random(cls, a:float = -50, b:float = 50) -> object:
+        '''Random quaternion generator.
+        
+        The floats a and b are the bounds of the uniform distribution used to pick the numbers.
+        '''
         from random import uniform
         return cls(uniform(a,b), uniform(a,b), uniform(a,b), uniform(a,b))
 
@@ -98,71 +126,90 @@ class Quaternion:
 
     ## Properties ##
     @property
-    def real(self): return self.q[0]
+    def real(self) -> float:
+        '''Returns the real part of the quaternion.'''
+        return self.q[0]
 
     @property
-    def i(self): return self.q[1]
+    def i(self) -> float:
+        '''Returns the first imaginary part of the quaternion.'''
+        return self.q[1]
 
     @property
-    def j(self): return self.q[2]
+    def j(self) -> float:
+        '''Returns the second imaginary part of the quaternion.'''
+        return self.q[2]
 
     @property
-    def k(self): return self.q[3]
+    def k(self) -> float:
+        '''Returns the third imaginary part of the quaternion.'''
+        return self.q[3]
 
 
     @real.setter
     def real(self, a):
-        if not isinstance(a, int|float|str):
+        if not isinstance(a, int|float):
             raise ValueError("Real part must be of type 'int', 'float' or 'str'")
         self.q[0] = a
         
     @i.setter
     def i(self, a):
-        if not isinstance(a, int|float|str):
+        if not isinstance(a, int|float):
             raise ValueError("i must be of type 'int', 'float' or 'str'")
         self.q[1] = a
         
     @j.setter
     def j(self, a):
-        if not isinstance(a, int|float|str):
+        if not isinstance(a, int|float):
             raise ValueError("j must be of type 'int', 'float' or 'str'")
         self.q[2] = a      
 
     @k.setter
     def k(self, a):
-        if not isinstance(a, int|float|str):
+        if not isinstance(a, int|float):
             raise ValueError("k must be of type 'int', 'float' or 'str'")
         self.q[3] = a
 
     @property
-    def vector(self): return self.q[1:]
+    def vector(self) -> tuple:
+        '''Returns a list with the three imaginary parts.'''
+        return tuple(self.q[1:])
 
     @property
     def rotation(self) -> tuple:
-        '''Returns the rotation associated to the quaternion.'''
+        '''Gets the rotation associated to the quaternion.
+        
+        Returns a 2-tuple (theta, (x, y, z)) containing:
+            theta: the angle
+            (x,y,z): axis of rotation
+            
+        Notes:
+        - the quaternion will be normalized if its norm is not 1
+        - the method returns (0,(1,0,0)) if the real part is 1, because it is
+        the pole of the conversion map
+        '''
         if self.real == 1.0:
-            return 0,1,0,0
+            return 0,(1,0,0)
 
         if self.norm != 1.0:
-            from warnings import warn
-            rawr = 'Warning: the quaternion is not unitary. It is only possible to extract rotations \
-                from versors, so the quaternion has been normalized.'
-            warn(rawr)
-            del rawr
             self.normalize_ip()
 
         theta = 2*acos(self.real)
-        return theta, self.i/sin(theta/2), self.j/sin(theta/2), self.k/sin(theta/2)
+        return theta, (self.i/sin(theta/2), self.j/sin(theta/2), self.k/sin(theta/2))
 
     def change_bound(self, fp:float=1e-13):
-        '''Changes the floating point limiter. If no value is passed, it restores to the default value.'''
+        '''Changes the floating point limiter. If no value is passed, it sets to the value 1e-13.'''
         self.ACCURACY = fp
 
 
     ## Type magic methods ##
     def __str__(self) -> str:
         '''Magic method to show a quaternion using print().
-        Numbers below 1e-10 will be printed as 0.'''
+
+        Returns a string of the form "a + bi + cj + dk".
+
+        Note: numbers below ACCURACY will be printed as 0.
+        '''
         ans, terms = '', {0:'', 1:'i', 2:'j', 3:'k'}
 
         for i,part in enumerate(self.q):
@@ -175,8 +222,7 @@ class Quaternion:
 
         if not ans:
             return '0'
-
-        del terms
+        
         return ans
 
     def __repr__(self) -> str:
@@ -185,42 +231,58 @@ class Quaternion:
 
     def __int__(self) -> int:
         '''Magic method to convert a quaternion to an integer.
-        Truncates the quaternion object by only considering its real part as integer.'''
+
+        Truncates the quaternion object by only considering its real part as an integer.
+        '''
         return int(self.real)
 
     def __float__(self) -> float:
         '''Magic method to convert a quaternion to a float.
-        Truncates the quaternion object by only considering its real part as float.'''
+
+        Truncates the quaternion object by only considering its real part as a float.
+        '''
         return float(self.real)
 
     def __complex__(self) -> complex:
         '''Magic method to convert a quaternion to a complex number.
+
         Truncates the quaternion object by only considering its first complex part,
-        that is, a projection from the 3-sphere to the complex plane.'''
+        that is, a projection from the 3-sphere to the complex plane.
+        '''
         return complex(self.real, self.i)
 
 
 
     ## Unary operation magic methods ##
     def __pos__(self):
-        '''Magic method to perform unary operation +object.'''
+        '''Magic method to perform unary operation +object.
+        
+        Actually it creates a copied version of the quaternion.
+        '''
         return self.__class__(self.real, self.i, self.j, self.k)
 
     def __neg__(self):
-        '''Magic method to perform the unary operation -object.'''
+        '''Magic method to perform the unary operation -object.
+        
+        It reverse the sign of each components of the quaternion.
+        '''
         return self.__class__(-self.real, -self.i, -self.j, -self.k)
 
     def __invert__(self):
         '''Magic method to get the inverse quaternion using ~.'''
         return self.inverse()
 
-    def __abs__(self):
-        '''Magic method to perform abs(). The absolute value of a quaternion is it's norm.'''
+    def __abs__(self) -> float:
+        '''Magic method to perform abs().
+        
+        The absolute value of a quaternion is it's norm.
+        '''
         return self.norm
 
     def __round__(self, n:int=3):
         '''Magic method to round the decimals of every components of the quaternion.
-        If n is not given, n = 3.'''
+        If n is not given, n = 3.
+        '''
         return Quaternion(round(self.real,n), round(self.i,n), round(self.j,n), 
                 round(self.k,n))
 
@@ -228,8 +290,8 @@ class Quaternion:
     
     ## Binary operation magic methods ##
     @staticmethod
-    def check_other(T_other, operation:str) -> None:
-        '''Auxiliary function to raise full exceptions during arithmetic.'''
+    def check_other(T_other, operation:str):
+        '''Auxiliary function to raise exceptions during arithmetic.'''
         if isinstance(T_other, int|float|complex|Quaternion):
             return
 
@@ -251,7 +313,8 @@ class Quaternion:
         return Quaternion(self.real+other.real, self.i+other.i, self.j+other.j, self.k+other.k)
 
     def __radd__(self, other):
-        '''Magic method to emulate the right sum.'''
+        '''Magic method to emulate the right sum. Since (H,+) is an Abelian group,
+        left and right are the same.'''
         return self.__add__(other)
 
     def __iadd__(self, other):
@@ -323,9 +386,9 @@ class Quaternion:
 
     # Multiplication
     def __mul__(self, other):
+        '''Magic method to perform quaternionic left-multiplication x * y.'''
         self.check_other(other, '*')
 
-        '''Magic method to perform quaternionic left-multiplication x * y.'''
         if isinstance(other, int|float):
             return Quaternion(self.real*other,self.i*other,self.j*other,self.k*other)
 
@@ -460,9 +523,11 @@ class Quaternion:
 
     # Modulo
     def __mod__(self, other):
-        '''Magic method to implement int-modulo operation x % y. Since there is not a true
-        modulo operation in H, it returns the reminder of an hipotetical division along
-        the line, in HP1, through the given quaternion.'''
+        '''Magic method to implement int-modulo operation x % y.
+        
+        Since there is not a true modulo operation in H, it returns the reminder of
+        an hipotetical division along the line, in HP1, through the given quaternion.
+        '''
         self.check_other(other, '%')
 
         if not isinstance(other, int|float) or other < 0:
@@ -474,9 +539,11 @@ class Quaternion:
 
     # Floordivision
     def __floordiv__(self, other):
-        '''Magic method to implement int-modulo operation x // y. Since there is not a true
-        modulo operation in H, it returns the quotient of an hipotetical division along
-        the line, in HP1, through the given quaternion.'''
+        '''Magic method to implement int-modulo operation x // y.
+        
+        Since there is not a true modulo operation in H, it returns the quotient of
+        an hipotetical division along the line, in HP1, through the given quaternion.
+        '''
         self.check_other(other, '//')
 
         if not isinstance(other, int|float) or other < 0:
@@ -488,8 +555,11 @@ class Quaternion:
 
     # Matmul
     def __matmul__(self, other):
-        '''Magic method to implement matmul x @ y. Since floordivision doesn't exist in H,
-        it performs an homotethy on x to the sphere of radius y.'''
+        '''Magic method to implement matmul x @ y.
+        
+        Since floordivision doesn't exist in H, it performs an homotethy on x
+        to the sphere of radius y.
+        '''
         self.check_other(other, '@')
 
         if not isinstance(other, int|float) or other < 0:
@@ -510,15 +580,24 @@ class Quaternion:
 
     ## Boolean magic methods ##
     def __eq__(self, other) -> bool:
-        '''Checks if all the components between the two quaternions are the same.'''
+        '''Magic method to perform ==.
+        
+        Checks if all the components between the two quaternions are the same.
+        '''
         return self.__sub__(other).__abs__() < self.ACCURACY
 
     def __ne__(self, other) -> bool:
-        '''Checks if one of the components between the two quaternions are different.'''
-        return self.q != other.q
+        '''Magic method to perform !=.
+
+        Returns the negation of __eq__.
+        '''
+        return not self.__eq__(other)
 
     def __bool__(self) -> bool:
-        '''Checks if the quaternion is not zero.'''
+        '''Magic method to perform bool().
+
+        Returns True if the quaternion is not zero.
+        '''
         return any(map(lambda x: abs(x) > self.ACCURACY, self.q))
 
     def is_unit(self) -> bool:
@@ -564,7 +643,9 @@ class Quaternion:
 
 
     def conjugate(self):
-        '''Returns the conjugated quaternion.'''
+        '''Returns the conjugated quaternion, that is a quaternion with the signs of the
+        imaginary parts reversed.
+        '''
         return Quaternion(self.real,-self.i,-self.j,-self.k)
 
     def conjugate_ip(self):
@@ -595,15 +676,35 @@ class Quaternion:
         self.k /= -n
         return self
 
-    
 
     ## Geometry (functions) ##
+    def rotate_point(self, point:Iterable[float], passive:bool=False) -> tuple:
+        '''Performs the rotation of a given point.
+        
+        Notes:
+        - normalizes the quaternion if it is not unitary
+        - the boolean passive, if set to True, performs the passive rotation, that is the inverse
+        rotation.
+        '''
+        if not len(point)==3:
+            raise TypeError("point must be a 3-dimensional iterable of floats")
+        
+        p = Quaternion(seq=(0,*point))
+        
+        if not self.norm==1.0:
+            self.normalize_ip()
+
+        if not passive:
+            return (self.__invert__() * p * self).vector
+        
+        return (self * p * self.__invert__()).vector
+
+
     # They are @staticmethods since they "exit" from the object
     @staticmethod
     def dot(q1, q2) -> float:
-        '''Performs dot product between vector parts of the two given quaternions.
-        Since the vector part of a quaternion is a three-dimensional array, it reflects the 
-        standard euclidean geometry of R3.'''
+        '''Performs Euclidean dot product between vector parts of the two given quaternions.'''
+
         if not (isinstance(q1, Quaternion) and isinstance(q2, Quaternion)):
             raise TypeError("unsupported operand type(s) for dot: arguments must be 'Quaternion'")
 
@@ -623,13 +724,13 @@ class Quaternion:
 
     @staticmethod
     def commutator(q1, q2) -> tuple:
-        '''Performs the commutator of the vector part of two given quaternions.'''
+        '''Performs the commutator of the vector parts of two given quaternions.'''
         C = Quaternion.cross(q1, q2)
         return 2*C[0], 2*C[1], 2*C[2]
     
     @staticmethod
-    def exp(Q) -> tuple:
-        '''Quaternionic exponential function. It returns a 4-tuple for future implementions.'''
+    def exp(Q):
+        '''Quaternionic exponential function.'''
         if Q.is_real():
             raise ZeroDivisionError("This is real number, isn't it?")
 
@@ -643,11 +744,11 @@ class Quaternion:
         j = (v[1]/v_norm) * esin
         k = (v[2]/v_norm) * esin
 
-        return ecos, i, j, k
+        return Quaternion(ecos, i, j, k)
 
     @staticmethod
-    def log2(Q) -> tuple:
-        '''Quaternionic logarithmic function. It returns a 4-tuple for future implementions.'''
+    def log2(Q):
+        '''Quaternionic logarithmic function.'''
         if Q.is_real():
             raise ZeroDivisionError("This is real number, isn't it?")
 
@@ -661,12 +762,14 @@ class Quaternion:
         j = (v[1]/v_norm) * a_acos
         k = (v[2]/v_norm) * a_acos
 
-        return lnq, i, j, k
+        return Quaternion(lnq, i, j, k)
 
     @staticmethod
     def geodesic_dist(q1, q2) -> float:
-        '''Returns the geodesic distance between two given unitary quaternions, that is the absolute
-        value of half the angle subtended by them along a great arc of the 3-sphere.'''
+        '''Returns the geodesic distance between two given unitary quaternions.
+        
+        It is the absolute value of half the angle subtended by them along a great arc of the 3-sphere.
+        '''
         if not (isinstance(q1, Quaternion) and isinstance(q2, Quaternion)):
             raise TypeError("unsupported operand type(s) for geodesic_dist: arguments must be 'Quaternion'")
 
@@ -674,3 +777,6 @@ class Quaternion:
             raise ArithmeticError("invalid argument(s) given: both quaternions must be unitary")
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
+
+
+# End of class

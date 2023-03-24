@@ -3,7 +3,8 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.1.8
+:star: (Main) Version 2.2
+:chart_with_upwards_trend: (Hplot) Version 1.0
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -41,6 +42,8 @@ This class allows user to emulate quaternionic algebra in Python. The class can 
 	> exponential and logarithmic functions
 	> dot product, cross product and commutator
 	> extraction or generation from 3D rotations
+	> rotate points in 3D
+	> plotting quaternions
 
 I used mostly magic methods to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
@@ -64,16 +67,19 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 
 ## 4. FUTURE IDEAS
 
-+ :o: Plotting quaternions (stereographic projection?)
-+ :o: Implementing rotation of 3D objects
 + :white_check_mark: Vector representation
 + :white_check_mark: Add complex compatibility
 + :white_check_mark: Quaternionic functions
 + :white_check_mark: Floor division
 + :white_check_mark: Add @ operator
++ :warning: Implementing rotation of 3D objects
++ :warning: Plotting quaternions
 + :warning: Create a library
 
-Legend: :o: = solution not (yet) found, :white_check_mark: = solution found and implemented, :warning: = solution found but the implementation needs to be improved
+### Legend:
++ :o: = solution not (yet) found
++ :white_check_mark: = solution found and implemented
++ :warning: = solution found but the implementation needs to be improved
 
 ===========================================================================
 
@@ -100,6 +106,19 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 ===========================================================================
 
 ## 6. CHANGELOG
+
+### Version 2.2
+Removed the possibility to set strings as parameters.
+
+Added more descriptions in functions and typing. Added the possibility to set the accuracy using the standard initializator. 
+
+Change the output of `rotation` function.
+
+Created the class `Hplot` to plot quaternions in three ways:
+
++ 3D-colored points,
++ mutual distances,
++ 3D-colored points connected according to the minimal mutual distance.
 
 ### Version 2.1.8
 Extended the random number generator to float numbers. Renamed `random` to `random_unit` and `randint` to `random`.
