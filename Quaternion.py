@@ -42,7 +42,7 @@ class Quaternion:
                  seq=None, acc:float=1e-13) -> object:
         '''Initializer of Quaternion object.
 
-        See [How to assemble a quaternion](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md) doc for complete behaviour:
+        See [How to assemble a quaternion](https://github.com/ferrixio/Quaternionic-beasts/blob/main/Documentations/How%20to%20assemble%20a%20quaternion.md) doc for complete behaviour:
         '''
         if isinstance(seq, list|tuple):
             match len(seq):
