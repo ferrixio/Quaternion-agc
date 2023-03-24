@@ -4,6 +4,7 @@
 :dragon: Author: Samuele Ferri (@ferrixio)
 
 :star: (Main) Version 2.2
+
 :chart_with_upwards_trend: (Hplot) Version 1.0
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternions/blob/main/How%20to%20assemble%20a%20quaternion.md)
