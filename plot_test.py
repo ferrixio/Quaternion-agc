@@ -1,12 +1,8 @@
 from Quaternion import Quaternion
 from Hplot import Hplot
 
-L = []
-for i in range(50):
-    L.append(Quaternion.random())
+L = [Quaternion.random() for _ in range(50)]
 
-# K = Hplot(L)
-# K.plot()
-# K.distplot()
-# K.pathplot()
-Hplot.pathplot(L,colored=False)
+Hplot.pathplot(L)
+# Hplot.plot(L)
+# Hplot.distplot(L)
