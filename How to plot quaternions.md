@@ -27,7 +27,7 @@ This particular way evaluates the relative distances among quaternions and plots
 This is wacky and (maybe) useless, but at least shows something about their distances.
 
 
-### :pencil2: The 'topology' way: `pathplot(Iterable, colored)`
+### :pencil2: The 'topological' way: `pathplot(Iterable, colored)`
 
 This method is interesting but difficult to understand. It draws a 3-dimensional graph of the list of quaternion, as `plot` do, connected according to the minimum mutual distances among them. As before, the three imaginary parts are the coordinates in R3, while the real part determines the color of the point.
 
