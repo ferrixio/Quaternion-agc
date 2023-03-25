@@ -47,11 +47,11 @@ d = x3*sin(theta/2)
 
 In the opposite direction, inverting the previous equations, the method fails when the real part of the quaternion is 1. In these cases, the rotation is set to (0,(1,0,0)).
 
-### :pencil2: Using random_unit()
+### :pencil2: Using `random_unit()`
 
 With this method, three numbers between 0 and 1 are randomly generated. Then, the quaternion is setted to be unitary.
 To avoid floating point inaccuracy, the procedure repeats the generation until it gets an unitary quaternion. 
 
-### :pencil2: Using random(a,b)
+### :pencil2: `Using random(a,b)`
 
 Similar to the previous one, this method generates a quaternion whose components are random float extracted with the uniform distribution in [a,b]. Default values of `a` and `b` are -50 and 50. 
