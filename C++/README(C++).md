@@ -41,7 +41,7 @@ This class allows user to emulate quaternionic algebra in C++. The class can do:
 
 I overload some operators to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
-I recommend reading [this file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/Documentations/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
+I recommend reading [this file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
 
 Every value below 1e-13 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
