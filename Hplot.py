@@ -24,16 +24,23 @@ class Hplot:
     ## Decorator
     def __are_quaternions(func):
         '''Decorator to check for invalid input.'''
-        def typo(args, **kw):
-            if not len(args):
-                raise TypeError('Missing arguments')
-            if not all(isinstance(item, Quaternion) for item in args):
-                raise ValueError('Invalid type in input: iterable must be of type Quaternion')
-            return func(args, **kw)
+        
+        # The correction in the input serve as letting the user to pass other function arguments in both *args and **kwargs, except for the Iterable of Quaternions
+        # If the other data in input is wanted to be only as keywards, than I suggest to put "/" and "*" in the arguments: eg
+        # plot(H_points:Iterable[Quaternion],/,*,colored:bool)
+        #
+        # The first check is added for specify the error when trying to get quaternions lenght
+        def typo(quaternions, *args, **kw):
+            if not isinstance(quaternions,Iterable):
+                raise TypeError("Invalid type in input: first argument must be an Iterable of Quaternion objects")
+            if not len(quaternions):
+                raise TypeError('Invalid type in input: Iterable must contain at least one Quaternion object')
+            if not all(isinstance(item, Quaternion) for item in quaternions):
+                raise ValueError('Invalid type in input: Iterable must contain only Quaternion objects')
+            return func(quaternions, *args, **kw)
         
         return typo
     
-
     ## Useful methods
     def __get_Colors(H_points:Iterable[Quaternion], rainbow:bool):
         '''Returns a list of colors to paint the plot.'''
@@ -57,11 +64,8 @@ class Hplot:
         d = (a.real-b.real)**2 + (a.i-b.i)**2 + (a.j-b.j)**2 + (a.k-b.k)**2
         return sqrt(d)
 
-
-
     # Standard plot in 4D = 3D + color
-    @__are_quaternions
-    def plot(H_points:Iterable[Quaternion], colored:bool=True):
+    def __plot(H_points:Iterable[Quaternion], colored:bool):
         '''Draws a 3-dimensional graph of the list of given quaternion.
         
         The three imaginary parts are the coordinates in R3, while the real part determines
@@ -80,9 +84,20 @@ class Hplot:
 
         plt.show()
 
+    def plot(H_points:Iterable[Quaternion], /, colored:bool=True):
+        '''Draws a 3-dimensional graph of the list of given quaternion.
+        
+        The three imaginary parts are the coordinates in R3, while the real part determines
+        the color of the point.
 
-    @__are_quaternions
-    def distplot(H_points:Iterable[Quaternion]):
+        Arguments:
+        - H_points: iterable of quaternions
+        - colored[bool]: if set to false, the graph will be graduated from black to red
+        '''
+
+        return Hplot.__are_quaternions(Hplot.__plot)(H_points,colored=colored)
+
+    def __distplot(H_points:Iterable[Quaternion]):
         '''Draws a bar graph of the minimum distances between quaternions, ordered
         according to the order of points in input.
 
@@ -103,9 +118,17 @@ class Hplot:
         plt.bar(arange(1,len(H_points)+1,1), ans)
         plt.show()
 
+    def distplot(H_points:Iterable[Quaternion], /):
+        '''Draws a bar graph of the minimum distances between quaternions, ordered
+        according to the order of points in input.
 
-    @__are_quaternions
-    def pathplot(H_points:Iterable[Quaternion], colored:bool=True):
+        Arguments:
+        - H_points: iterable of quaternions
+        '''
+
+        return Hplot.__are_quaternions(Hplot.__distplot)(H_points)
+
+    def __pathplot(H_points:Iterable[Quaternion], colored:bool):
         '''Draws a 3-dimensional graph of the list of quaternion, connected according to
         the minimum mutual distances.
         
@@ -132,5 +155,21 @@ class Hplot:
 
         plt.show()
 
+    def pathplot(H_points:Iterable[Quaternion], /, colored:bool=True):
+        '''Draws a 3-dimensional graph of the list of quaternion, connected according to
+        the minimum mutual distances.
+        
+        The three imaginary parts are the coordinates in R3, while the real part determines
+        the color of the point.
+
+        Arguments:
+        - H_points: iterable of quaternions
+        - colored[bool]: if set to false, the graph will be graduated from black to red
+        '''
+
+        return Hplot.__are_quaternions(Hplot.__pathplot)(H_points,colored = colored)
+
+    # This suggestion is pretty ugly, but it makes the work done
+    # avoiding any problem when doing multiprocessing
 
 # End of the class
