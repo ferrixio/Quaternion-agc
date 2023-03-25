@@ -20,7 +20,7 @@ The boolean `colored`, if set to False, paints differently the graph. Actually, 
 At this time, no other args and kwargs are implemented (work in progress).
 
 
-### :pencil2: The relative way: `distplot(Iterable)`
+### :pencil2: The 'relative' way: `distplot(Iterable)`
 
 This particular way evaluates the relative distances among quaternions and plots a bar graph of the minimum distances, sorted by the order in input.
 
