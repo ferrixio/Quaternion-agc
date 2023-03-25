@@ -80,9 +80,11 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 + :warning: Create a library
 
 ### Legend:
-> :o: = solution not (yet) found
-> :white_check_mark: = solution found and implemented
-> :warning: = solution found but the implementation needs to be improved
+:o: = solution not (yet) found
+
+:white_check_mark: = solution found and implemented
+
+:warning: = solution found but the implementation needs to be improved
 
 ===========================================================================
 
