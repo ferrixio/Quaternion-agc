@@ -63,7 +63,7 @@ class Quaternion:
 
 
     @classmethod
-    def from_complex(cls, cplx:complex=0j, imag:str='i') -> object:
+    def from_complex(cls, cplx:complex=0j, imag:str='i'):
         '''Generates a quaternion from a complex number.
         
         The string imag is used to specify which imaginary part is to be used (i, j or k).
@@ -81,7 +81,7 @@ class Quaternion:
                 
                 
     @classmethod
-    def from_rotation(cls, theta:float=0, axis:Iterable[float]=(0,0,0)) -> object:
+    def from_rotation(cls, theta:float=0, axis:Iterable[int|float]=(0,0,0)):
         '''Generates a quaternion from a 3D rotation.
         
         The float theta is the angle (in degrees), while axis is the (x,y,z) vector in R3.
@@ -97,7 +97,7 @@ class Quaternion:
 
 
     @classmethod
-    def random_unit(cls) -> object:
+    def random_unit(cls):
         '''Random unitary quaternion generator.'''
         from random import random
         while True:
@@ -114,7 +114,7 @@ class Quaternion:
 
 
     @classmethod
-    def random(cls, a:float = -50, b:float = 50) -> object:
+    def random(cls, a:float = -50, b:float = 50):
         '''Random quaternion generator.
         
         The floats a and b are the bounds of the uniform distribution used to pick the numbers.
@@ -149,25 +149,25 @@ class Quaternion:
     @real.setter
     def real(self, a):
         if not isinstance(a, int|float):
-            raise ValueError("Real part must be of type 'int', 'float' or 'str'")
+            raise ValueError("Real part must be of type 'int' or 'float'")
         self.q[0] = a
         
     @i.setter
     def i(self, a):
         if not isinstance(a, int|float):
-            raise ValueError("i must be of type 'int', 'float' or 'str'")
+            raise ValueError("i must be of type 'int' or 'float'")
         self.q[1] = a
         
     @j.setter
     def j(self, a):
         if not isinstance(a, int|float):
-            raise ValueError("j must be of type 'int', 'float' or 'str'")
+            raise ValueError("j must be of type 'int' or 'float'")
         self.q[2] = a      
 
     @k.setter
     def k(self, a):
         if not isinstance(a, int|float):
-            raise ValueError("k must be of type 'int', 'float' or 'str'")
+            raise ValueError("k must be of type 'int' or 'float'")
         self.q[3] = a
 
     @property
@@ -195,6 +195,7 @@ class Quaternion:
 
         theta = 2*acos(self_copy.real)
         return theta, (self_copy.i/sin(theta/2), self_copy.j/sin(theta/2), self_copy.k/sin(theta/2))
+    
 
     def change_bound(self, fp:float=1e-13):
         '''Changes the floating point limiter. If no value is passed, it sets to the value 1e-13.'''
@@ -676,8 +677,8 @@ class Quaternion:
 
 
     ## Geometry (functions) ##
-    def rotate_point(self, point:Iterable[float], passive:bool=False) -> tuple:
-        '''Performs the rotation of a given point.
+    def rotate_point(self, point:Iterable[int|float], passive:bool=False) -> tuple:
+        '''Performs the rotation of a given point by this quaternion.
         
         Notes:
         - normalizes the quaternion if it is not unitary
