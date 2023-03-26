@@ -9,7 +9,7 @@ from numpy import arange
 from matplotlib.colors import hsv_to_rgb
 from typing import Iterable
 from math import inf, ceil, sqrt
-
+from functools import wraps
 
 class Hplot:
     '''Class to plot quaternions.
@@ -24,16 +24,18 @@ class Hplot:
     ## Decorator
     def __are_quaternions(func):
         '''Decorator to check for invalid input.'''
-        def typo(args, **kw):
-            if not len(args):
-                raise TypeError('Missing arguments')
-            if not all(isinstance(item, Quaternion) for item in args):
-                raise ValueError('Invalid type in input: iterable must be of type Quaternion')
-            return func(args, **kw)
         
+        @wraps(func)
+        def typo(quaternions, *args, **kw):
+            if not isinstance(quaternions,Iterable):
+                raise TypeError("Invalid type in input: first argument must be an Iterable of Quaternion objects")
+            if not len(quaternions):
+                raise TypeError('Invalid type in input: Iterable must contain at least one Quaternion object')
+            if not all(isinstance(item, Quaternion) for item in quaternions):
+                raise ValueError('Invalid type in input: Iterable must contain only Quaternion objects')
+            return func(quaternions, *args, **kw)
         return typo
     
-
     ## Useful methods
     def __get_Colors(H_points:Iterable[Quaternion], rainbow:bool):
         '''Returns a list of colors to paint the plot.'''
@@ -52,16 +54,14 @@ class Hplot:
         return c_list
         
     @staticmethod
-    def __distance(a:Quaternion,b:Quaternion) -> float:
+    def __distance(a:Quaternion, b:Quaternion) -> float:
         '''Returns the euclidean distance between two quaternions.'''
         d = (a.real-b.real)**2 + (a.i-b.i)**2 + (a.j-b.j)**2 + (a.k-b.k)**2
         return sqrt(d)
 
-
-
     # Standard plot in 4D = 3D + color
     @__are_quaternions
-    def plot(H_points:Iterable[Quaternion], colored:bool=True):
+    def plot(H_points:Iterable[Quaternion], /, colored:bool=True):
         '''Draws a 3-dimensional graph of the list of given quaternion.
         
         The three imaginary parts are the coordinates in R3, while the real part determines
@@ -79,7 +79,6 @@ class Hplot:
             ax.plot(t.i, t.j, t.k, marker='o', c=col)
 
         plt.show()
-
 
     @__are_quaternions
     def distplot(H_points:Iterable[Quaternion]):
@@ -103,9 +102,8 @@ class Hplot:
         plt.bar(arange(1,len(H_points)+1,1), ans)
         plt.show()
 
-
     @__are_quaternions
-    def pathplot(H_points:Iterable[Quaternion], colored:bool=True):
+    def pathplot(H_points:Iterable[Quaternion], /, colored:bool=True):
         '''Draws a 3-dimensional graph of the list of quaternion, connected according to
         the minimum mutual distances.
         
@@ -131,6 +129,5 @@ class Hplot:
             plt.plot([item.i,dx.i], [item.j,dx.j], [item.k,dx.k], 'black', linestyle='-')
 
         plt.show()
-
 
 # End of the class
