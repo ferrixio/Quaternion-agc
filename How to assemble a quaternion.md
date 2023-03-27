@@ -15,6 +15,13 @@ A quaternion can be defined in the _standard_ way using integers, floats, lists 
 
 The "pre-constructor" `__new__` checks if the arguments in input are valid, else an error will raise.
 
+The argument `seq` has the priority on the other variables. This means that
+
+```py
+Quaternion(1,2,3, seq=[-1,-2])
+'Output: -1-2i'
+```
+
 After the object is constructed, it will only have two attributes in the `self` variable:
 
 - `q`: a 4-list of the four components of the quaternion;
@@ -36,7 +43,7 @@ It is possible to build a quaternion from a complex number, using the classmetho
 
 ### :pencil2: From a rotation
 
-Any 3D rotation (theta, x1, x2, x3) is indeed a unitary quaternion (a, b, c, d). Its components are:
+Any 3D rotation (theta, axis=(x1, x2, x3)) is indeed a unitary quaternion (a, b, c, d), whose components are:
 
 ```py
 a = cos(theta/2)
@@ -45,7 +52,7 @@ c = x2*sin(theta/2)
 d = x3*sin(theta/2)
 ```
 
-In the opposite direction, inverting the previous equations, the method fails when the real part of the quaternion is 1. In these cases, the rotation is set to (0,(1,0,0)).
+In the opposite direction, inverting the previous equations, the method fails when the real part of the quaternion is 1. In these cases, the rotation is set to $(0,(1,0,0))$.
 
 ### :pencil2: Using `random_unit()`
 
@@ -54,4 +61,4 @@ To avoid floating point inaccuracy, the procedure repeats the generation until i
 
 ### :pencil2: Using `random(a,b)`
 
-Similar to the previous one, this method generates a quaternion whose components are random float extracted with the uniform distribution in [a,b]. Default values of `a` and `b` are -50 and 50. 
+Similar to the previous one, this method generates a quaternion whose components are random float extracted with the uniform distribution in $[a,b]$. Default values are $a=-50$ and $b=50$. 

@@ -4,7 +4,7 @@ from multiprocessing import Process
 
 if __name__ == '__main__':
     
-    L = [Quaternion.random() for _ in range(50)]+[Quaternion(0,0,0,1)]
+    L = [Quaternion.random() for _ in range(50)]
 #     L = [Quaternion(0,1), Quaternion(0,0,1,0), Quaternion(0,0,0,1), Quaternion(0,1,1,0),
 #          Quaternion(0,0,1,1), Quaternion(0,1,1,1), Quaternion(0,1,0,1), Quaternion()]
     

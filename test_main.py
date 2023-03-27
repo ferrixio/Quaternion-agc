@@ -1,4 +1,4 @@
-from Quaternion import Quaternion
+from Quaternion import Quaternion, Versor
 
 x = Quaternion(2,1,1,0)
 y = Quaternion(1,-1,1,4)
@@ -67,3 +67,7 @@ print(f'from_rotation({angle},{axis}) = {r}')
 p = (1,0,0)
 q = Quaternion.from_rotation(180, (0,1,0))
 print(f'rotate_point {p} along {q.rotation} = {q.rotate_point(p)}')
+
+## Versors
+x = Versor.random()
+print(x, x.norm, x.is_unit(), type(x))

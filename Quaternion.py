@@ -1,7 +1,7 @@
 # Quaternion class for python 3.11
 
 # Author:     Samuele Ferri (@ferrixio)
-# Version:    2.2.1
+# Version:    2.2.2
 
 from math import sqrt, pi, sin, cos, e, log2, acos
 from typing import Iterable
@@ -14,12 +14,11 @@ class Quaternion:
     Attributes:
     - q: 4-dimensional list
     - ACCURACY: range to handle with floating point
-
     '''
 
     ## Initializers ##
     def __new__(cls, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0,
-                seq = None, acc:float=1e-13):
+                seq=None, acc:float=1e-13):
         '''Pre-generation of the quaternion.'''
 
         if not isinstance(real, float|int):
@@ -29,7 +28,7 @@ class Quaternion:
                 isinstance(k_img, float|int))):
             raise TypeError("All imaginary parts must be integers or floats")
 
-        if isinstance(seq, list|tuple) and len(seq) > 4:
+        if isinstance(seq, Iterable) and len(seq) > 4:
             raise IndexError("Invalid length: it must be from 0 to 4")
         
         if not isinstance(acc, float):
@@ -39,12 +38,18 @@ class Quaternion:
 
 
     def __init__(self, real:float=0, i_img:float=0, j_img:float=0, k_img:float=0,
-                 seq=None, acc:float=1e-13) -> object:
+                 seq=None, acc:float=1e-13):
         '''Initializer of Quaternion object.
 
-        See [How to assemble a quaternion](https://github.com/ferrixio/Quaternionic-beasts/blob/main/Documentations/How%20to%20assemble%20a%20quaternion.md) doc for complete behaviour:
+        See [How to assemble a quaternion](https://github.com/ferrixio/Quaternionic-beasts/blob/main/Documentations/How%20to%20assemble%20a%20quaternion.md)
+        doc for complete behaviour.
         '''
-        if isinstance(seq, list|tuple):
+        self.ACCURACY = acc       ## Floating point limiter ##
+
+        if isinstance(seq, int|float):
+            seq = [seq]
+
+        if isinstance(seq, Iterable):
             match len(seq):
                 case 0:
                     self.q = [0, 0, 0, 0]
@@ -58,8 +63,7 @@ class Quaternion:
                     self.q = [seq[0], seq[1], seq[2], seq[3]]
             return
 
-        self.q: list = [real, i_img, j_img, k_img]
-        self.ACCURACY = acc       ## Floating point limiter ##
+        self.q = [real, i_img, j_img, k_img]
 
 
     @classmethod
@@ -84,7 +88,9 @@ class Quaternion:
     def from_rotation(cls, theta:float=0, axis:Iterable[int|float]=(0,0,0)):
         '''Generates a quaternion from a 3D rotation.
         
-        The float theta is the angle (in degrees), while axis is the (x,y,z) vector in R3.
+        Arguments:
+        - theta[float]: angle in degrees
+        - axis[iterable]: vector in R3 representing the axis
         '''
         theta_rad = (theta/180)*pi
         a = cos(theta_rad/2)
@@ -117,7 +123,9 @@ class Quaternion:
     def random(cls, a:float = -50, b:float = 50):
         '''Random quaternion generator.
         
-        The floats a and b are the bounds of the uniform distribution used to pick the numbers.
+        Arguments:
+        - a[float]: left bound of the uniform distribution; default value is -50
+        - b[float]: right bound of the uniform distribution; default value is 50
         '''
         from random import uniform
         return cls(uniform(a,b), uniform(a,b), uniform(a,b), uniform(a,b))
@@ -198,7 +206,7 @@ class Quaternion:
     
 
     def change_bound(self, fp:float=1e-13):
-        '''Changes the floating point limiter. If no value is passed, it sets to the value 1e-13.'''
+        '''Changes the floating point limiter. Default value is 1e-13.'''
         self.ACCURACY = fp
 
 
@@ -281,7 +289,7 @@ class Quaternion:
 
     def __round__(self, n:int=3):
         '''Magic method to round the decimals of every components of the quaternion.
-        If n is not given, n = 3.
+        Default value of n is 3.
         '''
         return Quaternion(round(self.real,n), round(self.i,n), round(self.j,n), 
                 round(self.k,n))
@@ -602,7 +610,7 @@ class Quaternion:
 
     def is_unit(self) -> bool:
         '''Checks if the quaternion is unitary, that is, if it lies on the 3-sphere.'''
-        return self.norm == 1.0
+        return abs(self.norm-1) < self.ACCURACY
 
     def is_real(self) -> bool:
         '''Checks if the quaternion is a real number.'''
@@ -621,7 +629,9 @@ class Quaternion:
         return sqrt(self.square_norm())
 
     def square_norm(self) -> float:
-        '''Returns the square norm of the quaternion.'''
+        '''Returns the square norm of the quaternion. That is the square of the euclidean norm
+         in R4.
+         '''
         return self.real**2 + self.i**2 + self.j**2 + self.k**2
 
 
@@ -775,5 +785,62 @@ class Quaternion:
 
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
 
-
 # End of Quaternion class
+
+
+class Versor(Quaternion):
+    '''Class to represent unitary quaternions.
+    
+    Unitary quaternions are called 'versors', because they have norm equal to 1.
+    
+    Attributes:
+    - q: 4-dimensional list of norm 1
+    - ACCURACY: range to handle with floating point
+    '''
+
+    def __new__(cls, real:float = 1, i_img:float = 0, j_img:float = 0, k_img:float = 0,
+                seq=None, acc: float = 1e-13):
+        '''Pre-generation of the versor.'''
+
+        if real==i_img==j_img==k_img==0:
+            return Quaternion(0,acc=acc)
+        
+        if isinstance(seq, int|float):
+            seq = [seq]
+        if isinstance(seq, list|tuple) and any((h==0 for h in seq)):
+            return Quaternion(seq=seq, acc=acc)
+                
+        return super().__new__(cls)
+
+    def __init__(self, real:float = 1, i_img:float = 0, j_img:float = 0, k_img:float = 0,
+                 seq=None, acc:float = 1e-13):
+        '''Initializer of Versor object, subclass of Quaternion.
+        
+        The parameters in input are slightly different from Quaternion. The real part has
+        default value 1, in order to generate a unitary quaternion if 'Versor()' is called.
+
+        If a zero quaternion is given in input, the constructor __new__ exits from Versor
+        and generates the 0 as Quaternion object. 
+        '''
+        self.ACCURACY = acc       ## Floating point limiter ##
+
+        if isinstance(seq, tuple|list):
+            match len(seq):
+                case 0:
+                    temp = [1, 0, 0, 0]
+                case 1:
+                    temp = [seq[0], 0, 0, 0]
+                case 2:
+                    temp = [seq[0], seq[1], 0, 0]
+                case 3:
+                    temp = [seq[0], seq[1], seq[2], 0]
+                case 4:
+                    temp = [seq[0], seq[1], seq[2], seq[3]]
+
+        else:
+           temp = [real, i_img, j_img, k_img] 
+
+        norm = sqrt(temp[0]**2 + temp[1]**2 + temp[2]**2 + temp[3]**2)
+        self.q=[t/norm for t in temp]
+
+## End of Versor class

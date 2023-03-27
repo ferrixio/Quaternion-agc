@@ -1,7 +1,7 @@
 # Quaternion plotting class for python 3.11
 
 # Author:     Samuele Ferri (@ferrixio)
-# Version:    2.2.1
+# Version:    2.2.2
 
 from Quaternion import Quaternion
 import matplotlib.pyplot as plt
@@ -75,7 +75,7 @@ class Hplot:
         '''Evaluates the stereographic projection of a given quaternion.
         
         Arguments:
-        - number: the quaternion to be evaluated
+        - number[Quaternion]: the quaternion to be projected
         - south[bool]: if set to false, the projection will be evaluate from south pole
         '''
         if number==Quaternion(0,0,0,1) and north:
@@ -83,9 +83,9 @@ class Hplot:
         if number==Quaternion(0,0,0,-1) and not north:
             raise ZeroDivisionError("Can't map the south pole using south-stereographic projection.")
 
-        number.normalize()
-        mod = (1-number.k)*(north) + (1+number.k)*(not north)
-        return [number.real/mod, number.i/mod, number.j/mod]
+        temp = number.normalize()
+        mod = (1-temp.k)*(north) + (1+temp.k)*(not north)
+        return [temp.real/mod, temp.i/mod, temp.j/mod]
 
 
     ## Plot functions
@@ -162,7 +162,6 @@ class Hplot:
         plt.show()
 
 
-
     @__are_quaternions
     def stereo_pjrN(H_points:Iterable[Quaternion], /):
         '''Draws a 3-dimensional graph of the given list of quaternion according to the
@@ -173,7 +172,7 @@ class Hplot:
         '''
         ax = Hplot.__getPicture()
         for item in H_points:
-            ax.plot(*Hplot.__stereo_prj(item,True), 'o', c='blue')
+            ax.plot(*Hplot.__stereo_prj(item,True), 'o', c='red')
 
         plt.show()
     
@@ -188,7 +187,7 @@ class Hplot:
         '''
         ax = Hplot.__getPicture()
         for item in H_points:
-            ax.plot(*Hplot.__stereo_prj(item,False), 'o', c='blue')
+            ax.plot(*Hplot.__stereo_prj(item,False), 'o', c='red')
 
         plt.show()
     

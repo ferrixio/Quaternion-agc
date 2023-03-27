@@ -3,18 +3,19 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version 2.2.1
+:star: Version 2.2.2
 
-📜 Check this [useful file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md)
+:scroll: Check [this useful file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md) and [this other file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20plot%20quaternions.md).
 
 ## TABLE OF CONTENTS 
 
-1. Features
-2. How to use
-3. Known issues
-4. Future ideas
-5. Description
-6. Changelog
+1. [FEATURES](#1-features)
+2. [HOW TO USE](#2-how-to-use)
+3. [KNOWN ISSUES](#3-known-issues)
+4. [FUTURE IDEAS](#4-future-ideas)
+5. [DESCRIPTION](#5-description)
+6. [CHANGELOG](#6-changelog)
+
 
 ## 1. FEATURES
 
@@ -54,8 +55,8 @@ Open the file `test_me.py` and try it, or simply copy and paste the class in the
 
 ## 3. KNOWN ISSUES
 
-+ The operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
-+ There is a little chance that the color assigned to quaternion usign `__getColors` has negative numbers.
++ The in_place operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
++ There is a little chance that the method `Hplot.__getColors` returns negative numbers.
 
 ## 4. FUTURE IDEAS
 
@@ -65,6 +66,8 @@ Open the file `test_me.py` and try it, or simply copy and paste the class in the
 + :white_check_mark: Floor division
 + :white_check_mark: Add @ operator
 + :white_check_mark: Plotting quaternions
++ :white_check_mark: Autogeneration of versors
++ :white_check_mark: Literally use LaTeX to write the .md files
 + :warning: Implementing rotation of 3D objects
 + :warning: Create a library
 
@@ -77,29 +80,40 @@ Open the file `test_me.py` and try it, or simply copy and paste the class in the
 
 ## 5. DESCRIPTION
 
-The [quaternion number system](https://en.wikipedia.org/wiki/Quaternion) is an extended version of the complex numbers, firstly introduced by Rowan Hamilton in 1843. A quaternion is a 4-tuple of informations:
-	q := a + bi + cj + dk
-where a, b, c, d are real numbers, and i, j, k are the basic quaternions.
+The [quaternion number system](https://en.wikipedia.org/wiki/Quaternion) is an extended version of the complex numbers, firstly introduced by Rowan Hamilton in 1843. A quaternion is a 4-tuple of informations $q := a + bi + cj + dk$, where $a$, $b$, $c$, $d$ are real numbers, and $i$, $j$, $k$ are the basic quaternions.
 
-Instead of having a single imaginary part, as a complex number, quaternions have three imaginary parts, that is, there are three elements, namely i, j and k, such that
-	i^2 = j^2 = k^2 = ijk = -1
+Instead of having a single imaginary part, as a complex number, quaternions have three imaginary parts, that is, there are three elements, namely $i$, $j$ and $k$, such that
+$$i^2 = j^2 = k^2 = ijk = -1$$
 
 Addition works componentwise and it is commutative, and so is the scalar multiplication.
 The Hamilton product, that is the multiplication between two quaternions, follows the expression:
 
- > (a1 + b1i + c1j + d1k)*(a2 + b2i + c2j + d2k) = 
-	a1a2 - b1b2 - c1c2 - d1d2
-	+ (b1a2 + b1a2 + c1d2 - d1c2)i
-	+ (a1c2 - b1d2 + c1a2 + d1b2)j
-	+ (a1d2 + b1c2 - c1b2 + d1a1)k
+$$
+\begin{align*}
+	(a_1 + b_1i + c_1j + d_1k)*(a_2 + b_2i + c_2j + d_2k) &= a_1a_2 - b_1b_2 - c_1c_2 - d_1d_2 \\
+	&+ (b_1a_2 + b_1a_2 + c_1d_2 - d_1c_2)i \\
+	&+ (a_1c_2 - b_1d_2 + c_1a_2 + d_1b_2)j \\
+	& + (a_1d_2 + b_1c_2 - c_1b_2 + d_1a_1)k
+\end{align*}
+$$
 
-and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, ik = -j.
+and sadly it is not commutative since $ij = k$, $ji = -k$, $jk = i$, $kj = -i$, $ki = j$, $ik = -j$.
+
+This set is denoted with the letter $\mathbb{H}$.
 
 ## 6. CHANGELOG
 
+### Version 2.2.2
+
+Added the subclass `Versor(Quaternion)` to build unitary quaternion directly.
+
+Corrected a type error in `Hplot.__stereo_prj`
+
+Fixed a bug in `Quaternion.__init__` which doesn't create the attribute `ACCURACY` when a quaternion is build with an iterable.
+
 ### Version 2.2.1
 
-Added the multiprocessing in Hplot. Edited some strings.
+Added the multiprocessing in `Hplot`. Edited some strings.
 
 Now `pathplot` draws multiple segments if a quaternion is in the middle between two or more. Added the plots using stereographic projections.
 
