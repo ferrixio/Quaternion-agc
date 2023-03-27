@@ -1,7 +1,7 @@
 # Quaternion class for python 3.11
 
 # Author:     Samuele Ferri (@ferrixio)
-# Version:    2.2
+# Version:    2.2.1
 
 from math import sqrt, pi, sin, cos, e, log2, acos
 from typing import Iterable
@@ -776,4 +776,4 @@ class Quaternion:
         return acos(2*(Quaternion.dot(q1,q2))**2 - 1)
 
 
-# End of class
+# End of Quaternion class

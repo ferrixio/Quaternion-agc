@@ -40,5 +40,5 @@ At this moment, the method draws constellations of connected colored point in 3D
 
 ### :pencil2: The 'atlas' way: `stereo_prjN(Iterable)` and `stereo_prjS(Iterable)`
 
-__Work in progress...__
-
+The n-sphere can be covered by an atlas using only two local charts: the stereographic projections. So a quaternion, as a 4-dimensional array, can be projected in the 3-dimensional space. For the 3-sphere, its **north pole** is the quaternion **1k**, while its **south pole** is **-1k**.
+Since the projections are maps from the 3-sphere to R3, each quaternion will be normalized, in order to be correctly projected.

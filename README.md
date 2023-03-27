@@ -3,9 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: (Main) Version 2.2
-
-:chart_with_upwards_trend: (Hplot) Version 1.1
+:star: Version 2.2.1
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
@@ -75,8 +73,8 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 + :white_check_mark: Quaternionic functions
 + :white_check_mark: Floor division
 + :white_check_mark: Add @ operator
++ :white_check_mark: Plotting quaternions
 + :warning: Implementing rotation of 3D objects
-+ :warning: Plotting quaternions
 + :warning: Create a library
 
 ### Legend:
@@ -112,6 +110,12 @@ and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, 
 
 ## 6. CHANGELOG
 
+### Version 2.2.1
+
+Added the multiprocessing in Hplot. Edited some strings.
+
+Now `pathplot` draws multiple segments if a quaternion is in the middle between two or more. Added the plots using stereographic projections.
+
 ### Version 2.2
 Removed the possibility to set strings as parameters.
 
@@ -119,11 +123,7 @@ Added more descriptions in functions and typing. Added the possibility to set th
 
 Change the output of `rotation` function.
 
-Created the class `Hplot` to plot quaternions in three ways:
-
-+ 3D-colored points,
-+ mutual distances,
-+ 3D-colored points connected according to the minimal mutual distance.
+Created the class `Hplot` to plot quaternions in three ways: 3D-colored points, mutual distances, 3D-colored points connected according to the minimal mutual distance.
 
 ### Version 2.1.8
 Extended the random number generator to float numbers. Renamed `random` to `random_unit` and `randint` to `random`.
