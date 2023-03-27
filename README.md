@@ -7,8 +7,6 @@
 
 📜 Check this [useful file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md)
 
-===========================================================================
-
 ## TABLE OF CONTENTS 
 
 1. Features
@@ -17,8 +15,6 @@
 4. Future ideas
 5. Description
 6. Changelog
-
-===========================================================================
 
 ## 1. FEATURES
 
@@ -52,19 +48,14 @@ Every value below 1e-13 is treated as 0, especially during logical checks. This 
 
 I'm coding the class `Hplot` to plot quaternions in different ways. Also, I invite you to read [this file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20plot%20quaternions.md) to have an idea of how I decide to plot them. 
 
-===========================================================================
-
 ## 2. HOW TO USE
 
 Open the file `test_me.py` and try it, or simply copy and paste the class in the file you want to use and then import it. (Don't forget to __cite me__ if you are using this in a project!)
 
-===========================================================================
-
 ## 3. KNOWN ISSUES
 
-The operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
-
-===========================================================================
++ The operations +=, -=, *= and so on, don't work if on the left side there isn't a quaternion.
++ There is a little chance that the color assigned to quaternion usign `__getColors` has negative numbers.
 
 ## 4. FUTURE IDEAS
 
@@ -83,8 +74,6 @@ The operations +=, -=, *= and so on, don't work if on the left side there isn't 
 :white_check_mark: = solution found and implemented
 
 :warning: = solution found but the implementation needs to be improved
-
-===========================================================================
 
 ## 5. DESCRIPTION
 
@@ -105,8 +94,6 @@ The Hamilton product, that is the multiplication between two quaternions, follow
 	+ (a1d2 + b1c2 - c1b2 + d1a1)k
 
 and sadly it is not commutative since ij = k, ji = -k, jk = i, kj = -i, ki = j, ik = -j.
-
-===========================================================================
 
 ## 6. CHANGELOG
 
