@@ -807,7 +807,7 @@ class Versor(Quaternion):
         
         if isinstance(seq, int|float):
             seq = [seq]
-        if isinstance(seq, list|tuple) and any((h==0 for h in seq)):
+        if isinstance(seq, list|tuple) and all((h==0 for h in seq)):
             return Quaternion(seq=seq, acc=acc)
                 
         return super().__new__(cls)
