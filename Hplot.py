@@ -65,7 +65,7 @@ class Hplot:
 
     def __getPicture():
         '''Returns the figure where points will be drawn.'''
-        pic = plt.figure.add_subplot(projection='3d')
+        pic = plt.figure().add_subplot(projection='3d')
         pic.set_xlabel('i')
         pic.set_ylabel('j')
         pic.set_zlabel('k')
