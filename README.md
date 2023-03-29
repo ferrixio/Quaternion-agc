@@ -60,6 +60,8 @@ Open the file `test_me.py` and try it, or simply copy and paste the class in the
 
 ## 4. FUTURE IDEAS
 
++ :o: Add colorbar in plot to represent the real parts
++ :o: Study the topology of lists of quaternions
 + :white_check_mark: Vector representation
 + :white_check_mark: Add complex compatibility
 + :white_check_mark: Quaternionic functions
@@ -110,6 +112,8 @@ Added the subclass `Versor(Quaternion)` to build unitary quaternion directly.
 Corrected a type error in `Hplot.__stereo_prj`
 
 Fixed a bug in `Quaternion.__init__` which doesn't create the attribute `ACCURACY` when a quaternion is build with an iterable.
+
+Added the method `Hplot.getPath` to get a matrix of connections among quaternions in `pathplot`.
 
 ### Version 2.2.1
 

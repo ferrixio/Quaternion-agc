@@ -65,7 +65,7 @@ class Hplot:
 
     def __getPicture():
         '''Returns the figure where points will be drawn.'''
-        pic = plt.figure().add_subplot(projection='3d')
+        pic = plt.figure.add_subplot(projection='3d')
         pic.set_xlabel('i')
         pic.set_ylabel('j')
         pic.set_zlabel('k')
@@ -88,6 +88,28 @@ class Hplot:
         return [temp.real/mod, temp.i/mod, temp.j/mod]
 
 
+    def getPaths(H_points:Iterable[Quaternion]) -> list:
+        '''Get the connections among quaternions.
+        
+        It returns a len(H_points)^2 matrix of 'None's, in which the number 1 in position (i,j)
+        represents the link between the i-th and j-th quaternion in the H_points list.
+        
+        Argument:
+        - H_points: an iterable of quaternions
+        '''
+        length = len(H_points)
+        big_links = [[None for _ in range(length)] for _ in range(length)]
+        for i in range(length):
+            dist = tuple(Hplot.__distance(H_points[i],H_points[k]) if k!=i else inf for k in range(length))
+            minimum = min(dist)
+            rep = [k for k in range(length) if dist[k]==minimum]
+            for j in rep:
+                big_links[i][j] = 1
+
+        return big_links
+
+
+
     ## Plot functions
     @__are_quaternions
     def plot(H_points:Iterable[Quaternion], /, colored:bool=True):
@@ -97,7 +119,7 @@ class Hplot:
         the color of the point.
 
         Arguments:
-        - H_points: iterable of quaternions
+        - H_points: an iterable of quaternions
         - colored[bool]: if set to false, the graph will be graduated from black to red
         '''
         ax = Hplot.__getPicture()
@@ -115,7 +137,7 @@ class Hplot:
         according to the order of points in input.
 
         Arguments:
-        - H_points: iterable of quaternions
+        - H_points: an iterable of quaternions
         '''
         ans = []
         for i in range(len(H_points)):
@@ -141,11 +163,11 @@ class Hplot:
         the color of the point.
 
         Arguments:
-        - H_points: iterable of quaternions
+        - H_points: an iterable of quaternions
         - colored[bool]: if set to false, the graph will be graduated from black to red
         '''
-        ax = Hplot.__getPicture()
         Colors = Hplot.__getColors(H_points,colored)
+        ax = Hplot.__getPicture()
         
         for item, col in zip(H_points, Colors):
                 ax.plot(item.i, item.j, item.k, 'o', c=col)

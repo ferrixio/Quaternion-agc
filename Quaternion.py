@@ -643,7 +643,7 @@ class Quaternion:
     def normalize_ip(self):
         '''Normalizes the quaternion in place.'''
         t = self.norm
-        if t != 1.0:
+        if abs(t-1) > self.ACCURACY:
             self.real /= t
             self.i /= t
             self.j /= t
