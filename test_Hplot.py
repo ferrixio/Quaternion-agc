@@ -30,7 +30,7 @@ if __name__ == '__main__':
     # x = Hplot.getPaths(L)
     # specialPrint(x)
 
-    Hplot.plot(L)
-    # Hplot.pathplot(L)
+    # Hplot.plot(L)
+    Hplot.pathplot(L)
     # Hplot.stereo_pjrN(L)
     # Hplot.stereo_prjS(L)

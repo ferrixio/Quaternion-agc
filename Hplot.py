@@ -66,9 +66,9 @@ class Hplot:
     def __getPicture():
         '''Returns the figure where points will be drawn.'''
         pic = plt.figure().add_subplot(projection='3d')
-        pic.set_xlabel('i')
-        pic.set_ylabel('j')
-        pic.set_zlabel('k')
+        pic.set_xlabel('i axis')
+        pic.set_ylabel('j axis')
+        pic.set_zlabel('k axis')
         return pic
     
     def __stereo_prj(number:Quaternion, north:bool=True):
@@ -169,9 +169,11 @@ class Hplot:
         Colors = Hplot.__getColors(H_points,colored)
         ax = Hplot.__getPicture()
         
+        # Plotting the (colored) points
         for item, col in zip(H_points, Colors):
                 ax.plot(item.i, item.j, item.k, 'o', c=col)
 
+        # Adding the links among points
         for item in H_points:
             dist = tuple(Hplot.__distance(item,k) if k!=item else inf for k in H_points)
             minimum = min(dist)
