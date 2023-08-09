@@ -50,7 +50,7 @@ I recommend reading [`how to build a quaternion`](https://github.com/ferrixio/Qu
 
 Every value below 1e-13 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
-The new class `Hplot` to plot quaternions in different ways. Also, I invite you to read [`how to plot quaternions`](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/How%20to%20plot%20quaternions.md) to have an idea of how I decide to plot them. 
+The new class `Hplot` is used to plot quaternions in different ways. Also, I invite you to read [`how to plot quaternions`](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/How%20to%20plot%20quaternions.md) to have an idea of how I decide to plot them. 
 
 ## 3. KNOWN ISSUES
 
