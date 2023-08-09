@@ -35,7 +35,7 @@ I decide to write this method to add the possibility (in the future) to study th
 
 At this moment, the method draws constellations of connected colored point in 3D.
 
-![My Image](Pics/Figure_1.png)
+![My Image](Figure_1.png)
 
 
 ### :pencil2: The 'atlas' way: `stereo_prjN(Iterable)` and `stereo_prjS(Iterable)`
