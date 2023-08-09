@@ -9,10 +9,10 @@
 
 ## TABLE OF CONTENTS 
 
-1. [REQUIREMENTS](#1-requirements)
-2. [FEATURES](#2-features)
-3. [KNOWN ISSUES](#3-known-issues)
-4. [FUTURE IDEAS](#4-future-ideas)
+1. [Requirements](#1-requirements)
+2. [Features](#2-features)
+3. [Known issues](#3-known-issues)
+4. [Future ideas](#4-future-ideas)
 
 ## 1. REQUIREMENTS
 
