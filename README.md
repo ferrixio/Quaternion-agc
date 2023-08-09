@@ -1,4 +1,4 @@
-# Quaternionic-beast: a (small) Python 3.11 resource
+# Quaternionic-beast: a Python 3.11 resource
 ### Perform quaternionic arithmetic easily in Python
 
 :dragon: Author: Samuele Ferri (@ferrixio)
