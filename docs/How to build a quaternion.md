@@ -1,6 +1,29 @@
-# How to assemble a quaternion
+# How to build a quaternion
 
 🐉 Author: Samuele Ferri (@ferrixio)
+
+## Introduction
+
+The [quaternion number system](https://en.wikipedia.org/wiki/Quaternion) is an extended version of the complex numbers, firstly introduced by Rowan Hamilton in 1843. A quaternion is a 4-tuple of informations $q := a + bi + cj + dk$, where $a$, $b$, $c$, $d$ are real numbers, and $i$, $j$, $k$ are the basic quaternions.
+
+Instead of having a single imaginary part, as a complex number, quaternions have three imaginary parts, that is, there are three elements, namely $i$, $j$ and $k$, such that
+$$i^2 = j^2 = k^2 = ijk = -1$$
+
+Addition works componentwise and it is commutative, and so is the scalar multiplication.
+The Hamilton product, that is the multiplication between two quaternions, follows the expression:
+
+$$
+\begin{align*}
+	(a_1 + b_1i + c_1j + d_1k)*(a_2 + b_2i + c_2j + d_2k) &= a_1a_2 - b_1b_2 - c_1c_2 - d_1d_2 \\
+	&+ (b_1a_2 + b_1a_2 + c_1d_2 - d_1c_2)i \\
+	&+ (a_1c_2 - b_1d_2 + c_1a_2 + d_1b_2)j \\
+	& + (a_1d_2 + b_1c_2 - c_1b_2 + d_1a_1)k
+\end{align*}
+$$
+
+and sadly it is not commutative since $ij = k$, $ji = -k$, $jk = i$, $kj = -i$, $ki = j$, $ik = -j$.
+
+This set is denoted with the letter $\mathbb{H}$.
 
 ## Basic construction
 
