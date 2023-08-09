@@ -5,7 +5,7 @@
 
 :star: Version **2.2.2**
 
-:scroll: [Changelog](https://github.com/ferrixio/Quaternionic-beasts/blob/main/CHANGELOG)
+:scroll: [Changelog](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/CHANGELOG.md)
 
 ## TABLE OF CONTENTS 
 
