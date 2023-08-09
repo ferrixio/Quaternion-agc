@@ -5,7 +5,7 @@
 
 :star: Version 2.2.2
 
-:scroll: Check [this useful file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md) and [this other file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20plot%20quaternions.md).
+:scroll: Check [this useful file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/How%20to%20assemble%20a%20quaternion.md) and [this other file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/How%20to%20plot%20quaternions.md).
 
 ## TABLE OF CONTENTS 
 
@@ -43,11 +43,11 @@ This class allows user to emulate quaternionic algebra in Python. The class can 
 
 I used mostly magic methods to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
-I recommend reading [this file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
+I recommend reading [this file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/How%20to%20assemble%20a%20quaternion.md) to better understand how to construct a quaternion.
 
 Every value below 1e-13 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
-I'm coding the class `Hplot` to plot quaternions in different ways. Also, I invite you to read [this file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/How%20to%20plot%20quaternions.md) to have an idea of how I decide to plot them. 
+I'm coding the class `Hplot` to plot quaternions in different ways. Also, I invite you to read [this file](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/How%20to%20plot%20quaternions.md) to have an idea of how I decide to plot them. 
 
 ## 2. HOW TO USE
 
