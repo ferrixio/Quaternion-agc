@@ -16,7 +16,7 @@
 
 ## 1. REQUIREMENTS
 
-Python version: **3.11**
+Python version: **>=3.10**
 
 Additional packages: numpy, matplotlib
 
