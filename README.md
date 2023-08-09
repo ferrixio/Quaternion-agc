@@ -1,4 +1,4 @@
-# Quaternionic-beast: a Python 3.11 resource
+# Quaternionic-beast: a Python 3 resource
 ### Perform quaternionic arithmetic easily in Python
 
 :dragon: Author: Samuele Ferri (@ferrixio)
@@ -16,7 +16,7 @@
 
 ## 1. REQUIREMENTS
 
-Python version: **>=3.10**
+Python version: **3.10** or above (3.11 is recommended)
 
 Additional packages: numpy, matplotlib
 
