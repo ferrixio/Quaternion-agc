@@ -1,7 +1,7 @@
 # Quaternion plotting class for python 3.11
 
 # Author:     Samuele Ferri (@ferrixio)
-# Version:    2.2.2
+# Version:    2.2.3
 
 from Quaternion import Quaternion
 import matplotlib.pyplot as plt

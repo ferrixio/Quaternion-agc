@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 2.2.3
+
+Added `__len__` method to the Quaternion object.
+
 ## Version 2.2.2
 
 Added the subclass `Versor(Quaternion)` to build unitary quaternion directly.

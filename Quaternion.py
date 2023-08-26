@@ -1,7 +1,7 @@
 # Quaternion class for python 3.11
 
 # Author:     Samuele Ferri (@ferrixio)
-# Version:    2.2.2
+# Version:    2.2.3
 
 from math import sqrt, pi, sin, cos, e, log2, acos
 from typing import Iterable
@@ -210,7 +210,8 @@ class Quaternion:
         self.ACCURACY = fp
 
 
-    ## Type magic methods ##
+
+    ## Typing magic methods ##
     def __str__(self) -> str:
         '''Magic method to show a quaternion using print().
 
@@ -293,7 +294,12 @@ class Quaternion:
         '''
         return Quaternion(round(self.real,n), round(self.i,n), round(self.j,n), 
                 round(self.k,n))
-
+    
+    def __len__(self):
+        '''Magic method to make the function len() callable.
+        It return the dimension of the quaternion, that is the number of the components
+        of self.q that are not zero.'''
+        return sum(1 for i in self.q if i>self.ACCURACY)
 
     
     ## Binary operation magic methods ##

@@ -3,11 +3,11 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version **2.2.2**
+:star: Version **2.2.3**
 
 :scroll: [Changelog](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/CHANGELOG.md)
 
-## TABLE OF CONTENTS 
+## TABLE OF CONTENTS
 
 1. [Requirements](#1-requirements)
 2. [Features](#2-features)
