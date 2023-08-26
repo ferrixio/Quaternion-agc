@@ -299,7 +299,7 @@ class Quaternion:
         '''Magic method to make the function len() callable.
         It return the dimension of the quaternion, that is the number of the components
         of self.q that are not zero.'''
-        return sum(1 for i in self.q if i>self.ACCURACY)
+        return sum(1 for i in self.q if abs(i)>self.ACCURACY)
 
     
     ## Binary operation magic methods ##
