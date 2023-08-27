@@ -37,6 +37,7 @@ This class allows user to emulate quaternionic algebra in Python. The class can 
 	> inversions
 	> algebric prints
 	> type casting (int, float, complex)
+	> iterations
 	> random generations
 	> exponential and logarithmic functions
 	> dot product, cross product and commutator

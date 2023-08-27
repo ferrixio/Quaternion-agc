@@ -22,14 +22,17 @@ if __name__ == "__main__":
     y = Quaternion(1,-1,1,4)
     z = Quaternion(0)
 
-    print(z.vector, x.vector)
+    print(f"{z}.vector = {z.vector}", f"{x}.vector = {x.vector}", sep=', ')
 
-    print(x, type(x), repr(x))
+    print(x, type(x), repr(x), sep=', ')
     print(y, bool(y))
     print(z, bool(z))
 
     print(f"length of {x} = {len(x)}")
     print(f"length of {z} = {len(z)}")
+    print(f"iter of {x} = {iter(x)}")
+    for i in x:
+        print(f"{x}.next() = {i}")
 
     d = Quaternion(-3)
     print(f'{d} is_real = {d.is_real()}, is_imagy = {d.is_imagy()}')

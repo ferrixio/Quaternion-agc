@@ -299,7 +299,27 @@ class Quaternion:
         '''Magic method to make the function len() callable.
         It return the dimension of the quaternion, that is the number of the components
         of self.q that are not zero.'''
+        if self.is_real():
+            return 1
+        
         return sum(1 for i in self.q if abs(i)>self.ACCURACY)
+    
+    def __iter__(self):
+        '''Magic method to make the quaternion an iterator.
+        The iteration is made over the elements of self.q.'''
+        self.currentIndex = 0
+        return self
+    
+    def __next__(self):
+        '''magic method to make the function next() callable.
+        It returns the next element of the iterator.'''
+        if self.currentIndex < len(self):
+            x = self.q[self.currentIndex]
+            self.currentIndex += 1
+            return x
+        
+        raise StopIteration
+
 
     
     ## Binary operation magic methods ##

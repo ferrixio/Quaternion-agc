@@ -2,7 +2,7 @@
 
 ## Version 2.2.3
 
-Added `__len__` method to the Quaternion object.
+Added `__len__`, `__iter__` and `__next__` methods to the Quaternion object.
 
 ## Version 2.2.2
 
