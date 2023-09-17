@@ -1,9 +1,9 @@
-# Quaternion-agc: a Python 3 resource
+# Quaternion-agc: a Python 3.10 resource
 ### Perform quaternionic algebra and geometry easily in Python
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version **2.2.3**
+:star: Version **2.2.4**
 
 :scroll: [Changelog](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/CHANGELOG.md)
 
@@ -51,9 +51,11 @@ I recommend reading [`how to build a quaternion`](https://github.com/ferrixio/Qu
 
 Every value below 1e-13 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
-The new class `Hplot` is used to plot quaternions in different ways. Also, I invite you to read [`how to plot quaternions`](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/How%20to%20plot%20quaternions.md) to have an idea of how I decide to plot them. 
+The new class `Hplot` is used to plot quaternions in different ways. Also, I invite you to read [`how to plot quaternions`](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/How%20to%20plot%20quaternions.md) to understand how to plot them.
 
-"agc" in the title stands for "algebra-geometry computation"
+The class `functions` contains many methods to perform quaternionic calculus [work in progress].
+
+"agc" in the title stands for "algebra-geometry-calculus".
 
 ## 3. KNOWN ISSUES
 
@@ -62,6 +64,8 @@ The new class `Hplot` is used to plot quaternions in different ways. Also, I inv
 
 ## 4. FUTURE IDEAS
 
++ :o: Add custom quaternionic functions
++ :o: Add more algebra and calculus to the field
 + :o: Add colorbar in plot to represent the real parts
 + :o: Study the topology of lists of quaternions
 + :white_check_mark: Vector representation
@@ -72,8 +76,9 @@ The new class `Hplot` is used to plot quaternions in different ways. Also, I inv
 + :white_check_mark: Plotting quaternions
 + :white_check_mark: Autogeneration of versors
 + :white_check_mark: Literally use LaTeX to write the .md files
++ :white_check_mark: Create a library/package
 + :warning: Implementing rotation of 3D objects
-+ :warning: Create a library/package
+
 
 ### Legend:
 :o: = solution not (yet) found

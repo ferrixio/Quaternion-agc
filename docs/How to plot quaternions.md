@@ -11,7 +11,7 @@ The class doesn't have an initializer, but I added a decorator to check invalid 
 At this moment forward, the word `Iterable` means any iterable object of quaternions.
 
 
-### :pencil2: The 'standard' way: `plot(Iterable, colored)`
+### :pencil2: The 'standard' way: `Hplot(Iterable, colored)`
 
 This is the main function to plot quaternions. It splits the 4-dimension in a `3D-space of points + 1D-line of colors`; in mathematical symbols, $\mathbb{H} \simeq \mathbb{R^3} \times \mathbb{R}$. The vector part of a quaternion represents the coordinates of a point in $\mathbb{R}^3$, while the real part is used to find a color to paint the point, using _hsv scale_.
 

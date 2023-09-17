@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 2.2.4
+
+Create a real package and deployed on PyPI, so that you can install via pip this package.
+
+Moved the static methods of the quaternion class to an external file, `functions.py`, so that it is possible to add more algebra and calculus without creating thousands of staticmethods.
+
+Renamed `Hplot.py` with `plot.py`. Renamed standard plot with `Hplot`
+
 ## Version 2.2.3
 
 Added `__len__`, `__iter__` and `__next__` methods to the Quaternion object.

@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     
 from Quaternion import Quaternion
-from Hplot import Hplot
+import Hplot
 from multiprocessing import Process
 
 def specialPrint(L:list):
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     # x = Hplot.getPaths(L)
     # specialPrint(x)
 
-    # Hplot.plot(L)
+    # Hplot.Hplot(L)
     Hplot.pathplot(L)
     # Hplot.stereo_pjrN(L)
     # Hplot.stereo_prjS(L)
