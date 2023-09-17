@@ -6,14 +6,14 @@
 
 Since quaternions are 4-dimensional objects, we can't represent them using our standard tools, because we live in a 3-dimensional cage. However, with special methods it's possible to project (part of) $\mathbb{H}$ in $\mathbb{R}^3$.
 
-The class doesn't have an initializer, but I added a decorator to check for invalid inputs.
+The class doesn't have an initializer, but I added a decorator to check invalid inputs.
 
 At this moment forward, the word `Iterable` means any iterable object of quaternions.
 
 
 ### :pencil2: The 'standard' way: `plot(Iterable, colored)`
 
-This is the main function to plot quaternions. It splits the 4-dimension in a `3D-space of points + 1D-line of colors`; in mathematical symbols, $\mathbb{H} \simeq \mathbb{R^3} \oplus \mathbb{R}$. The vector part of a quaternion represents the coordinates of a point in $\mathbb{R}^3$, while the real part is used to find a color to paint the point, using _hsv scale_.
+This is the main function to plot quaternions. It splits the 4-dimension in a `3D-space of points + 1D-line of colors`; in mathematical symbols, $\mathbb{H} \simeq \mathbb{R^3} \times \mathbb{R}$. The vector part of a quaternion represents the coordinates of a point in $\mathbb{R}^3$, while the real part is used to find a color to paint the point, using _hsv scale_.
 
 The boolean `colored`, if set to False, paints differently the graph. Actually, this list of colors will be graduated from black to red, according to the order of the given quaternions.
 
@@ -29,9 +29,9 @@ This is wacky and (maybe) useless, but at least shows something about their dist
 
 ### :pencil2: The 'topological' way: `pathplot(Iterable, colored)`
 
-This method is interesting but difficult to understand. It draws a 3-dimensional graph of the list of quaternion, as `plot` do, connected according to the minimum mutual distances among them. As before, the three imaginary parts are coordinates in $\mathbb{R^3}$, while the real part determines the color of the point.
+This method is interesting but difficult to understand. It draws a 3-dimensional graph of the list of given quaternions, as `plot` do, connected according to the minimum mutual distances among them. As before, the three imaginary parts are coordinates in $\mathbb{R^3}$, while the real part determines the color of the point.
 
-I decide to write this method to add the possibility (in the future) to study the topology of the points. Recently I discovered a branch of mathematics called _topological data analysis_, which amazed me.
+I decide to write this method to add the possibility in the future to study the topology of the points. Recently I discovered a branch of mathematics called _topological data analysis_, which amazed me.
 
 At this moment, the method draws constellations of connected colored point in 3D.
 
