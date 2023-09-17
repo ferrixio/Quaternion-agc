@@ -1,11 +1,11 @@
-# Quaternionic-beast: a Python 3 resource
-### Perform quaternionic arithmetic easily in Python
+# Quaternion-agc: a Python 3 resource
+### Perform quaternionic algebra and geometry easily in Python
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
 :star: Version **2.2.3**
 
-:scroll: [Changelog](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/CHANGELOG.md)
+:scroll: [Changelog](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/CHANGELOG.md)
 
 ## TABLE OF CONTENTS
 
@@ -47,11 +47,13 @@ This class allows user to emulate quaternionic algebra in Python. The class can 
 
 I used mostly magic methods to allow users to write `x+y`, `x*y`, `x/y`, ..., directly.
 
-I recommend reading [`how to build a quaternion`](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/How%20to%20build%20a%20quaternion.md) to better understand how to define and use a quaternion.
+I recommend reading [`how to build a quaternion`](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/How%20to%20build%20a%20quaternion.md) to better understand how to define and use a quaternion.
 
 Every value below 1e-13 is treated as 0, especially during logical checks. This does NOT imply that the value is set to 0!
 
-The new class `Hplot` is used to plot quaternions in different ways. Also, I invite you to read [`how to plot quaternions`](https://github.com/ferrixio/Quaternionic-beasts/blob/main/docs/How%20to%20plot%20quaternions.md) to have an idea of how I decide to plot them. 
+The new class `Hplot` is used to plot quaternions in different ways. Also, I invite you to read [`how to plot quaternions`](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/How%20to%20plot%20quaternions.md) to have an idea of how I decide to plot them. 
+
+"agc" in the title stands for "algebra-geometry computation"
 
 ## 3. KNOWN ISSUES
 
@@ -71,7 +73,7 @@ The new class `Hplot` is used to plot quaternions in different ways. Also, I inv
 + :white_check_mark: Autogeneration of versors
 + :white_check_mark: Literally use LaTeX to write the .md files
 + :warning: Implementing rotation of 3D objects
-+ :warning: Create a library
++ :warning: Create a library/package
 
 ### Legend:
 :o: = solution not (yet) found
