@@ -5,6 +5,8 @@
 
 :star: Version **2.2.4**
 
+:bar_chart: Status: closed
+
 :scroll: [Changelog](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/CHANGELOG.md)
 
 ## TABLE OF CONTENTS
