@@ -34,20 +34,24 @@ if __name__ == '__main__':
     L = [Quaternion.random() for _ in range(50)]
     # L = [Quaternion(1), Quaternion(1,1,0,0), Quaternion(1,0,1,0), Quaternion(1,0,0,1)]
     
-#     r = Process(target=Hplot.pathplot, args=(L,))
-#     r.start()
-#     s = Process(target=Hplot.plot, args=(L,))
-#     s.start()
-#     t = Process(target=Hplot.distplot, args=(L,))
-#     t.start()
-#     t.join()
-#     r.join()
-#     s.join()
+    # Various plots using multiprocessing
+    # r = Process(target=Hplot.pathplot, args=(L,))
+    # r.start()
+    # s = Process(target=Hplot.plot, args=(L,))
+    # s.start()
+    # t = Process(target=Hplot.distplot, args=(L,))
+    # t.start()
+    # t.join()
+    # r.join()
+    # s.join()
 
     # x = Hplot.getPaths(L)
     # specialPrint(x)
 
+    # Uncomment what plot you want to see
     # Hplot.Hplot(L)
-    Hplot.pathplot(L)
+    # Hplot.pathplot(L)
     # Hplot.stereo_pjrN(L)
     # Hplot.stereo_prjS(L)
+    # Hplot.stereo_432(L)
+    Hplot.imagy_stereo(L)

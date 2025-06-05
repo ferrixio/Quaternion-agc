@@ -1,7 +1,7 @@
-# Quaternion class for python 3.11
+# Quaternion class for python 3.10
 
-# Author:     Samuele Ferri (@ferrixio)
-# Version:    2.2.3
+# Author:       Samuele Ferri (@ferrixio)
+# Licence:      MIT 2025
 
 from math import sqrt, pi, sin, cos, acos
 from typing import Iterable

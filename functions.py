@@ -1,7 +1,7 @@
 # Quaternion algebra class for python 3.10
 
-# Author:     Samuele Ferri (@ferrixio)
-# Version:    2.2.4
+# Author:       Samuele Ferri (@ferrixio)
+# Licence:      MIT 2025
 
 # This class contains functions that operates in quaternionic space.
 

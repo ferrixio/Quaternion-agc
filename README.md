@@ -3,9 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version **2.2.4**
-
-:bar_chart: Status: closed
+:star: Version **2.3**
 
 :scroll: [Changelog](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/CHANGELOG.md)
 
@@ -69,16 +67,8 @@ The class `functions` contains many methods to perform quaternionic calculus [wo
 + :o: Add custom quaternionic functions
 + :o: Add more algebra and calculus to the field
 + :o: Add colorbar in plot to represent the real parts
-+ :o: Study the topology of lists of quaternions
-+ :white_check_mark: Vector representation
-+ :white_check_mark: Add complex compatibility
-+ :white_check_mark: Quaternionic functions
-+ :white_check_mark: Floor division
-+ :white_check_mark: Add @ operator
-+ :white_check_mark: Plotting quaternions
-+ :white_check_mark: Autogeneration of versors
-+ :white_check_mark: Literally use LaTeX to write the .md files
-+ :white_check_mark: Create a library/package
++ :o: Fix the PyPI package
++ :warning: Study the topology of lists of quaternions
 + :warning: Implementing rotation of 3D objects
 
 

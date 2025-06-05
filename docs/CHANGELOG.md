@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 2.3
+
+Added the method `Hplot.stereo_432` for a double stereographic projection from H -> R^2.
+
+Added the method `Hplot.imagy_stereo` that plots (q.real, f(q)), where f(q) is a double stereographic projection from R^3 -> R of the imaginary part of the quaternion q.
+
+Changed the name of the standard stereographic projection from S^3 to be more consistent with the new two.
+
 ## Version 2.2.4
 
 Create a real package and deployed on PyPI, so that you can install via pip this package.

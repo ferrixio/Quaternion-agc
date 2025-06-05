@@ -1,14 +1,14 @@
-# Quaternion plotting class for python 3.11
+# Quaternion plotting class for python 3.10
 
-# Author:     Samuele Ferri (@ferrixio)
-# Version:    2.2.3
+# Author:       Samuele Ferri (@ferrixio)
+# Licence:      MIT 2025
 
 from Quaternion import Quaternion
 import matplotlib.pyplot as plt
 from numpy import arange
 from matplotlib.colors import hsv_to_rgb
 from typing import Iterable
-from math import inf, ceil
+from math import inf, ceil, sqrt
 from functools import wraps
 
 
@@ -71,8 +71,9 @@ def __getPicture():
     pic.set_zlabel('k axis')
     return pic
 
-def __stereo_prj(number:Quaternion, north:bool=True):
-    '''Evaluates the stereographic projection of a given quaternion.
+def __stereo_prj_S3(number:Quaternion, north:bool=True):
+    '''Evaluates the stereographic projection of a given quaternion, which is the stereographic
+    projection from S^3 to R^3.
     
     Arguments:
     - number[Quaternion]: the quaternion to be projected
@@ -86,6 +87,38 @@ def __stereo_prj(number:Quaternion, north:bool=True):
     temp = number.normalize()
     mod = (1-temp.k)*(north) + (1+temp.k)*(not north)
     return [temp.real/mod, temp.i/mod, temp.j/mod]
+
+def __stereo_prj_S2(number:list[float], north:bool=True):
+    '''Evaluates the stereographic projection from S^2 to R^2.
+    
+    Arguments:
+    - number[list[float]]: the point in 3D to be projected
+    - south[bool]: if set to false, the projection will be evaluate from south pole
+    '''
+    if number==[0,0,1] and north:
+        raise ZeroDivisionError("Can't map the north pole using north-stereographic projection.")
+    if number==[0,0,-1] and not north:
+        raise ZeroDivisionError("Can't map the south pole using south-stereographic projection.")
+
+    mod = sqrt(pow(number[0],2) + pow(number[1],2) + pow(number[2],2))
+    number = [i/mod for i in number]
+    den = 1 + ((-1)**north)*number[2]
+
+    return [number[0]/den, number[1]/den]
+
+def __stereo_prj_S1(number:list[float], north:bool=True):
+    '''Evaluates the stereographic projection from S^1 to R.
+    
+    Arguments:
+    - number[list[float]]: the point in 2D to be projected
+    - south[bool]: if set to false, the projection will be evaluate from south pole
+    '''
+    if number==[0,1] and north:
+        raise ZeroDivisionError("Can't map the north pole using north-stereographic projection.")
+    if number==[0,-1] and not north:
+        raise ZeroDivisionError("Can't map the south pole using south-stereographic projection.")
+
+    return number[0]/(1 + ((-1)**north)*number[1])
 
 
 def getPaths(H_points:Iterable[Quaternion]) -> list:
@@ -188,7 +221,7 @@ def pathplot(H_points:Iterable[Quaternion], /, colored:bool=True):
 
 @__are_quaternions
 def stereo_pjrN(H_points:Iterable[Quaternion], /):
-    '''Draws a 3-dimensional graph of the given list of quaternion according to the
+    '''Draws a 3-dimensional graph of the given list of quaternions according to the
     stereographic projection from the north pole of the 3-sphere, that is the point (0,0,0,1).
     
     Arguments:
@@ -196,14 +229,14 @@ def stereo_pjrN(H_points:Iterable[Quaternion], /):
     '''
     ax = __getPicture()
     for item in H_points:
-        ax.plot(*__stereo_prj(item,True), 'o', c='red')
+        ax.plot(*__stereo_prj_S3(item,True), 'o', c='red')
 
     plt.show()
 
 
 @__are_quaternions
 def stereo_prjS(H_points:Iterable[Quaternion], /):
-    '''Draws a 3-dimensional graph of the given list of quaternion according to the
+    '''Draws a 3-dimensional graph of the given list of quaternions according to the
     stereographic projection from the south pole of the 3-sphere, that is the point (0,0,0,-1).
     
     Arguments:
@@ -211,10 +244,74 @@ def stereo_prjS(H_points:Iterable[Quaternion], /):
     '''
     ax = __getPicture()
     for item in H_points:
-        ax.plot(*__stereo_prj(item,False), 'o', c='red')
+        ax.plot(*__stereo_prj_S3(item,False), 'o', c='red')
 
     plt.show()
     
 
+@__are_quaternions
+def stereo_432(H_points:Iterable[Quaternion], poles:Iterable[str]=('North','North')):
+    '''Draws a 2-dimensional graph of the given list of quaternions according to a
+    double stereographic projection from H to R^2.
+    By default it projects twice from north pole, but you can change with the argument
+    'poles'.
+    
+    Arguments:
+    - H_points: iterable of quaternions
+    - poles: iterable (of strings) of the poles of the two projections
+    '''
+
+    _poles = []
+    for s in poles:
+        if s in ('North', 'north', 'N', 'n'):
+            _poles.append(True)
+        elif s in ('South', 'south', 'S', 's'):
+            _poles.append(False)
+        else:
+            raise AttributeError(f'Poles `{s}` is not a valid pole.')
+    
+    if len(_poles) != 2:
+        raise ValueError(f'Wrong length list of poles: it is {len(_poles)} instead of 2.')
+
+    R2 = [__stereo_prj_S2(__stereo_prj_S3(i, _poles[0]), _poles[1]) for i in H_points]
+    xx = [p[0] for p in R2]
+    yy = [p[1] for p in R2]
+
+    plt.figure()
+    plt.plot(xx, yy, '*')
+    plt.show()
+
+
+@__are_quaternions
+def imagy_stereo(H_points:Iterable[Quaternion], poles:Iterable[str]=('North','North')):
+    '''Draws a graph (x, f(x)) of the given list of quaternions, where
+    - x: real part of the quaternion,
+    - f(x): double stereographic projection of the imaginary part of the quaternion.
+
+    By default it projects twice from north pole, but you can change with the argument `poles`.
+
+    @Arguments:
+    - H_points: iterable of quaternions
+    - poles: iterable (of strings) of the poles of the three projections
+    '''
+
+    _poles = []
+    for s in poles:
+        if s in ('North', 'north', 'N', 'n'):
+            _poles.append(True)
+        elif s in ('South', 'south', 'S', 's'):
+            _poles.append(False)
+        else:
+            raise AttributeError(f'Poles `{s}` is not a valid pole.')
+        
+    if len(_poles) != 2:
+        raise ValueError(f'Wrong length list of poles: it is {len(_poles)} instead of 2.')
+    
+    real_parts = [i.real for i in H_points]
+    R = [__stereo_prj_S1(__stereo_prj_S2(i.vector, _poles[0]), _poles[1]) for i in H_points]
+
+    plt.figure()
+    plt.plot(real_parts, R, '*')
+    plt.show()
 
 # End of Hplot class

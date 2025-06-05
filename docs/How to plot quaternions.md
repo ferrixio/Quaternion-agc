@@ -43,3 +43,14 @@ At this moment, the method draws constellations of connected colored point in 3D
 The $n$-sphere can be covered by an atlas using only two local charts: the stereographic projections. So a quaternion, as an element of $S^3\subset \mathbb{R^4}$, can be projected in the 3-dimensional space. For the 3-sphere, its **north pole** is the quaternion **1k**, while its **south pole** is **-1k**.
 
 Since the projections are maps $S^3-\{pole\}\to\mathbb{R^3}$, each quaternion will be normalized, in order to be correctly projected.
+
+
+### :pencil2: The 'double atlas' way: `stereo_432(Iterable, poles)`
+
+This is a modified version of the previous one, in which two stereographic projections are carried out sequentially on the given list of quaterions. In this case, the user can use the input `poles`, which is a list of strings, to specify the sequence of poles to be used.
+
+Since the projections are maps $S^3-\{pole\}\to\mathbb{R}^3$, each quaternion will be normalized, in order to be correctly projected AND the resulting point is again normalized before projecting in $\mathbb{R}^2$
+
+### :pencil2: The 'imaginay atlas' way: `imagy_stereo(Iterable, poles)`
+
+This is another modified version of `stereo_432` that plots the real part of the quaternion against the double stereographic projection of its imaginary part, from $\mathbb{R}^3\to\mathbb{R}$.
