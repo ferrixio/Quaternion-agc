@@ -51,6 +51,10 @@ This is a modified version of the previous one, in which two stereographic proje
 
 Since the projections are maps $S^3-\{pole\}\to\mathbb{R}^3$, each quaternion will be normalized, in order to be correctly projected AND the resulting point is again normalized before projecting in $\mathbb{R}^2$
 
+### :pencil2: The 'triple atlas' way: `stereo_4321(Iterable, poles)`
+
+This is a modified version of the previous one, in which three stereographic projections are carried out sequentially on the given list of quaterions. Therefore we project an element from $\mathbb{H}$ in $\mathbb{R}$. In this case, the user can use the input `poles`, which is a list of strings, to specify the sequence of poles to be used.
+
 ### :pencil2: The 'imaginay atlas' way: `imagy_stereo(Iterable, poles)`
 
 This is another modified version of `stereo_432` that plots the real part of the quaternion against the double stereographic projection of its imaginary part, from $\mathbb{R}^3\to\mathbb{R}$.

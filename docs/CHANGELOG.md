@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 2.3.1
+
+Added the triple stereographic projection from H to R.
+
 ## Version 2.3
 
 Added the method `Hplot.stereo_432` for a double stereographic projection from H -> R^2.

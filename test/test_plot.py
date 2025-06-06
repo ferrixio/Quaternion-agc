@@ -54,4 +54,5 @@ if __name__ == '__main__':
     # Hplot.stereo_pjrN(L)
     # Hplot.stereo_prjS(L)
     # Hplot.stereo_432(L)
-    Hplot.imagy_stereo(L)
+    # Hplot.imagy_stereo(L)
+    Hplot.stereo_4321(L)

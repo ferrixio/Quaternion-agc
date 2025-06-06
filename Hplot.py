@@ -5,7 +5,7 @@
 
 from Quaternion import Quaternion
 import matplotlib.pyplot as plt
-from numpy import arange
+from numpy import arange, linspace
 from matplotlib.colors import hsv_to_rgb
 from typing import Iterable
 from math import inf, ceil, sqrt
@@ -312,6 +312,38 @@ def imagy_stereo(H_points:Iterable[Quaternion], poles:Iterable[str]=('North','No
 
     plt.figure()
     plt.plot(real_parts, R, '*')
+    plt.show()
+
+
+@__are_quaternions
+def stereo_4321(H_points:Iterable[Quaternion], poles:Iterable[str]=('North','North','North')):
+    '''Draws a 1-dimensional graph of the given list of quaternions according to a
+    triple stereographic projection from H to R.
+    By default it projects trice from north pole, but you can change with the argument
+    'poles'.
+    
+    Arguments:
+    - H_points: iterable of quaternions
+    - poles: iterable (of strings) of the poles of the two projections
+    '''
+
+    _poles = []
+    for s in poles:
+        if s in ('North', 'north', 'N', 'n'):
+            _poles.append(True)
+        elif s in ('South', 'south', 'S', 's'):
+            _poles.append(False)
+        else:
+            raise AttributeError(f'Poles `{s}` is not a valid pole.')
+    
+    if len(_poles) != 3:
+        raise ValueError(f'Wrong length list of poles: it is {len(_poles)} instead of 3.')
+
+    R1 = [__stereo_prj_S1(__stereo_prj_S2(__stereo_prj_S3(i, _poles[0]), _poles[1]), _poles[2]) for i in H_points]
+
+    xx = linspace(0,1,len(R1))
+    plt.figure()
+    plt.plot(xx, R1, '*')
     plt.show()
 
 # End of Hplot class

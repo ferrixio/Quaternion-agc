@@ -3,7 +3,7 @@
 
 :dragon: Author: Samuele Ferri (@ferrixio)
 
-:star: Version **2.3**
+:star: Version **2.3.1**
 
 :scroll: [Changelog](https://github.com/ferrixio/Quaternion-agc/blob/main/docs/CHANGELOG.md)
 
