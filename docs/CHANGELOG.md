@@ -1,11 +1,9 @@
 # CHANGELOG
 
 ## Version 2.3.1
-
-Added the triple stereographic projection from H to R.
+Added the triple stereographic projection from H to R and `ComplexPlot`.
 
 ## Version 2.3
-
 Added the method `Hplot.stereo_432` for a double stereographic projection from H -> R^2.
 
 Added the method `Hplot.imagy_stereo` that plots (q.real, f(q)), where f(q) is a double stereographic projection from R^3 -> R of the imaginary part of the quaternion q.
@@ -13,7 +11,6 @@ Added the method `Hplot.imagy_stereo` that plots (q.real, f(q)), where f(q) is a
 Changed the name of the standard stereographic projection from S^3 to be more consistent with the new two.
 
 ## Version 2.2.4
-
 Create a real package and deployed on PyPI, so that you can install via pip this package.
 
 Moved the static methods of the quaternion class to an external file, `functions.py`, so that it is possible to add more algebra and calculus without creating thousands of staticmethods.
@@ -21,11 +18,9 @@ Moved the static methods of the quaternion class to an external file, `functions
 Renamed `Hplot.py` with `plot.py`. Renamed standard plot with `Hplot`
 
 ## Version 2.2.3
-
 Added `__len__`, `__iter__` and `__next__` methods to the Quaternion object.
 
 ## Version 2.2.2
-
 Added the subclass `Versor(Quaternion)` to build unitary quaternion directly.
 
 Corrected a type error in `Hplot.__stereo_prj`
@@ -35,7 +30,6 @@ Fixed a bug in `Quaternion.__init__` which doesn't create the attribute `ACCURAC
 Added the method `Hplot.getPath` to get a matrix of connections among quaternions in `pathplot`.
 
 ## Version 2.2.1
-
 Added the multiprocessing in `Hplot`. Edited some strings.
 
 Now `pathplot` draws multiple segments if a quaternion is in the middle between two or more. Added the plots using stereographic projections.

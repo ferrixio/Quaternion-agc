@@ -58,3 +58,7 @@ This is a modified version of the previous one, in which three stereographic pro
 ### :pencil2: The 'imaginay atlas' way: `imagy_stereo(Iterable, poles)`
 
 This is another modified version of `stereo_432` that plots the real part of the quaternion against the double stereographic projection of its imaginary part, from $\mathbb{R}^3\to\mathbb{R}$.
+
+### :pencil2: The 'forget imaginary part' way: `ComplexPlot(Iterable)`
+
+In this framework the function plots the list of quaternions according to the map $q\rightarrow(Re(q),\mid\mid Im(q)\mid\mid_2)$.

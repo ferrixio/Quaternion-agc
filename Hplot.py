@@ -6,6 +6,7 @@
 from Quaternion import Quaternion
 import matplotlib.pyplot as plt
 from numpy import arange, linspace
+from numpy.linalg import norm
 from matplotlib.colors import hsv_to_rgb
 from typing import Iterable
 from math import inf, ceil, sqrt
@@ -344,6 +345,23 @@ def stereo_4321(H_points:Iterable[Quaternion], poles:Iterable[str]=('North','Nor
     xx = linspace(0,1,len(R1))
     plt.figure()
     plt.plot(xx, R1, '*')
+    plt.show()
+
+
+@__are_quaternions
+def ComplexPlot(H_points:Iterable[Quaternion]):
+    '''Plots the list of quaternions in the complex plane, according to the map 
+    q -> (Re(q), ||Im(q)||_2).
+    
+    Arguments:
+    - H_points: iterable of quaternions
+    '''
+
+    reals = [i.real for i in H_points]
+    imagyNorms = [norm(i.vector) for i in H_points]
+
+    plt.figure()
+    plt.plot(reals, imagyNorms, '*')
     plt.show()
 
 # End of Hplot class
